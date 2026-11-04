@@ -1,0 +1,40 @@
+services:
+  colibri:
+    build:
+      context: .
+      dockerfile: docker/colibri.Dockerfile
+    image: gguf-rocm-colibri:local
+    devices:
+      - /dev/dri:/dev/dri
+    group_add:
+      - "${VIDEO_GID:?Run make run-colibri to detect GPU groups}"
+      - "${RENDER_GID:?Run make run-colibri to detect GPU groups}"
+    shm_size: 2gb
+    stop_grace_period: 2m
+    ports:
+      - 8080:8080
+    environment:
+      COLIBRI_GGUF: ${COLIBRI_GGUF:-flint-UD-Q4_K_XL.gguf}
+      COLIBRI_CTX: ${COLIBRI_CTX:-8192}
+      COLIBRI_RAM: ${COLIBRI_RAM:-48}
+      COLI_VULKAN: "1"
+      COLI_VK_DENSE: "1"
+      COLI_VK_ATTN: "1"
+      COLI_NO_OMP_TUNE: "1"
+      OMP_NUM_THREADS: "8"
+    volumes:
+      - ${MODELS_DIR:-./data/models}:/models:ro
+      - ./data/colibri:/state
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.13.0
+    depends_on:
+      - colibri
+    ports:
+      - 80:8080
+    environment:
+      - OPENAI_API_BASE_URL=http://colibri:8080/v1
+      - ENABLE_PERSISTENT_CONFIG=False
+      - WEBUI_SECRET_KEY=
+    volumes:
+      - ./data/open-webui:/app/backend/data

@@ -3,8 +3,14 @@ set -euo pipefail
 
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 
+backend=${1:?Usage: prepare-gpu.sh strata|colibri}
+case "$backend" in
+    strata|colibri) ;;
+    *) printf 'Unknown backend: %s\n' "$backend" >&2; exit 1 ;;
+esac
+
 fail() {
-    printf 'Strata setup: %s\n' "$*" >&2
+    printf '%s setup: %s\n' "$backend" "$*" >&2
     exit 1
 }
 
@@ -14,19 +20,21 @@ render_devices=(/dev/dri/renderD*)
 video_devices=(/dev/dri/card*)
 ((${#render_devices[@]})) || fail 'No /dev/dri/renderD* devices found. Check the AMD GPU driver on the host.'
 ((${#video_devices[@]})) || fail 'No /dev/dri/card* devices found. Check the AMD GPU driver on the host.'
-[[ -c /dev/kfd ]] || fail 'No /dev/kfd character device found. Check that the AMD ROCm/amdgpu driver is available.'
 
 for device in "${render_devices[0]}" "${video_devices[0]}"; do
     [[ -c "$device" ]] || fail "$device is not a character device."
 done
 render_gid=$(stat -c '%g' -- "${render_devices[0]}")
 video_gid=$(stat -c '%g' -- "${video_devices[0]}")
-kfd_gid=$(stat -c '%g' -- /dev/kfd)
-for gid in "$render_gid" "$video_gid" "$kfd_gid"; do
+for gid in "$render_gid" "$video_gid"; do
     [[ "$gid" =~ ^[0-9]+$ ]] || fail 'Could not determine numeric GPU device group IDs.'
 done
-[[ "$kfd_gid" == "$render_gid" || "$kfd_gid" == "$video_gid" ]] ||
-    fail '/dev/kfd has a different group from the DRM devices. Align GPU device permissions on the host first.'
+if [[ "$backend" == strata ]]; then
+    [[ -c /dev/kfd ]] || fail 'No /dev/kfd character device found. Check the AMD ROCm/amdgpu driver.'
+    kfd_gid=$(stat -c '%g' -- /dev/kfd)
+    [[ "$kfd_gid" == "$render_gid" || "$kfd_gid" == "$video_gid" ]] ||
+        fail '/dev/kfd has a different group from the DRM devices. Align GPU device permissions on the host first.'
+fi
 
 # Keep existing secrets and other settings; create a key only if absent/empty.
 source_env=.env
@@ -34,7 +42,7 @@ source_env=.env
 api_key=''
 existing_key=$(sed -n 's/^[[:space:]]*STRATA_API_KEY=//p' "$source_env" | tail -n 1)
 existing_key="${existing_key//[[:space:]]/}"
-if [[ -z "$existing_key" || "$existing_key" == '""' || "$existing_key" == "''" ]]; then
+if [[ "$backend" == strata ]] && [[ -z "$existing_key" || "$existing_key" == '""' || "$existing_key" == "''" ]]; then
     command -v openssl >/dev/null || fail 'openssl is required to generate STRATA_API_KEY.'
     api_key=$(openssl rand -hex 24)
 fi
@@ -63,4 +71,4 @@ awk -v render="$render_gid" -v video="$video_gid" -v key="$api_key" '
     }
 ' "$source_env" > "$tmp"
 mv -- "$tmp" .env
-printf 'Strata GPU groups: render=%s video=%s kfd=%s\n' "$render_gid" "$video_gid" "$kfd_gid"
+printf '%s GPU groups: render=%s video=%s\n' "$backend" "$render_gid" "$video_gid"

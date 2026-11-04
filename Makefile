@@ -1,21 +1,24 @@
-COMPOSE := docker compose -p llama-open-webui
-
-.PHONY: run stop run-strata stop-strata
-
-run:
-	$(COMPOSE) -f compose.strata.yaml down --remove-orphans
-	$(COMPOSE) -f compose.llama.yaml up -d
-
-stop:
-	$(COMPOSE) -f compose.llama.yaml down --remove-orphans
-
-run-strata:
-	bash scripts/prepare-strata.sh
-	$(COMPOSE) -f compose.strata.yaml config -q
-	$(COMPOSE) -f compose.llama.yaml down --remove-orphans
-	$(COMPOSE) -f compose.strata.yaml up -d
-
-stop-strata:
-	$(COMPOSE) -f compose.strata.yaml down --remove-orphans
+.DEFAULT_GOAL := run-llama
 
 include models.mk
+export MODELS_DIR
+
+COMPOSE := docker compose -p gguf-rocm
+
+run-%: FORCE
+	$(COMPOSE) -f compose.$*.yaml up -d
+
+stop-%: FORCE
+	$(COMPOSE) -f compose.$*.yaml down --remove-orphans
+
+run-strata: prepare-strata
+run-colibri: prepare-colibri
+
+.PHONY: FORCE prepare-strata prepare-colibri build-colibri
+FORCE:
+
+prepare-strata prepare-colibri:
+	bash scripts/prepare-gpu.sh $(@:prepare-%=%)
+
+build-colibri: prepare-colibri
+	$(COMPOSE) -f compose.colibri.yaml build colibri

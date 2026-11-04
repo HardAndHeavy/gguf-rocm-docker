@@ -1,6 +1,6 @@
 services:
   strata:
-    image: ghcr.io/niko1221/strata:0.2.8-rocm-gfx120x
+    image: ghcr.io/niko1221/strata:0.2.9-rocm-gfx120x
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
@@ -29,7 +29,7 @@ services:
       - ./data/strata:/data
 
   open-webui:
-    image: ghcr.io/open-webui/open-webui:v0.12.5
+    image: ghcr.io/open-webui/open-webui:v0.13.0
     depends_on:
       - strata
     ports:
