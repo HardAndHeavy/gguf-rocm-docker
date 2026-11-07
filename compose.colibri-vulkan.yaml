@@ -1,0 +1,19 @@
+# Alternative: docker compose -p gguf-rocm -f compose.colibri.yaml \
+#   -f compose.colibri-vulkan.yaml up -d --build
+services:
+  colibri:
+    build:
+      dockerfile: docker/colibri-vulkan.Dockerfile
+    image: gguf-rocm-colibri:vulkan
+    environment:
+      COLI_CUDA: "0"
+      COLI_VULKAN: "1"
+      COLI_VK_DENSE: "1"
+      COLI_VK_ATTN: "1"
+      # Avoid transient vkAllocateMemory/import/free for every expert matrix.
+      COLI_VK_UP_IMPORT: "0"
+      # Flint fits in VRAM: do not duplicate every expert in an imported pool.
+      COLI_VK_TIER_HOST: "0"
+      COLI_VK_CHAIN_ROWS: "64"
+      COLI_VK_CHAIN_SPIN_US: "0"
+      COLI_VK_SPIN_US: "0"

@@ -4,7 +4,7 @@ set -euo pipefail
 if (($#)); then
     exec "$@"
 fi
-: "${COLIBRI_GGUF:?Set COLIBRI_GGUF to the first GGUF shard's filename}"
+: "${COLIBRI_GGUF:?Set COLIBRI_GGUF to the filename of the first GGUF shard}"
 [[ -f "/models/$COLIBRI_GGUF" ]] || {
     printf 'Missing GGUF: /models/%s\n' "$COLIBRI_GGUF" >&2
     exit 1

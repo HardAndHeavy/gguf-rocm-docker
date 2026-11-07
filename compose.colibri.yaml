@@ -3,8 +3,12 @@ services:
     build:
       context: .
       dockerfile: docker/colibri.Dockerfile
+      args:
+        ROCM_IMAGE: ${COLIBRI_ROCM_IMAGE:-llama-rocm:3.0.0}
+        HIP_ARCH: ${COLIBRI_HIP_ARCH:-gfx1201}
     image: gguf-rocm-colibri:local
     devices:
+      - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
     group_add:
       - "${VIDEO_GID:?Run make run-colibri to detect GPU groups}"
@@ -17,9 +21,14 @@ services:
       COLIBRI_GGUF: ${COLIBRI_GGUF:-flint-UD-Q4_K_XL.gguf}
       COLIBRI_CTX: ${COLIBRI_CTX:-8192}
       COLIBRI_RAM: ${COLIBRI_RAM:-48}
-      COLI_VULKAN: "1"
-      COLI_VK_DENSE: "1"
-      COLI_VK_ATTN: "1"
+      COLI_API_KEY: ${COLI_API_KEY:?Run make run-colibri to generate an API key}
+      COLI_ALLOWED_HOSTS: colibri,localhost,127.0.0.1
+      # Upstream uses the CUDA ABI/env names for its HIP backend too.
+      COLI_CUDA: "1"
+      COLI_VULKAN: "0"
+      COLI_CUDA_HOST_POOL: "0"
+      COLI_CUDA_CHAIN_ROWS: "64"
+      Q36_ILV16: "0"
       COLI_NO_OMP_TUNE: "1"
       OMP_NUM_THREADS: "8"
     volumes:
@@ -34,6 +43,8 @@ services:
       - 80:8080
     environment:
       - OPENAI_API_BASE_URL=http://colibri:8080/v1
+      - OPENAI_API_KEY=${COLI_API_KEY}
+      - ENABLE_OLLAMA_API=False
       - ENABLE_PERSISTENT_CONFIG=False
       - WEBUI_SECRET_KEY=
     volumes:

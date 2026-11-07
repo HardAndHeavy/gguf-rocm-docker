@@ -29,7 +29,7 @@ video_gid=$(stat -c '%g' -- "${video_devices[0]}")
 for gid in "$render_gid" "$video_gid"; do
     [[ "$gid" =~ ^[0-9]+$ ]] || fail 'Could not determine numeric GPU device group IDs.'
 done
-if [[ "$backend" == strata ]]; then
+if [[ "$backend" == strata || "$backend" == colibri ]]; then
     [[ -c /dev/kfd ]] || fail 'No /dev/kfd character device found. Check the AMD ROCm/amdgpu driver.'
     kfd_gid=$(stat -c '%g' -- /dev/kfd)
     [[ "$kfd_gid" == "$render_gid" || "$kfd_gid" == "$video_gid" ]] ||
@@ -40,10 +40,14 @@ fi
 source_env=.env
 [[ -f "$source_env" ]] || source_env=.env.example
 api_key=''
-existing_key=$(sed -n 's/^[[:space:]]*STRATA_API_KEY=//p' "$source_env" | tail -n 1)
+case "$backend" in
+    strata) key_name=STRATA_API_KEY ;;
+    colibri) key_name=COLI_API_KEY ;;
+esac
+existing_key=$(sed -n "s/^[[:space:]]*${key_name}=//p" "$source_env" | tail -n 1)
 existing_key="${existing_key//[[:space:]]/}"
-if [[ "$backend" == strata ]] && [[ -z "$existing_key" || "$existing_key" == '""' || "$existing_key" == "''" ]]; then
-    command -v openssl >/dev/null || fail 'openssl is required to generate STRATA_API_KEY.'
+if [[ -z "$existing_key" || "$existing_key" == '""' || "$existing_key" == "''" ]]; then
+    command -v openssl >/dev/null || fail "openssl is required to generate $key_name."
     api_key=$(openssl rand -hex 24)
 fi
 
@@ -51,11 +55,11 @@ umask 077
 tmp=$(mktemp .env.tmp.XXXXXX)
 trap 'rm -f -- "$tmp"' EXIT
 # Do not source .env: it is Compose configuration, not executable shell code.
-awk -v render="$render_gid" -v video="$video_gid" -v key="$api_key" '
+awk -v render="$render_gid" -v video="$video_gid" -v key="$api_key" -v key_name="$key_name" '
     BEGIN {
         values["RENDER_GID"] = render
         values["VIDEO_GID"] = video
-        if (key != "") values["STRATA_API_KEY"] = key
+        if (key != "") values[key_name] = key
     }
     {
         name = $0
