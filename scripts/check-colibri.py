@@ -8,14 +8,32 @@ import urllib.request
 url = "http://127.0.0.1:8080/v1"
 headers = {"Authorization": "Bearer " + os.environ["COLI_API_KEY"],
            "Content-Type": "application/json"}
+startup_timeout = float(os.environ.get("COLIBRI_SMOKE_STARTUP_TIMEOUT", "600"))
+request_timeout = float(os.environ.get("COLIBRI_SMOKE_REQUEST_TIMEOUT", "300"))
 
-def request(path, payload=None):
+
+def request(path, payload=None, timeout=request_timeout):
     req = urllib.request.Request(url + path, headers=headers,
                                  data=None if payload is None else json.dumps(payload).encode())
-    with urllib.request.urlopen(req, timeout=120) as response:
+    with urllib.request.urlopen(req, timeout=timeout) as response:
         return json.load(response)
 
-model = request("/models")["data"][0]["id"]
+
+# The TCP healthcheck intentionally stays responsive while the engine is busy.
+# Consequently healthy can precede the end of expert warmstart/host-pool setup:
+# wait for the actual API instead of racing it with a single /models request.
+deadline = time.monotonic() + startup_timeout
+while True:
+    try:
+        timeout = min(10.0, max(1.0, deadline - time.monotonic()))
+        model = request("/models", timeout=timeout)["data"][0]["id"]
+        break
+    except (OSError, KeyError, IndexError, TypeError) as error:
+        if time.monotonic() >= deadline:
+            raise RuntimeError(f"Inference API was not ready within {startup_timeout:g}s") from error
+        print(f"Waiting for inference API: {error}", flush=True)
+        time.sleep(2)
+
 start = time.monotonic()
 result = request("/chat/completions", {
     "model": model,

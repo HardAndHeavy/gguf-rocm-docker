@@ -8,11 +8,13 @@ WORKDIR /src
 RUN git init . && git remote add origin https://github.com/JustVugg/colibri.git \
     && git fetch --depth 1 origin "${COLIBRI_REF}" && git checkout --detach FETCH_HEAD
 # Zen 2 supports x86-64-v3. Do not bake the build host's native ISA into the image.
-RUN make -C c -j2 colibri glm53 qwen36 qwen38 ARCH=x86-64-v3 VK=1
+RUN make -C c -j2 colibri glm53 qwen36 qwen38 kimi_k3 ARCH=x86-64-v3 VK=1 \
+    && test -x c/colibri && test -x c/glm53 && test -x c/qwen36 && test -x c/qwen38 \
+    && test -x c/kimi_k3
 
 FROM debian:trixie-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 libgomp1 libvulkan1 mesa-vulkan-drivers ca-certificates \
+    python3 libgomp1 libvulkan1 mesa-vulkan-drivers ca-certificates rocm-smi \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app/c
 # Keep Python helpers, engine binaries and shaders together as upstream expects.

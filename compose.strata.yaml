@@ -14,7 +14,7 @@ services:
     shm_size: 2gb
     stop_grace_period: 2m
     ports:
-      - 8080:8080
+      - ${STRATA_PORT:-8080}:8080
     environment:
       FAMILY: qwen
       MODEL: IQ2_XS
@@ -31,12 +31,14 @@ services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:v0.13.0
     depends_on:
-      - strata
+      strata:
+        condition: service_healthy
     ports:
-      - 80:8080
+      - ${OPENWEBUI_PORT:-80}:8080
     environment:
       - OPENAI_API_BASE_URL=http://strata:8080/v1
       - OPENAI_API_KEY=${STRATA_API_KEY}
+      - ENABLE_OLLAMA_API=False
       - ENABLE_PERSISTENT_CONFIG=False
       - WEBUI_SECRET_KEY=
     volumes:

@@ -4,33 +4,57 @@ services:
       context: .
       dockerfile: docker/colibri.Dockerfile
       args:
-        ROCM_IMAGE: ${COLIBRI_ROCM_IMAGE:-llama-rocm:3.0.0}
+        ROCM_IMAGE: ${COLIBRI_ROCM_IMAGE:-llama-rocm:3.0.2}
         HIP_ARCH: ${COLIBRI_HIP_ARCH:-gfx1201}
+        COLIBRI_REF: ${COLIBRI_REF:-0a5504a1dc64f86fcd0fe7db298b0448c730e7e6}
     image: gguf-rocm-colibri:local
+    init: true
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
     group_add:
       - "${VIDEO_GID:?Run make run-colibri to detect GPU groups}"
       - "${RENDER_GID:?Run make run-colibri to detect GPU groups}"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     shm_size: 2gb
     stop_grace_period: 2m
+    # Compose applies this to both ROCm and Vulkan images. TCP connect does not
+    # wait for the busy engine's HTTP handler during a valid generation.
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import socket; s=socket.create_connection(('127.0.0.1', 8080), 4); s.close()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10m
     ports:
-      - 8080:8080
+      - ${COLIBRI_PORT:-8080}:8080
     environment:
       COLIBRI_GGUF: ${COLIBRI_GGUF:-flint-UD-Q4_K_XL.gguf}
+      COLIBRI_MTP: ${COLIBRI_MTP:-}
       COLIBRI_CTX: ${COLIBRI_CTX:-8192}
       COLIBRI_RAM: ${COLIBRI_RAM:-48}
+      COLIBRI_CAP: ${COLIBRI_CAP:-}
+      COLIBRI_VRAM: ${COLIBRI_VRAM:-}
+      COLIBRI_KV_SLOTS: ${COLIBRI_KV_SLOTS:-}
+      COLIBRI_POLICY: ${COLIBRI_POLICY:-}
       COLI_API_KEY: ${COLI_API_KEY:?Run make run-colibri to generate an API key}
       COLI_ALLOWED_HOSTS: colibri,localhost,127.0.0.1
       # Upstream uses the CUDA ABI/env names for its HIP backend too.
       COLI_CUDA: "1"
       COLI_VULKAN: "0"
       COLI_CUDA_HOST_POOL: "0"
+      # Qwen3.8 uses CHAIN_POOL (not HOST_POOL). Keep the fast default; the
+      # low-RAM alternative is documented and deliberately not silent.
+      COLI_CUDA_CHAIN_POOL: ${COLI_CUDA_CHAIN_POOL:-1}
+      COLI_CUDA_CHAIN_LAYERWISE: ${COLI_CUDA_CHAIN_LAYERWISE:-1}
       COLI_CUDA_CHAIN_ROWS: "64"
+      Q38_MTP: ${Q38_MTP:-0}
       Q36_ILV16: "0"
       COLI_NO_OMP_TUNE: "1"
-      OMP_NUM_THREADS: "8"
+      OMP_NUM_THREADS: ${OMP_NUM_THREADS:-8}
     volumes:
       - ${MODELS_DIR:-./data/models}:/models:ro
       - ./data/colibri:/state
@@ -38,9 +62,10 @@ services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:v0.13.0
     depends_on:
-      - colibri
+      colibri:
+        condition: service_healthy
     ports:
-      - 80:8080
+      - ${OPENWEBUI_PORT:-80}:8080
     environment:
       - OPENAI_API_BASE_URL=http://colibri:8080/v1
       - OPENAI_API_KEY=${COLI_API_KEY}

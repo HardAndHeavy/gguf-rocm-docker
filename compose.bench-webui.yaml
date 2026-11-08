@@ -1,0 +1,35 @@
+services:
+  open-webui-bench:
+    image: ghcr.io/open-webui/open-webui:v0.13.0
+    init: true
+    ports:
+      - ${BENCH_WEBUI_PORT:-3300}:8080
+    environment:
+      OPENAI_API_BASE_URL: ${BENCH_BACKEND_URL:?Set BENCH_BACKEND_URL, for example http://colibri:8080/v1}
+      OPENAI_API_KEY: ${BENCH_BACKEND_API_KEY:?Set BENCH_BACKEND_API_KEY without putting it in shell history}
+      ENABLE_OLLAMA_API: "False"
+      ENABLE_PERSISTENT_CONFIG: "False"
+      ENABLE_API_KEYS: "True"
+      ENABLE_SIGNUP: "False"
+      WEBUI_SECRET_KEY: ${BENCH_WEBUI_SECRET:?Set a random benchmark-only secret}
+      BYPASS_EMBEDDING_AND_RETRIEVAL: "True"
+      RAG_EMBEDDING_ENGINE: openai
+      ENABLE_WEB_SEARCH: "False"
+      ENABLE_IMAGE_GENERATION: "False"
+      ENABLE_CODE_INTERPRETER: "False"
+      ENABLE_DIRECT_CONNECTIONS: "False"
+      ENABLE_COMMUNITY_SHARING: "False"
+      ENABLE_ADMIN_EXPORT: "False"
+      ENABLE_ADMIN_CHAT_ACCESS: "False"
+      OFFLINE_MODE: "True"
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    volumes:
+      - ./data/open-webui-bench:/app/backend/data
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: ${BENCH_BACKEND_NETWORK:-gguf-rocm_default}
+    external: true

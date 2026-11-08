@@ -3,9 +3,9 @@ set -euo pipefail
 
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 
-backend=${1:?Usage: prepare-gpu.sh strata|colibri}
+backend=${1:?Usage: prepare-gpu.sh strata|colibri|llama}
 case "$backend" in
-    strata|colibri) ;;
+    strata|colibri|llama) ;;
     *) printf 'Unknown backend: %s\n' "$backend" >&2; exit 1 ;;
 esac
 
@@ -29,26 +29,28 @@ video_gid=$(stat -c '%g' -- "${video_devices[0]}")
 for gid in "$render_gid" "$video_gid"; do
     [[ "$gid" =~ ^[0-9]+$ ]] || fail 'Could not determine numeric GPU device group IDs.'
 done
-if [[ "$backend" == strata || "$backend" == colibri ]]; then
-    [[ -c /dev/kfd ]] || fail 'No /dev/kfd character device found. Check the AMD ROCm/amdgpu driver.'
-    kfd_gid=$(stat -c '%g' -- /dev/kfd)
-    [[ "$kfd_gid" == "$render_gid" || "$kfd_gid" == "$video_gid" ]] ||
-        fail '/dev/kfd has a different group from the DRM devices. Align GPU device permissions on the host first.'
-fi
+[[ -c /dev/kfd ]] || fail 'No /dev/kfd character device found. Check the AMD ROCm/amdgpu driver.'
+kfd_gid=$(stat -c '%g' -- /dev/kfd)
+[[ "$kfd_gid" == "$render_gid" || "$kfd_gid" == "$video_gid" ]] ||
+    fail '/dev/kfd has a different group from the DRM devices. Align GPU device permissions on the host first.'
 
 # Keep existing secrets and other settings; create a key only if absent/empty.
 source_env=.env
 [[ -f "$source_env" ]] || source_env=.env.example
 api_key=''
+key_name=''
 case "$backend" in
     strata) key_name=STRATA_API_KEY ;;
     colibri) key_name=COLI_API_KEY ;;
+    llama) ;; # The pinned llama-server profile is loopback-only and has no API key.
 esac
-existing_key=$(sed -n "s/^[[:space:]]*${key_name}=//p" "$source_env" | tail -n 1)
-existing_key="${existing_key//[[:space:]]/}"
-if [[ -z "$existing_key" || "$existing_key" == '""' || "$existing_key" == "''" ]]; then
-    command -v openssl >/dev/null || fail "openssl is required to generate $key_name."
-    api_key=$(openssl rand -hex 24)
+if [[ -n "$key_name" ]]; then
+    existing_key=$(sed -n "s/^[[:space:]]*${key_name}=//p" "$source_env" | tail -n 1)
+    existing_key="${existing_key//[[:space:]]/}"
+    if [[ -z "$existing_key" || "$existing_key" == '""' || "$existing_key" == "''" ]]; then
+        command -v openssl >/dev/null || fail "openssl is required to generate $key_name."
+        api_key=$(openssl rand -hex 24)
+    fi
 fi
 
 umask 077

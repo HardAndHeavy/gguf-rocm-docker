@@ -1,26 +1,40 @@
 services:
   llama-cpp:
     image: ghcr.io/ggml-org/llama.cpp:server-rocm-b12098
+    init: true
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
+    group_add:
+      - "${VIDEO_GID:?Run make run-llama-api after preparing GPU groups}"
+      - "${RENDER_GID:?Run make run-llama-api after preparing GPU groups}"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    shm_size: 2gb
     command: >
-      --models-dir /models
+      --model /models/${LLAMA_GGUF:-flint-UD-Q4_K_XL.gguf}
+      --alias ${LLAMA_MODEL_ID:-flint-llama}
       --port 8080
       --host 0.0.0.0
-      --ctx-size 96000
+      --ctx-size ${LLAMA_CTX:-8192}
+      --n-gpu-layers ${LLAMA_N_GPU_LAYERS:--1}
+      --threads ${LLAMA_THREADS:-8}
+      --parallel 1
       --flash-attn on
     ports:
-      - 8080:8080
+      # No API key is configured upstream: expose direct inference on loopback only.
+      - 127.0.0.1:${LLAMA_PORT:-8080}:8080
     volumes:
-      - ./data/models:/models:ro
+      - ${MODELS_DIR:-./data/models}:/models:ro
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:v0.13.0
     depends_on:
       - llama-cpp
     ports:
-      - 80:8080
+      - ${OPENWEBUI_PORT:-80}:8080
     environment:
       - OPENAI_API_BASE_URL=http://llama-cpp:8080/v1
       - ENABLE_PERSISTENT_CONFIG=False
