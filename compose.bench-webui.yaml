@@ -30,6 +30,10 @@ services:
       - backend
 
 networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${GGUF_ROCM_BENCH_SUBNET:-192.168.241.0/24}
   backend:
     name: ${BENCH_BACKEND_NETWORK:-gguf-rocm_default}
     external: true

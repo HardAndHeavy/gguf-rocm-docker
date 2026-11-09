@@ -3,8 +3,8 @@
 
 The client deliberately bypasses Open WebUI. It records response headers, the
 first reasoning/answer token, exact server token usage, throughput and GPU/RAM
-samples. Every measured prompt starts with a unique marker to defeat exact
-prefix-cache reuse between runs.
+samples. By default every measured prompt starts with a unique marker to defeat
+exact prefix-cache reuse; --fixed-prompt is reserved for correctness comparisons.
 """
 from __future__ import annotations
 
@@ -403,6 +403,8 @@ def main() -> int:
     parser.add_argument("--gpu-device", help="sysfs device path; auto-detected when unambiguous")
     parser.add_argument("--request-json", default="{}", help="Extra OpenAI request fields as a JSON object")
     parser.add_argument("--save-text", action="store_true", help="Include generated text in JSON (off by default)")
+    parser.add_argument("--fixed-prompt", action="store_true",
+                        help="Disable UUID cache-busting for cross-profile correctness only; not for throughput")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     if args.runs < 1 or args.warmups < 0 or args.max_tokens < 1:
@@ -433,7 +435,7 @@ def main() -> int:
         "parameters": {
             "cases": cases, "runs": args.runs, "warmups": args.warmups,
             "max_tokens": args.max_tokens, "temperature": args.temperature,
-            "request": extra, "unique_prompt_prefix": True,
+            "request": extra, "unique_prompt_prefix": not args.fixed_prompt,
         },
         "host": {"platform": platform.platform(), "python": platform.python_version()},
         "cases": [],
@@ -446,7 +448,8 @@ def main() -> int:
             report["cases"].append(case_report)
             for phase, count in (("warmup", args.warmups), ("run", args.runs)):
                 for index in range(1, count + 1):
-                    marker = f"Benchmark request {uuid.uuid4()}; do not mention this marker.\n"
+                    marker = ("" if args.fixed_prompt else
+                              f"Benchmark request {uuid.uuid4()}; do not mention this marker.\n")
                     result = client.stream_chat(model, marker + PROMPTS[case_name], args, extra)
                     result["phase"] = phase
                     result["run"] = index

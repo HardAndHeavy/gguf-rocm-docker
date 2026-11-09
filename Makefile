@@ -40,6 +40,13 @@ prepare-strata prepare-colibri prepare-llama:
 build-colibri: prepare-colibri
 	$(COMPOSE) -f compose.colibri.yaml build colibri
 
+# Existing upstream Qwen3.8 device-MTP work (PR #2559), pinned for HIP
+# validation. This is an experiment, not the default serving image.
+build-colibri-mtp-dev: prepare-colibri
+	COLIBRI_REF=0a6f235b0c7a20726e28e6e0229ef1201de74638 \
+	COLIBRI_IMAGE=gguf-rocm-colibri:mtp-dev-0a6f235b \
+	$(COMPOSE) -f compose.colibri.yaml build colibri
+
 smoke-colibri:
 	$(COMPOSE) -f compose.colibri.yaml exec -T colibri python3 < scripts/check-colibri.py
 
@@ -51,6 +58,10 @@ bench-strata:
 
 bench-llama:
 	python3 scripts/benchmark.py --backend llama --api-key-env LLAMA_API_KEY $(BENCH_ARGS)
+
+bench-agent:
+	python3 scripts/agent_benchmark.py --backend $(BENCH_LABEL) \
+		--api-key-env $(BENCH_BACKEND_KEY_ENV) $(BENCH_ARGS)
 
 run-bench-webui:
 	python3 scripts/openwebui-bench.py up --backend-url $(BENCH_BACKEND_URL) --backend-key-env $(BENCH_BACKEND_KEY_ENV)
@@ -72,9 +83,11 @@ bench-webui-full:
 		--api-key-env OPENWEBUI_API_KEY $(BENCH_ARGS)
 
 check:
-	bash -n scripts/prepare-gpu.sh scripts/start-colibri.sh
+	bash -n scripts/prepare-gpu.sh scripts/start-colibri.sh scripts/run-colibri-mtp-hip.sh \
+		scripts/run-qwen36-backend.sh scripts/run-functional-control.sh docker/strata-entrypoint.sh
 	python3 -m py_compile scripts/benchmark.py scripts/benchmark_report.py scripts/check-colibri.py \
-		scripts/openwebui-bench.py scripts/openwebui-bench-auth.py scripts/capture-runtime.py
+		scripts/agent_benchmark.py scripts/openwebui-bench.py scripts/openwebui-bench-auth.py \
+		scripts/capture-runtime.py
 	python3 -m unittest discover -s tests -v
 	$(CHECK_ENV) $(COMPOSE) -f compose.colibri.yaml config --quiet
 	$(CHECK_ENV) $(COMPOSE) -f compose.strata.yaml config --quiet
@@ -84,6 +97,6 @@ check:
 	docker build --check -f docker/colibri-vulkan.Dockerfile .
 
 .PHONY: FORCE prepare-strata prepare-colibri prepare-llama build-colibri smoke-colibri \
-	bench-colibri bench-strata bench-llama check run-llama-api run-strata-api run-colibri-api \
-	run-bench-webui auth-bench-webui stop-bench-webui bench-webui-openai bench-webui-full
+	bench-colibri bench-strata bench-llama bench-agent check run-llama-api run-strata-api run-colibri-api \
+	build-colibri-mtp-dev run-bench-webui auth-bench-webui stop-bench-webui bench-webui-openai bench-webui-full
 FORCE:

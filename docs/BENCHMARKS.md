@@ -1,6 +1,6 @@
 # Radeon AI PRO R9700: измеренные результаты
 
-Дата: 8 ноября 2026. GPU: AMD Radeon AI PRO R9700, `gfx1201`, 32 GiB VRAM
+Дата: 8–9 ноября 2026. GPU: AMD Radeon AI PRO R9700, `gfx1201`, 32 GiB VRAM
 (sysfs сообщает 34 208 743 424 байта). CPU: Ryzen 7 3700X. RAM: 60 GiB + 8 GiB swap.
 
 ## Метод
@@ -36,6 +36,99 @@ python3 scripts/benchmark.py \
   --api-key-env COLI_API_KEY \
   --output data/benchmarks/LABEL.json
 ```
+
+## Qwen3.6-35B-A3B: сопоставимая serving и functional матрица
+
+Общий файл — `unsloth/Qwen3.6-35B-A3B-MTP-GGUF`, revision
+`5bc3e238d916f48a861bac2f8a1990a0e9b7e98d`, `Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf`,
+22 853 663 008 байт (21,28 GiB), SHA-256
+`55983c5a75a1ab969824077b3bb3de4146e82a9234072b48ad4e8f92ad3fe9f1`.
+Это документированный preset Strata 0.2.9; тот же GGUF используется без подмены на llama.cpp
+b12098 и Colibri `0a5504a1`. Context 32k, vision off, один backend за раз.
+
+Для итоговой серии запросы содержат `temperature=0`, `presence_penalty=0`,
+`frequency_penalty=0` и `chat_template_kwargs.enable_thinking=false`. Последние поля важны:
+provider-default penalties и 768 reasoning tokens в ранних сериях делали coding outputs пустыми.
+Correctness preflight требует законченный ответ на short case и видимый content в decode.
+Источники — только `qwen36-*-nothink.json`; старые `qwen36-strata-{off,mtp}.json` и
+`qwen36-colibri-mtp.json` являются диагностическими inert-MTP сериями и сюда не входят.
+
+### Throughput
+
+Все числа — медианы трёх measured runs после одного warm-up, 192 completion tokens.
+`Prefill TTFT` относится к отдельному prompt длиной около 2,7k tokens; throughput prompts имеют
+UUID. VRAM — максимум sysfs за весь JSON-run.
+
+| Backend / профиль | Decode TTFT, s | Decode, tok/s | Gross, tok/s | Prefill TTFT, s | Prefill decode, tok/s | VRAM max |
+|---|---:|---:|---:|---:|---:|---:|
+| llama.cpp, non-MTP | 0,184 | 74,43 | 69,82 | 0,936 | 73,89 | 22,41 GiB |
+| llama.cpp, `draft-mtp` | 0,235 | 100,23 | 90,22 | 1,078 | 109,49 | 23,47 GiB |
+| Strata, non-MTP | 0,077 | 115,12 | 110,60 | 0,452 | 112,55 | 28,92 GiB |
+| Strata, batch MTP | 0,079 | **154,14** | **145,64** | 0,594 | **156,52** | 28,97 GiB |
+| Colibri, non-MTP, lookup off | 0,200 | 85,53 | 78,91 | 4,928 | 38,34 | 22,15 GiB |
+| Colibri, `Q36_MTP=1` | **unsupported для этого GGUF** | — | — | — | — | — |
+
+Strata MTP требует `STRATA_PARALLEL=2`, `STRATA_BATCH_MTP=1`, `STRATA_MTP=on` и
+`STRATA_DRAFTING=mtp`. Нельзя добавлять `--set batch=2`: Strata считает его конфликтующим с
+любым launch/profile parallel override. Несуществующие для qwen35 engine `--spec`,
+`--spec-min-p` и `--suffix-draft` не используются. Замеры остаются последовательными, хотя
+engine настроен на две session slots; non-MTP baseline имеет одну. Поэтому MTP/off включает
+необходимую batch-конфигурацию, а не является изоляцией одного флага при прочих равных.
+
+MTP действительность проверена логами, а не названием профиля:
+
+- llama.cpp создал MTP draft context; 34 request reports содержат 2448 accepted из 3550 generated
+  draft tokens (агрегат по всем correctness/throughput/functional prompts, не общий коэффициент
+  ускорения). Non-MTP игнорирует `blk.40.nextn.*` tensors, как и ожидается.
+- Strata MTP имеет `--batch 2`, drafts offered > 0 в каждом request; суммарно 2219/2858 accepted.
+  У non-MTP launch нет `--mtp`, все requests — `drafts accepted 0 of 0`.
+- Colibri пишет `[mtp] Q36_MTP=1: the head stays off`. Loader ожидает converted-container
+  `mtp.*` (начиная с `mtp.fc.weight`), а выбранный llama.cpp-style GGUF содержит
+  `blk.40.nextn.*`. Это unsupported model/container комбинация, не доказанный HIP-дефект.
+  Runner завершается exit 4 и сохраняет `qwen36-colibri-mtp-nothink-unsupported.txt`.
+- Strata и Colibri разместили все 10 240 routed experts в VRAM. У Colibri 40 layers, 190 trunk
+  matrices и lm_head находятся на HIP device; сообщения `[CUDA]` обозначают общий CUDA/HIP ABI.
+
+### Functional: реальные tools, изменённые файлы и tests
+
+`agent` получает только `read_file`, `write_file`, `run_tests`; `coder` возвращает один Python
+source file. Каждый run создаёт свежий fixture, применяет изменение к `statistics_utils.py` и
+запускает фиксированный `python3 -m unittest discover -s . -p test_*.py -v`. В таблице wall —
+медиана успешных runs; `completion` помогает увидеть цену более длинного ответа. Это smoke
+benchmark, не SWE-bench и не оценка общего интеллекта.
+
+| Модель / backend / профиль | Agent | Agent wall, s | Coder | Coder wall, s | Coder completion tokens |
+|---|---:|---:|---:|---:|---:|
+| Qwen3.6, llama.cpp non-MTP | 3/3 | 5,835 | 3/3 | 1,881 | 121 |
+| Qwen3.6, llama.cpp MTP | 3/3 | 3,716 | 3/3 | 1,080 | 121 |
+| Qwen3.6, Strata non-MTP | 3/3 | 3,518 | 3/3 | 1,221 | 120 |
+| Qwen3.6, Strata MTP | **3/3** | **2,356** | **3/3** | **0,781** | 121 |
+| Qwen3.6, Colibri non-MTP | 3/3 | 14,940 | 3/3 | 2,193 | 120 |
+| Flint, llama.cpp non-MTP | 3/3 | 5,752 | 3/3 | 8,488 | 556 |
+| Flint, Colibri non-MTP | 3/3 | 12,370 | 3/3 | 9,408 | 473 |
+| Coder390 Q6_K, llama.cpp non-MTP | 3/3 | 11,587 | 3/3 | 5,502 | 108 |
+| Coder390 Q6_K, Colibri non-MTP | 3/3 | 95,236 | 3/3 | 26,375 | 375 |
+
+Все Qwen3.6 runs сделали четыре валидных tool calls в agent case, без invalid calls; controls
+также прошли tests 3/3. У естественно завершённых задач trajectories и длина ответа различаются,
+поэтому wall time нельзя пересчитывать из decode tok/s. Например, Flint на Colibri имеет самый
+быстрый исторический direct decode (117,81 tok/s), но генерирует 473 coder tokens против 121 у
+Qwen3.6 и заканчивает задачу за 9,41 с вместо 0,78 с.
+
+**Выбор для этой R9700 на текущем smoke suite:**
+
+- **Agent platform:** Qwen3.6 UD-Q4_K_XL на **Strata 0.2.9 с реально активным batch MTP** —
+  3/3 PASS, 2,36 s; следующий non-MTP Strata — 3,52 s. Длинный prefill Colibri делает его
+  неподходящим primary agent stack для этого GGUF, несмотря на приличный короткий decode.
+- **Coder platform:** тот же **Qwen3.6 + Strata MTP** — 3/3 PASS, 0,78 s; llama.cpp MTP —
+  практичный fallback с 1,08 s. Flint и специализированный Coder390 в этом тесте не дают
+  преимущества по полному времени. Выбор ограничен одним маленьким regression task; перед
+  production-решением нужен более широкий набор репозиториев и длинных задач.
+
+Strata+Flint остаётся unsupported по explicit import preflight ниже. Coder390 на Strata не
+тестировался и не объявляется unsupported. Все functional JSON/CSV, config.env, runtime и logs
+сохранены в `data/benchmarks/`; runner — `scripts/run-qwen36-backend.sh`, controls —
+`scripts/run-functional-control.sh`.
 
 ## Покрытие модель × backend × HTTP path
 

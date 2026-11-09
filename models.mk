@@ -24,11 +24,19 @@ FLINT_REPO := unsloth/flint-GGUF
 FLINT_FILE := flint-UD-Q4_K_XL.gguf
 FLINT_PATH := $(MODELS_DIR)/$(FLINT_FILE)
 
+# Same MTP-aware artifact across llama.cpp, Colibri and Strata. This revision
+# and SHA-256 match Strata 0.2.9's supported UD-Q4_K_XL preset. At 21.28 GiB
+# it fits a 32 GiB R9700 with KV cache and runtime headroom.
+QWEN36_REPO := unsloth/Qwen3.6-35B-A3B-MTP-GGUF
+QWEN36_REV := 5bc3e238d916f48a861bac2f8a1990a0e9b7e98d
+QWEN36_FILE := Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf
+QWEN36_PATH := $(MODELS_DIR)/$(QWEN36_FILE)
+
 GLM53_FLASH_REPO := unsloth/GLM-5.3-Flash-GGUF
 GLM53_FLASH_FILES := $(addprefix UD-IQ2_XXS/GLM-5.3-Flash-UD-IQ2_XXS-,00001-of-00004.gguf 00002-of-00004.gguf 00003-of-00004.gguf 00004-of-00004.gguf)
 GLM53_FLASH_PATHS := $(addprefix $(MODELS_DIR)/,$(notdir $(GLM53_FLASH_FILES)))
 
-.PHONY: model-coder390 model-flash-next model-flash-next-mtp model-flash-next-sc117 model-flint model-glm53-flash verify-model-glm53-flash
+.PHONY: model-coder390 model-flash-next model-flash-next-mtp model-flash-next-sc117 model-flint model-qwen36 verify-model-qwen36 model-glm53-flash verify-model-glm53-flash
 
 model-coder390: $(CODER390_PATH)
 
@@ -40,10 +48,15 @@ model-flash-next-sc117: $(SC117_PATHS)
 
 model-flint: $(FLINT_PATH)
 
+model-qwen36: $(QWEN36_PATH)
+
 model-glm53-flash: $(GLM53_FLASH_PATHS)
 
-# Deliberately do not depend on model-glm53-flash: verification must never start
-# a second downloader. Missing or incomplete GGUFs fail sha256sum instead.
+# Verification never starts a second downloader. Missing or incomplete GGUFs
+# fail sha256sum instead; resume the corresponding model target afterwards.
+verify-model-qwen36:
+	cd "$(MODELS_DIR)" && sha256sum --check --strict "$(CURDIR)/checksums/qwen36-q4-k-xl.sha256"
+
 verify-model-glm53-flash:
 	cd "$(MODELS_DIR)" && sha256sum --check --strict "$(CURDIR)/checksums/glm53-flash.sha256"
 
@@ -55,7 +68,7 @@ define download_model
 		--retry 10 --retry-delay 3 --retry-all-errors \
 		--connect-timeout 30 --speed-limit 10240 --speed-time 60 \
 		--continue-at - --output "$@.part" \
-		"$(HF_BASE_URL)/$(1)/resolve/main/$(2)"
+		"$(HF_BASE_URL)/$(1)/resolve/$(if $(3),$(3),main)/$(2)"
 	mv "$@.part" "$@"
 endef
 
@@ -73,6 +86,9 @@ $(SC117_PATHS):
 
 $(FLINT_PATH):
 	$(call download_model,$(FLINT_REPO),$(FLINT_FILE))
+
+$(QWEN36_PATH):
+	$(call download_model,$(QWEN36_REPO),$(QWEN36_FILE),$(QWEN36_REV))
 
 $(GLM53_FLASH_PATHS):
 	$(call download_model,$(GLM53_FLASH_REPO),UD-IQ2_XXS/$(notdir $@))

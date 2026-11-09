@@ -7,7 +7,7 @@ services:
         ROCM_IMAGE: ${COLIBRI_ROCM_IMAGE:-llama-rocm:3.0.2}
         HIP_ARCH: ${COLIBRI_HIP_ARCH:-gfx1201}
         COLIBRI_REF: ${COLIBRI_REF:-0a5504a1dc64f86fcd0fe7db298b0448c730e7e6}
-    image: gguf-rocm-colibri:local
+    image: ${COLIBRI_IMAGE:-gguf-rocm-colibri:local}
     init: true
     devices:
       - /dev/kfd:/dev/kfd
@@ -51,13 +51,25 @@ services:
       COLI_CUDA_CHAIN_POOL: ${COLI_CUDA_CHAIN_POOL:-1}
       COLI_CUDA_CHAIN_LAYERWISE: ${COLI_CUDA_CHAIN_LAYERWISE:-1}
       COLI_CUDA_CHAIN_ROWS: "64"
+      # Optional upstream diagnostics/isolation knobs; empty keeps upstream defaults.
+      COLI_CUDA_GEMV_W4: ${COLI_CUDA_GEMV_W4:-}
+      COLI_CUDA_GEMV_SK: ${COLI_CUDA_GEMV_SK:-}
+      HIP_LAUNCH_BLOCKING: ${HIP_LAUNCH_BLOCKING:-}
+      COLI_LOOKUP: ${COLI_LOOKUP:-1}
       Q38_MTP: ${Q38_MTP:-0}
+      Q38_MTP_CHAIN: ${Q38_MTP_CHAIN:-1}
+      Q38_MTP_DRAFTS: ${Q38_MTP_DRAFTS:-0}
+      COLI_CUDA_CHAIN_MTP_CARD: ${COLI_CUDA_CHAIN_MTP_CARD:-1}
+      COLI_CUDA_CHAIN_MTP_POOL: ${COLI_CUDA_CHAIN_MTP_POOL:-1}
+      # Qwen3.6 has its own embedded head and device implementation.
+      Q36_MTP: ${Q36_MTP:-0}
+      Q36_MTP_DRAFTS: ${Q36_MTP_DRAFTS:-1}
       Q36_ILV16: "0"
       COLI_NO_OMP_TUNE: "1"
       OMP_NUM_THREADS: ${OMP_NUM_THREADS:-8}
     volumes:
       - ${MODELS_DIR:-./data/models}:/models:ro
-      - ./data/colibri:/state
+      - ${COLIBRI_STATE_DIR:-./data/colibri}:/state
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:v0.13.0
@@ -74,3 +86,9 @@ services:
       - WEBUI_SECRET_KEY=
     volumes:
       - ./data/open-webui:/app/backend/data
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${GGUF_ROCM_SUBNET:-192.168.240.0/24}

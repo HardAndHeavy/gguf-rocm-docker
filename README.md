@@ -11,6 +11,9 @@ Open WebUI и без смешивания prefill, reasoning и decode.
 - `compose.bench-webui.yaml` — изолированный Open WebUI только для benchmark-матрицы.
 
 Измерения на Radeon AI PRO R9700: **[docs/BENCHMARKS.md](docs/BENCHMARKS.md)**.
+Текущая матрица Qwen3.6 и план отдельных agent/coder сравнений:
+**[docs/ROADMAP.md](docs/ROADMAP.md)**. Исследование Qwen3.8 MTP/HIP и существующий
+upstream PR: **[docs/MTP-HIP.md](docs/MTP-HIP.md)**.
 
 ## Почему база `llama-rocm`, а не чистый `transformers-rocm`
 
@@ -126,6 +129,66 @@ make stop-strata
 Порты 8080 общие: backends запускайте по очереди. Strata 0.2.9 **не поддерживает Flint GGUF**:
 изолированный import возвращает `unsupported_architecture` для `general.architecture=flint`.
 Это не ошибка ROCm и не повод подменять Flint похожим Qwen UD-Q4_K_XL.
+
+## Qwen3.6-35B-A3B: один GGUF для трёх backend
+
+Для сопоставимой матрицы используется MTP-aware UD-Q4_K_XL из отдельного репозитория Unsloth.
+Файл занимает 21,28 GiB, поддерживается preset Strata 0.2.9 и оставляет запас под context/runtime
+на 32-GiB R9700. Revision и официальный LFS SHA-256 закреплены:
+
+```bash
+make model-qwen36
+make verify-model-qwen36
+```
+
+Одинаковый файл выбирается так (backends запускаются по очереди):
+
+```bash
+# llama.cpp b12098, non-MTP baseline
+LLAMA_GGUF=Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf \
+LLAMA_MODEL_ID=qwen36-llama LLAMA_CTX=32768 LLAMA_SPEC_TYPE=none \
+  make run-llama-api
+
+# llama.cpp, embedded MTP; замерять отдельно от baseline
+LLAMA_GGUF=Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf \
+LLAMA_MODEL_ID=qwen36-llama LLAMA_CTX=32768 LLAMA_SPEC_TYPE=draft-mtp \
+  make run-llama-api
+
+# Strata 0.2.9, поддерживаемый Qwen3.6 preset (MTP включён upstream по умолчанию)
+STRATA_FAMILY=qwen36 STRATA_MODEL=ud-q4_k_xl \
+STRATA_MODEL_PATH=/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf \
+STRATA_CONTEXT=32k STRATA_VISION=off STRATA_PARALLEL=1 \
+  make run-strata-api
+
+# Colibri: сначала Q36_MTP=0, затем отдельная серия с Q36_MTP=1
+COLIBRI_GGUF=Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf \
+COLIBRI_CTX=32768 Q36_MTP=0 make run-colibri-api
+```
+
+Полный изолированный прогон одного профиля (correctness + throughput + agent/coder + runtime/logs):
+
+```bash
+bash scripts/run-qwen36-backend.sh llama-off
+bash scripts/run-qwen36-backend.sh llama-mtp
+bash scripts/run-qwen36-backend.sh strata-off
+bash scripts/run-qwen36-backend.sh strata-mtp
+bash scripts/run-qwen36-backend.sh colibri-off
+bash scripts/run-qwen36-backend.sh colibri-mtp
+```
+
+Скрипт ничего не скачивает: сначала обязателен успешный `make verify-model-qwen36`.
+Для throughput используются обычные `bench-*` команды. Coding/agent smoke дополнительно проверяет
+фактический tool protocol и unit tests, а не оценивает код только по внешнему виду:
+
+```bash
+make bench-agent BENCH_LABEL=qwen36-colibri BENCH_BACKEND_KEY_ENV=COLI_API_KEY \
+  BENCH_ARGS='--case agent --case coder --runs 3 --warmups 1 --max-tokens 768'
+# Для llama.cpp ключ не нужен: BENCH_BACKEND_KEY_ENV=LLAMA_API_KEY
+# Для Strata: BENCH_BACKEND_KEY_ENV=STRATA_API_KEY
+```
+
+Это небольшой функциональный regression benchmark, **не SWE-bench**. Полные agent wall time,
+pass rate и invalid tool calls сохраняются в `data/benchmarks/` рядом с serving-метриками.
 
 ## GLM-5.3-Flash UD-IQ2_XXS
 
@@ -257,9 +320,24 @@ COLIBRI_MTP=mtp-Qwen3.8-Flash-Next-Q2_0.gguf
 Q38_MTP=1
 ```
 
-MTP совместим и даёт высокий acceptance, но на текущем ROCm chain draft head исполняется на
-CPU. Замер показал замедление с 55,8 до 49,8 ток/с и рост TTFT. Поэтому `Q38_MTP=0` оставлен
+MTP совместим и даёт высокий acceptance, но на закреплённом main ROCm chain draft head исполняется
+на CPU. Замер показал замедление с 55,8 до 49,8 ток/с и рост TTFT. Поэтому `Q38_MTP=0` оставлен
 по умолчанию. `COLIBRI_MTP=off` запрещает даже auto-discovery файла.
+
+В upstream `dev` уже влит PR #2559 с device MTP head. Экспериментальная HIP-проверка не меняет
+stable image/state и не содержит локального параллельного MTP-движка:
+
+```bash
+make build-colibri-mtp-dev
+bash scripts/run-colibri-mtp-hip.sh off
+bash scripts/run-colibri-mtp-hip.sh cpu
+bash scripts/run-colibri-mtp-hip.sh gpu-conservative
+bash scripts/run-colibri-mtp-hip.sh gpu-full
+```
+
+Runner сохраняет отдельные fixed-prompt correctness и cache-busted throughput JSON; baseline `off`
+и `gpu-full` также прогоняют полный agent/coder smoke (настраивается `RUN_AGENT=0|1`). Технические ссылки и критерии upstream PR:
+[docs/MTP-HIP.md](docs/MTP-HIP.md).
 
 ### Прочие необязательные параметры
 
