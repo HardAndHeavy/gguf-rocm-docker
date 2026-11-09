@@ -3,6 +3,10 @@
 Дата: 8–9 ноября 2026. GPU: AMD Radeon AI PRO R9700, `gfx1201`, 32 GiB VRAM
 (sysfs сообщает 34 208 743 424 байта). CPU: Ryzen 7 3700X. RAM: 60 GiB + 8 GiB swap.
 
+Рабочий фокус: **Qwen3.6 + Strata batch MTP**; тяжёлый профиль — **Flash-Next + Strata**.
+Старые модели ниже — история и controls, не текущая рекомендация. Raw JSON/logs находятся
+локально в gitignored `data/`, не поставляются в git. План open source: [MTP-HIP](MTP-HIP.md).
+
 ## Метод
 
 - Один запрос за раз, API на loopback, Open WebUI не участвует, кроме явно названных тестов.

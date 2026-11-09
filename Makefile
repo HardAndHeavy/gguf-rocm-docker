@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := run-llama
+.DEFAULT_GOAL := run-strata
 
 include models.mk
 export MODELS_DIR

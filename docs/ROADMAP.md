@@ -1,7 +1,9 @@
 # Стратегия экспериментов на Radeon AI PRO R9700
 
-Дата: 9 ноября 2026. Цель — выбрать быстрый локальный стек **отдельно для agent workflow и
-написания кода**, а полезные исправления вернуть upstream. Скорость decode не считается
+Дата: 9 ноября 2026. Рабочий выбор — **Qwen3.6 + Strata batch MTP**; для сложных задач —
+**Flash-Next + Strata** (отдельная оценка качества ещё нужна). llama.cpp и Colibri сохраняются
+как варианты запуска и контроль. Остальные модели/Vulkan — второй план до обновлений.
+Цель — поддерживать воспроизводимый рабочий стек и вернуть доказанные исправления upstream. Скорость decode не считается
 достаточным доказательством качества агента.
 
 ## Трек A: Qwen3.6 и выбор рабочего стека
@@ -46,7 +48,8 @@
 
 ## Трек B: Qwen3.8 MTP на HIP / open source
 
-- [x] Найти первопричину в pinned main и существующую upstream-работу.
+- [x] Выяснить размещение CPU MTP в pinned main и найти существующую upstream-работу.
+  Это не означает, что первопричины регрессии A или fault B найдены.
 - [x] Найти связанные issues/PR в Colibri, llama.cpp и ROCm/HIP; детали в `docs/MTP-HIP.md`.
 - [x] Собрать существующий Colibri `dev` с PR #2559 отдельным образом и state directory;
   upstream tiny accept/mixed/reject и byte-identity tests пройдены.
@@ -62,6 +65,10 @@
 - [ ] Согласовать с @JustVugg два focused вопроса: non-MTP dev regression/forward-port #2559 на
   main и device-MTP no-thinking W4/SK fault с сохранённым repro. Не создавать параллельную
   реализацию уже влитой функциональности. Сообщения пока не отправлены.
+- [ ] Узкий тест B: 2048 × 300, NR=4, split-K on/off в отдельных процессах, CPU reference;
+  подтвердить dispatch, добавить NR=1 контроль. Затем full-model HIP prompt regression.
+  Спецификация и границы доказательств — в `MTP-HIP.md`.
+- [ ] A вести отдельно: interleaved main/dev при одинаковых state и lookup off, затем bisect/profile.
 - [ ] После ответа maintainer'а: минимальный patch поверх выбранного base, real-HIP integration
   test для двух prompt variants и W4/SK path, затем повторные decode/prefill/full-agent A/B.
   PR готов только при корректности, воспроизводимом ускорении и отсутствии non-MTP regression.

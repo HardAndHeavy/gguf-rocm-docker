@@ -160,21 +160,102 @@ token/final-logit comparison; видимый короткий ответ во в
 - prefill и полная agent task не скрыты за одним красивым decode числом;
 - патч минимален относительно #2559 и содержит upstream regression test.
 
-## Черновик вопроса maintainer'у
+## Текущий статус: A и B расследуются отдельно
 
-Публикуется только после подтверждения владельца репозитория; на момент исследования сообщение не
-отправлялось. Предлагаемый канал — focused Colibri issue со ссылкой на #2559.
+**A — регрессия без MTP.** На сопоставимых state snapshots и с `COLI_LOOKUP=0`
+main `0a5504a1` дал 45,45 tok/s, dev `0a6f235b` — 37,26 tok/s: −18,0% decode.
+Источники: `data/benchmarks/mtp-hip-off-{main,dev}-nolookup-controlled.json`
+и соответствующие `-config.env`, `-container.log`, `-runtime.json`.
+Это наблюдение, а не доказательство причины: нужен interleaved повтор и bisect/profile.
+Нельзя автоматически обвинять MTP PR или считать одинаковыми внутренние code paths.
 
-> Hi @JustVugg! I validated merged dev PR #2559 on an AMD Radeon AI PRO R9700 (gfx1201, 32 GiB,
-> ROCm/HIP), rather than creating a parallel implementation. At pinned dev `0a6f235b`, fixed-budget
-> decode medians were 50.48 tok/s without MTP, 41.31 with the CPU head, 55.16 with the conservative
-> device head, and 54.12 with the full card/pool path. The upstream tiny accept/reject/rollback and
-> byte-identity tests pass, and the full device path passed 3/3 agent and 3/3 coder smoke runs.
-> I have saved per-run JSON, placement/acceptance logs and a no-prompt-lookup correctness series.
-> Do you already know of HIP blockers on gfx1201, and would you prefer more testing of current dev
-> wholesale or a minimal forward-port of #2559 onto main? In particular, conservative is only about
-> 2% faster than full here, so I do not treat that difference as resolved. If a HIP-only fix is
-> needed, would a focused PR with reproducible R9700 results be useful?
+В отдельной controlled dev-серии с lookup off: off / CPU / full device =
+36,88 / 43,38 / 54,73 tok/s (`mtp-hip-{off,cpu,gpu-full}-nolookup-controlled.json`).
+Эти результаты заменяют ранние сравнения с lookup on для изоляции MTP, но не отменяют A.
 
-Возможные технические собеседники по прошлым HIP contributions: @huppiflupp и @noobdev-ph;
-не упоминать их в первом сообщении без необходимости.
+**B — HIP memory fault.** При `chat_template_kwargs.enable_thinking=false` device MTP
+в full и conservative падает с `HSA_STATUS_ERROR_MEMORY_FAULT`; runtime указывает
+`gemv_i8_w4<4>`. Off/CPU работают; `COLI_CUDA_GEMV_W4=0` **либо**
+`COLI_CUDA_GEMV_SK=0` обходят падение. Это локализация, не root-cause fix.
+Асинхронная ошибка может обнаружиться позднее первичного повреждения памяти;
+название faulting kernel само по себе не доказывает виновника.
+
+Источники: `data/benchmarks/mtp-hip-gpu-{full,conservative}-nolookup-nothink-container.log`,
+`mtp-hip-gpu-full-nolookup-nothink-{now4,nosk}-correctness.json` и их config/logs.
+Standalone `test_gemv_rows_cuda` прошёл на HIP (`data/colibri-gemv-rows-hip.log`),
+но это не покрытие падающего full-model path и не доказательство безопасности всех shapes.
+Всё `data/` gitignored: эти файлы локальные, **не приложены к репозиторию**.
+
+## Следующий узкий тест: 2048 × 300, четыре строки
+
+Это **план**, не уже реализованный regression test. Сначала уточнить в исходнике порядок
+размеров: зафиксировать K=2048, N=300 (или явно объяснить иной порядок), NR=4,
+layout/strides, dtype/quantization, padding и dispatch predicate. Нет гарантии, что этот
+shape автоматически попадёт в нужный W4/split-K kernel.
+
+1. На закреплённом base создать deterministic входы, включая хвост N=300.
+   Сохранить seed, build flags, ROCm/compiler, GPU и image digest.
+2. Один и тот же вход прогнать **в двух отдельных процессах**: split-K on/off,
+   W4 включён. Подтвердить фактически выбранный kernel и число splits логом/trace.
+   Флаги могут читаться один раз и кешироваться — не переключать их внутри процесса.
+3. Проверить **каждую из четырёх строк относительно CPU reference**, а не только on vs off.
+   Reference должен использовать те же деквантованные веса/входы; пороги abs/rel error
+   определить заранее по формату и накоплению. Проверять NaN/Inf, max error, sync/launch
+   errors; canary/guard regions, если harness позволяет. Один успешный exit недостаточен.
+4. Для отделения multi-row/NR4 от split-K добавить NR=1 и при возможности 4 отдельных
+   single-row вызова, сохранив тот же dispatch. Если путь иной, явно это отметить.
+   Повторы обязательны: race/uninitialised scratch может быть недетерминированным.
+5. Если только split-K on падает/ошибается, исследовать scratch, bounds/tail, reduction и
+   stream lifetime. Если оба — NR4/layout/bounds. Это направления проверки, не диагноз.
+   Если оба проходят — не отключать kernel глобально: переходить к integration trace.
+
+### Настоящий HIP integration regression
+
+- Взять точный падающий prompt из `scripts/benchmark.py` (`short`/`decode`) и конкретного
+  `*-nothink-correctness.json`; сохранить сообщения, budget, request JSON и hash модели.
+  Не сокращать prompt до проверки, что минимизация сохраняет сбой.
+- Стартовать fresh процесс и контролируемую копию state для каждого варианта; lookup off,
+  одинаковые weights/context и request order. Runner по умолчанию использует общий dev state:
+  для независимых опытов явно задавать `COLIBRI_STATE_DIR` и уникальный `LABEL_SUFFIX`.
+- Проверить обе формы prompt (падающую no-thinking и контроль thinking), MTP off/CPU/device,
+  затем отдельно W4/SK on/off. Ловить смерть процесса, timeout, memory fault **и неверный ответ**.
+- Отдельно сохранить короткий standalone repro и full-model HIP test. Upstream tiny CPU
+  или mocked tests не заменяют реальный HIP запуск. После patch повторить обычный NR=1,
+  MTP/non-MTP decode, prefill и agent/coder: исправление B не должно маскировать A.
+
+Локальный repro B (останавливает текущий backend; может уронить HIP процесс):
+
+```bash
+COLI_LOOKUP=0 CORRECTNESS_ONLY=1 LABEL_SUFFIX=-repro-nothink \
+COLIBRI_STATE_DIR=./data/colibri-mtp-repro \
+  bash scripts/run-colibri-mtp-hip.sh gpu-full
+# Контроли — отдельные запуски с уникальными state/label:
+# COLI_CUDA_GEMV_SK=0   либо COLI_CUDA_GEMV_W4=0
+```
+
+Это существующий runner, не минимальный standalone reproducer. Модель/head и pinned dev
+образ должны быть подготовлены заранее; no-thinking уже является default request runner.
+
+## Порядок взаимодействия с upstream
+
+Сначала подготовить sanitised repro bundle (команда, revisions/digests, model hashes,
+точный request, логи fault, CPU/W4/SK controls), затем **после разрешения владельца**
+открыть focused discussion/issue. Пока ничего не отправлено. Не ждать ответа для локального
+теста, но согласовать base до реализации большого patch. A и B не смешивать в один fix.
+
+Черновик с двумя вопросами (не отправлен):
+
+> Hi @JustVugg! I tested #2559 on Radeon AI PRO R9700 (gfx1201, ROCm/HIP),
+> main 0a5504a1 vs dev 0a6f235b. I have two separate observations, not proven related:
+> (A) non-MTP decode drops from 45.45 to 37.26 tok/s on comparable state snapshots,
+> lookup disabled; (B) device MTP with enable_thinking=false faults with
+> HSA_STATUS_ERROR_MEMORY_FAULT reported in gemv_i8_w4<4>. CPU/off work;
+> disabling W4 or split-K avoids the fault, but I do not consider those fixes.
+> The existing standalone GEMV rows test passes on HIP. I plan a 2048 x 300,
+> four-row split-K on/off CPU-reference test plus a real HIP prompt regression.
+> Which base revision would you recommend for a focused investigation/patch?
+> Is this HIP fault already being investigated, or is there an existing fix/test to try?
+
+Полезный PR — минимальный доказанный root-cause fix и regression test, без глобального
+отключения быстрого пути и без деградации обычного режима. Отрицательный результат теста
+тоже сохраняется; отсутствие падения не равно доказанной корректности.
