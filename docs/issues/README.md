@@ -6,7 +6,8 @@
 Оба открыты на момент проверки 11 ноября; тексты ниже сохранены как локальные материалы
 подготовки, а не синхронизированные копии GitHub. Рабочий стек Strata не менялся.
 
-- [Issue A — non-MTP decode observation](colibri-A-non-mtp-regression.md): перепроверка исторических данных, −18,03%; причины и interleaved process repeats ещё нет.
+- [Issue A — non-MTP decode observation](colibri-A-non-mtp-regression.md): исторические данные, −18,03%; это не установленная причина.
+- [Ответ на рекомендацию maintainer по A](issue-A-pool-followup-ready-to-post.md): новые восемь процессов **ABBA / BCCB** на pinned dev, подготовленный английский комментарий (не отправлен). GPU pool-read обычно ~40–41 tok/s, но один процесс 33,80; стабильное восстановление 45,45 не показано. Порог 90% не дал изменения при нулевых promotions. Скрипт: `scripts/run-colibri-pool-ab.py`.
 - [Issue B — device-MTP HIP fault](colibri-B-hip-device-mtp-fault.md): исторический fault и обходы, новый standalone PASS, незавершённая новая integration-проверка.
 - [`evidence/`](evidence/): компактные отобранные JSON и standalone logs без `.env`, API keys/auth headers, usernames и абсолютных host paths. `SHA256.json` фиксирует байты приложений; это **не** hashes весов модели. Публиковать выборочно после личного просмотра.
 
@@ -17,7 +18,8 @@
 - A: measured request metrics/summary и hashes исходных локальных JSON. Не весь Docker inspect/environment.
 - B: точные request bodies, отобранные исторические responses/errors и оба новых standalone run logs. Sanitised fault excerpt включён в текст issue.
 - Полные локальные build/startup/runtime logs, metadata snapshots и исходные benchmark JSON остаются в gitignored `data/`; **ссылки на них не являются публичными attachments**.
-- Нет content hashes GGUF, завершённого нового fresh-snapshot integration matrix, interleaved A benchmark или доказанного root-cause patch.
+- Для follow-up A: `evidence/A-pool-ab-measurements.json` и `evidence/A-pool-ab-log-excerpts.txt` — все восемь процессов, measured/warmup metrics, manifest общего metadata/history snapshot и выбранные counters. Полные исходники: gitignored `data/colibri-investigation/pool-ab/20261111-162844/`.
+- Нет content hashes GGUF, завершённого нового fresh-snapshot integration B matrix или доказанного root-cause patch. Новый interleaved A benchmark выполнен, но число независимых повторов мало и между процессами есть вариабельность.
 
 ## Повторение локально
 
@@ -36,6 +38,6 @@ OpenWebUI, не создаёт bridge/compose network, не останавлив
 только `127.0.0.1:18080`. Возможен HIP fault. Новые direct off/full attempts в этой сессии
 не вышли из startup; не считать команды выше уже успешным новым repro.
 
-Исследование остановлено в согласованной границе: дальше — ответ maintainer'а или релевантное
-upstream-обновление, не длительный tracing/bisect. Перед отправкой сверить актуальность
-upstream отдельно: эти drafts относятся только к указанным pinned revisions.
+По ответу maintainer в A выполнен ограниченный pool-path/promotion follow-up; дальше — обсуждение
+результатов, не автоматический длительный tracing/bisect. B этим прогоном не исследуется.
+Перед отправкой сверить актуальность upstream отдельно: drafts относятся только к указанным pinned revisions.

@@ -1,0 +1,73 @@
+Selected startup and final cumulative counters. GPU pool-read profiles have no CPU server line. Paths are container paths, not host paths.
+
+## 01-A
+2026-11-11T13:31:50.437960175Z [chain] qwen38: the pool's server: 12 threads for a decode step's pooled experts (COLI_CUDA_CHAIN_SERVE_THREADS=0: the recording thread's)
+2026-11-11T13:31:50.437989270Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (24.8 s to allocate, 95.5 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:31:50.438000902Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 97 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T13:32:44.789603358Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1283 frames braked, 98.6 % of the routes on the card
+2026-11-11T13:32:44.789589522Z [chain] qwen38: the pool's server (12 threads): 60480 layer steps, 9791 pooled slots (9791 experts' groups) in 1347.4 ms (137.6 us a slot)
+2026-11-11T13:32:44.789586878Z [chain] qwen38: 61584 layer steps with the routed experts in the frame, 60816 of them hybrid (12378 slots on the host in 4320.1 ms, 3739.9 ms waiting for the device's routes), 17121 slots from the host pool
+2026-11-11T13:32:44.789593490Z [chain] qwen38: 4 prompts' pooled experts on the CPU, 6 staged; 2587 slots from the host pool on the CPU, 1965 experts, in 2959.3 ms (1143.9 us a slot; COLI_CUDA_CHAIN_POOL_CPU_ROWS=0: the prompt's chunks stage them over the bus)
+
+## 02-B
+[no such log line]
+2026-11-11T13:37:32.535005845Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (25.7 s to allocate, 97.7 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:37:32.535047423Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 97 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T13:38:18.962487570Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1281 frames braked, 98.6 % of the routes on the card
+[no such log line]
+2026-11-11T13:38:18.962474034Z [chain] qwen38: 61488 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 16976 slots from the host pool
+[no such log line]
+
+## 03-B
+[no such log line]
+2026-11-11T13:41:55.715330927Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (26.0 s to allocate, 99.6 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:41:55.716049486Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 97 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T13:42:55.038389713Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1281 frames braked, 98.6 % of the routes on the card
+[no such log line]
+2026-11-11T13:42:55.038376068Z [chain] qwen38: 61488 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 16976 slots from the host pool
+[no such log line]
+
+## 04-A
+2026-11-11T13:46:50.526968785Z [chain] qwen38: the pool's server: 12 threads for a decode step's pooled experts (COLI_CUDA_CHAIN_SERVE_THREADS=0: the recording thread's)
+2026-11-11T13:46:50.527001136Z [chain] qwen38: host pool, every expert (the 5396 the card leaves and its own 19180) in 33.02 GiB of page-locked RAM the device reads over the bus (38.2 s to allocate, 95.2 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:46:50.527011736Z [chain] qwen38: the card's 19180 slots are the chain's to fill (19180 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 97 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T13:47:44.855692199Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1283 frames braked, 98.6 % of the routes on the card
+2026-11-11T13:47:44.855678353Z [chain] qwen38: the pool's server (12 threads): 60480 layer steps, 9880 pooled slots (9880 experts' groups) in 1357.5 ms (137.4 us a slot)
+2026-11-11T13:47:44.855675748Z [chain] qwen38: 61584 layer steps with the routed experts in the frame, 60816 of them hybrid (12467 slots on the host in 4518.3 ms, 3755.6 ms waiting for the device's routes), 17210 slots from the host pool
+2026-11-11T13:47:44.855682531Z [chain] qwen38: 4 prompts' pooled experts on the CPU, 6 staged; 2587 slots from the host pool on the CPU, 1965 experts, in 3145.4 ms (1215.8 us a slot; COLI_CUDA_CHAIN_POOL_CPU_ROWS=0: the prompt's chunks stage them over the bus)
+
+## 05-B
+[no such log line]
+2026-11-11T13:51:13.899581028Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (28.8 s to allocate, 94.9 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:51:13.900310978Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 97 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T13:52:01.599694569Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1281 frames braked, 98.6 % of the routes on the card
+[no such log line]
+2026-11-11T13:52:01.599680442Z [chain] qwen38: 61488 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 16976 slots from the host pool
+[no such log line]
+
+## 06-C
+[no such log line]
+2026-11-11T13:55:39.137002672Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (36.0 s to allocate, 95.0 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:55:39.137039812Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 90 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T13:56:25.189249158Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1281 frames braked, 98.6 % of the routes on the card
+[no such log line]
+2026-11-11T13:56:25.189239239Z [chain] qwen38: 61488 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 16976 slots from the host pool
+[no such log line]
+
+## 07-C
+[no such log line]
+2026-11-11T13:59:55.109556628Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (29.2 s to allocate, 95.0 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T13:59:55.109592486Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 90 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T14:00:43.340481267Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1281 frames braked, 98.6 % of the routes on the card
+[no such log line]
+2026-11-11T14:00:43.340470367Z [chain] qwen38: 61488 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 16976 slots from the host pool
+[no such log line]
+
+## 08-B
+[no such log line]
+2026-11-11T14:04:13.283902983Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (26.8 s to allocate, 96.9 s to read; COLI_CUDA_CHAIN_POOL=0 off)
+2026-11-11T14:04:13.284323552Z [chain] qwen38: the card's 19186 slots are the chain's to fill (19186 held): up to 128 experts a forward promoted from the pool by this conversation's routes, none while the last 64 frames found 97 % or more of their routes on the card (COLI_CUDA_CHAIN_PROMOTE=0 keeps the warm start's set)
+2026-11-11T14:05:01.250872170Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1281 frames braked, 98.6 % of the routes on the card
+[no such log line]
+2026-11-11T14:05:01.250861510Z [chain] qwen38: 61488 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 16976 slots from the host pool
+[no such log line]
