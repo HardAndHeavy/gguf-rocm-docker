@@ -1,0 +1,121 @@
+PRESET abs=1e-3 rel=1e-4 seed=0x6d2b79f5 repeats=3 SK=1 W4=1
+[CUDA] device 0: AMD Radeon AI PRO R9700, 34.2 GB VRAM, sm_120
+DEVICE AMD Radeon AI PRO R9700 arch=gfx1201 CU=32 warp=32
+DISPATCH FALLBACK I=2048 O=300 S=4 nr=1 shared=9232 grid=38,4,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+RESULT K=2048 N=300 repeat=0 mode=NR4_request row=0 max_abs=1.23706843e-06 max_rel=4.54987661e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=NR4_request row=1 max_abs=1.11661086e-06 max_rel=2.83324117e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=NR4_request row=2 max_abs=1.84458384e-06 max_rel=0.000268379804 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=NR4_request row=3 max_abs=9.38999619e-07 max_rel=8.2391314e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=four_NR1 row=0 max_abs=1.23706843e-06 max_rel=4.54987661e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=four_NR1 row=1 max_abs=1.11661086e-06 max_rel=2.83324117e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=four_NR1 row=2 max_abs=1.84458384e-06 max_rel=0.000268379804 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=0 mode=four_NR1 row=3 max_abs=9.38999619e-07 max_rel=8.2391314e-05 bad=0 nonfinite=0 guard=0
+DISPATCH FALLBACK I=2048 O=300 S=4 nr=1 shared=9232 grid=38,4,1
+RESULT K=2048 N=300 repeat=1 mode=NR4_request row=0 max_abs=1.23706843e-06 max_rel=4.54987661e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=1 mode=NR4_request row=1 max_abs=1.11661086e-06 max_rel=2.83324117e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=1 mode=NR4_request row=2 max_abs=1.84458384e-06 max_rel=0.000268379804 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=1 mode=NR4_request row=3 max_abs=9.38999619e-07 max_rel=8.2391314e-05 bad=0 nonfinite=0 guard=0
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+RESULT K=2048 N=300 repeat=1 mode=four_NR1 row=0 max_abs=1.23706843e-06 max_rel=4.54987661e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=1 mode=four_NR1 row=1 max_abs=1.11661086e-06 max_rel=2.83324117e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=1 mode=four_NR1 row=2 max_abs=1.84458384e-06 max_rel=0.000268379804 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=1 mode=four_NR1 row=3 max_abs=9.38999619e-07 max_rel=8.2391314e-05 bad=0 nonfinite=0 guard=0
+DISPATCH FALLBACK I=2048 O=300 S=4 nr=1 shared=9232 grid=38,4,1
+RESULT K=2048 N=300 repeat=2 mode=NR4_request row=0 max_abs=1.23706843e-06 max_rel=4.54987661e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=2 mode=NR4_request row=1 max_abs=1.11661086e-06 max_rel=2.83324117e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=2 mode=NR4_request row=2 max_abs=1.84458384e-06 max_rel=0.000268379804 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=2 mode=NR4_request row=3 max_abs=9.38999619e-07 max_rel=8.2391314e-05 bad=0 nonfinite=0 guard=0
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+DISPATCH FALLBACK I=2048 O=300 S=1 nr=1 shared=9232 grid=38,1,1
+RESULT K=2048 N=300 repeat=2 mode=four_NR1 row=0 max_abs=1.23706843e-06 max_rel=4.54987661e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=2 mode=four_NR1 row=1 max_abs=1.11661086e-06 max_rel=2.83324117e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=2 mode=four_NR1 row=2 max_abs=1.84458384e-06 max_rel=0.000268379804 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=300 repeat=2 mode=four_NR1 row=3 max_abs=9.38999619e-07 max_rel=8.2391314e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=2048 O=1100 S=4 ks=2 kc=1024 kz=2 sr=4 shared=18496 grid=35,2,1
+RESULT K=2048 N=1100 repeat=0 mode=NR4_request row=0 max_abs=8.62469648e-07 max_rel=1.17000968e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=0 mode=NR4_request row=1 max_abs=1.01099583e-06 max_rel=0.000231272075 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=0 mode=NR4_request row=2 max_abs=1.11200841e-06 max_rel=0.000509296038 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=0 mode=NR4_request row=3 max_abs=1.3642511e-06 max_rel=3.20950191e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+RESULT K=2048 N=1100 repeat=0 mode=four_NR1 row=0 max_abs=8.62469648e-07 max_rel=1.17000968e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=0 mode=four_NR1 row=1 max_abs=1.01099583e-06 max_rel=0.000231272075 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=0 mode=four_NR1 row=2 max_abs=1.11200841e-06 max_rel=0.000509296038 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=0 mode=four_NR1 row=3 max_abs=1.3642511e-06 max_rel=3.20950191e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=2048 O=1100 S=4 ks=2 kc=1024 kz=2 sr=4 shared=18496 grid=35,2,1
+RESULT K=2048 N=1100 repeat=1 mode=NR4_request row=0 max_abs=8.62469648e-07 max_rel=1.17000968e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=1 mode=NR4_request row=1 max_abs=1.01099583e-06 max_rel=0.000231272075 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=1 mode=NR4_request row=2 max_abs=1.11200841e-06 max_rel=0.000509296038 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=1 mode=NR4_request row=3 max_abs=1.3642511e-06 max_rel=3.20950191e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+RESULT K=2048 N=1100 repeat=1 mode=four_NR1 row=0 max_abs=8.62469648e-07 max_rel=1.17000968e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=1 mode=four_NR1 row=1 max_abs=1.01099583e-06 max_rel=0.000231272075 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=1 mode=four_NR1 row=2 max_abs=1.11200841e-06 max_rel=0.000509296038 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=1 mode=four_NR1 row=3 max_abs=1.3642511e-06 max_rel=3.20950191e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=2048 O=1100 S=4 ks=2 kc=1024 kz=2 sr=4 shared=18496 grid=35,2,1
+RESULT K=2048 N=1100 repeat=2 mode=NR4_request row=0 max_abs=8.62469648e-07 max_rel=1.17000968e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=2 mode=NR4_request row=1 max_abs=1.01099583e-06 max_rel=0.000231272075 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=2 mode=NR4_request row=2 max_abs=1.11200841e-06 max_rel=0.000509296038 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=2 mode=NR4_request row=3 max_abs=1.3642511e-06 max_rel=3.20950191e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+DISPATCH W4 I=2048 O=1100 S=1 ks=2 kc=1024 kz=2 sr=1 shared=4624 grid=35,2,1
+RESULT K=2048 N=1100 repeat=2 mode=four_NR1 row=0 max_abs=8.62469648e-07 max_rel=1.17000968e-05 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=2 mode=four_NR1 row=1 max_abs=1.01099583e-06 max_rel=0.000231272075 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=2 mode=four_NR1 row=2 max_abs=1.11200841e-06 max_rel=0.000509296038 bad=0 nonfinite=0 guard=0
+RESULT K=2048 N=1100 repeat=2 mode=four_NR1 row=3 max_abs=1.3642511e-06 max_rel=3.20950191e-05 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=10240 O=300 S=4 ks=7 kc=1536 kz=7 sr=4 shared=27712 grid=10,7,1
+RESULT K=10240 N=300 repeat=0 mode=NR4_request row=0 max_abs=2.77261188e-06 max_rel=1.99368683e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=0 mode=NR4_request row=1 max_abs=3.43361557e-06 max_rel=1.49444114e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=0 mode=NR4_request row=2 max_abs=2.3748266e-06 max_rel=1.16286104e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=0 mode=NR4_request row=3 max_abs=2.05717565e-06 max_rel=0.000108669285 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+RESULT K=10240 N=300 repeat=0 mode=four_NR1 row=0 max_abs=2.77261188e-06 max_rel=1.99368683e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=0 mode=four_NR1 row=1 max_abs=3.43361557e-06 max_rel=1.49444114e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=0 mode=four_NR1 row=2 max_abs=2.3748266e-06 max_rel=1.16286104e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=0 mode=four_NR1 row=3 max_abs=2.05717565e-06 max_rel=0.000108669285 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=10240 O=300 S=4 ks=7 kc=1536 kz=7 sr=4 shared=27712 grid=10,7,1
+RESULT K=10240 N=300 repeat=1 mode=NR4_request row=0 max_abs=2.77261188e-06 max_rel=1.99368683e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=1 mode=NR4_request row=1 max_abs=3.43361557e-06 max_rel=1.49444114e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=1 mode=NR4_request row=2 max_abs=2.3748266e-06 max_rel=1.16286104e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=1 mode=NR4_request row=3 max_abs=2.05717565e-06 max_rel=0.000108669285 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+RESULT K=10240 N=300 repeat=1 mode=four_NR1 row=0 max_abs=2.77261188e-06 max_rel=1.99368683e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=1 mode=four_NR1 row=1 max_abs=3.43361557e-06 max_rel=1.49444114e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=1 mode=four_NR1 row=2 max_abs=2.3748266e-06 max_rel=1.16286104e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=1 mode=four_NR1 row=3 max_abs=2.05717565e-06 max_rel=0.000108669285 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=10240 O=300 S=4 ks=7 kc=1536 kz=7 sr=4 shared=27712 grid=10,7,1
+RESULT K=10240 N=300 repeat=2 mode=NR4_request row=0 max_abs=2.77261188e-06 max_rel=1.99368683e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=2 mode=NR4_request row=1 max_abs=3.43361557e-06 max_rel=1.49444114e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=2 mode=NR4_request row=2 max_abs=2.3748266e-06 max_rel=1.16286104e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=2 mode=NR4_request row=3 max_abs=2.05717565e-06 max_rel=0.000108669285 bad=0 nonfinite=0 guard=0
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+DISPATCH W4 I=10240 O=300 S=1 ks=7 kc=1536 kz=7 sr=1 shared=6928 grid=10,7,1
+RESULT K=10240 N=300 repeat=2 mode=four_NR1 row=0 max_abs=2.77261188e-06 max_rel=1.99368683e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=2 mode=four_NR1 row=1 max_abs=3.43361557e-06 max_rel=1.49444114e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=2 mode=four_NR1 row=2 max_abs=2.3748266e-06 max_rel=1.16286104e-05 bad=0 nonfinite=0 guard=0
+RESULT K=10240 N=300 repeat=2 mode=four_NR1 row=3 max_abs=2.05717565e-06 max_rel=0.000108669285 bad=0 nonfinite=0 guard=0
+FINAL failures=0

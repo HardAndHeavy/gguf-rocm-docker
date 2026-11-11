@@ -186,9 +186,43 @@ Standalone `test_gemv_rows_cuda` прошёл на HIP (`data/colibri-gemv-rows-
 но это не покрытие падающего full-model path и не доказательство безопасности всех shapes.
 Всё `data/` gitignored: эти файлы локальные, **не приложены к репозиторию**.
 
-## Следующий узкий тест: 2048 × 300, четыре строки
+## Результат ограниченной сессии 11 ноября
 
-Это **план**, не уже реализованный regression test. Сначала уточнить в исходнике порядок
+Подготовлены два отдельных английских черновика (на момент подготовки ещё не отправлены):
+[issue A](issues/colibri-A-non-mtp-regression.md) и
+[issue B](issues/colibri-B-hip-device-mtp-fault.md), с компактными sanitised attachments
+в `docs/issues/evidence/`. Полные исходные logs остаются локально в `data/`.
+
+Статус проверен 11 ноября: опубликованы [A — #2757](https://github.com/JustVugg/colibri/issues/2757)
+и [B — #2758](https://github.com/JustVugg/colibri/issues/2758), оба открыты.
+Локальные drafts сохранены как история подготовки; ожидается ответ maintainer'а.
+
+- **A:** исходные JSON/CSV перепроверены: 45,4526 → 37,2574 tok/s (−18,0302%).
+  Это исторические thinking-enabled серии (`request={}`), не текущий no-thinking default.
+  Найдены различия placement/pool paths; причинность и process-level interleaved repeats
+  не установлены. Новый performance benchmark/bisect не запускался.
+- **B:** `bash scripts/check-colibri-gemv-hip.sh` выполнил CPU-reference тест на pinned dev
+  image, `docker run --network none`, W4 on, split-K on/off в отдельных процессах.
+  K=2048/N=300 **не выбирает W4**: N*K ниже 2^21. Добавлены K2048/N1100 и K10240/N300;
+  лог подтверждает реальный W4 и splits. S4 и четыре S1, три повтора, 144 row records:
+  ноль ошибок по заранее заданному `abs <= 1e-3 + 1e-4*abs(ref)`, нет NaN/Inf и повреждения
+  внешних output guards. На K10240/N300 split-off снижает sr с 4 до 1 из-за shared memory,
+  поэтому обход SK=0 не изолирует только split reduction. Build O2, не production O3;
+  synthetic PASS не доказывает безопасность полной модели и не находит root cause.
+- **Integration:** `scripts/check-colibri-mtp-direct.py` использует только direct Docker,
+  host network и API bind `127.0.0.1:18080`, отдельные копии state, без compose/OpenWebUI.
+  Две ограниченные попытки off/full не достигли API readiness (~198/~183 s), chat requests
+  **не отправлены**; нового воспроизведения fault или correctness результата нет.
+  CPU/SK0/W40 пропущены по лимиту. Старые fault/controls не смешиваются с новыми попытками.
+  Контейнеры удалены. Детали, ограничения и post-run правки runner описаны в issue B.
+
+Минимального обоснованного fix/PR нет. Согласно лимиту исследования дальнейшие долгие
+tracing/bisect отложены до ответа maintainer'а или релевантного upstream update.
+
+## Исходный план узкого теста (исторический)
+
+Ниже исходная спецификация; её результат и уточнение dispatch описаны выше. Это не
+утверждение, что K2048/N300 проверяет W4. Сначала уточнить в исходнике порядок
 размеров: зафиксировать K=2048, N=300 (или явно объяснить иной порядок), NR=4,
 layout/strides, dtype/quantization, padding и dispatch predicate. Нет гарантии, что этот
 shape автоматически попадёт в нужный W4/split-K kernel.

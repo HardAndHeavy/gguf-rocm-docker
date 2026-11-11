@@ -154,7 +154,13 @@ make bench-strata BENCH_ARGS='--case short --case decode --case prefill --runs 3
 - **B — HIP memory fault:** device MTP + `enable_thinking=false` падает в
   `gemv_i8_w4<4>`. W4 off или split-K off — диагностические обходы, **не исправление**.
 
-Следующий узкий тест: **2048 × 300, четыре строки, split-K on/off в разных процессах,
-с CPU reference**, затем настоящий HIP integration test с падающим prompt.
-Подробные условия, вопросы автору и критерии PR: [MTP-HIP](docs/MTP-HIP.md).
-Текущие приоритеты: [ROADMAP](docs/ROADMAP.md). Обсуждение и PR без разрешения не отправляем.
+Узкий CPU-reference тест выполнен: **2048 × 300 идёт в fallback**, поэтому дополнительно
+проверены реальные W4 shapes **2048 × 1100 и 10240 × 300**, split-K on/off, S4 и четыре S1.
+Оба процесса прошли; root cause не найден. Новая full-model проверка ограничена startup timeout,
+без отправленных chat requests. Дальнейший tracing отложен до ответа maintainer'а.
+Issues опубликованы: [A — #2757](https://github.com/JustVugg/colibri/issues/2757),
+[B — #2758](https://github.com/JustVugg/colibri/issues/2758); оба открыты на 11 ноября 2026.
+Локальные материалы: [A](docs/issues/colibri-A-non-mtp-regression.md),
+[B](docs/issues/colibri-B-hip-device-mtp-fault.md).
+Подробные условия, результаты и критерии PR: [MTP-HIP](docs/MTP-HIP.md).
+Текущие приоритеты: [ROADMAP](docs/ROADMAP.md). Новые сообщения и PR без разрешения не отправляем.

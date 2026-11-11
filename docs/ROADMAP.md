@@ -1,6 +1,6 @@
 # Стратегия экспериментов на Radeon AI PRO R9700
 
-Дата: 9 ноября 2026. Рабочий выбор — **Qwen3.6 + Strata batch MTP**; для сложных задач —
+Дата: 11 ноября 2026. Рабочий выбор — **Qwen3.6 + Strata batch MTP**; для сложных задач —
 **Flash-Next + Strata** (отдельная оценка качества ещё нужна). llama.cpp и Colibri сохраняются
 как варианты запуска и контроль. Остальные модели/Vulkan — второй план до обновлений.
 Цель — поддерживать воспроизводимый рабочий стек и вернуть доказанные исправления upstream. Скорость decode не считается
@@ -62,12 +62,17 @@
   `HSA_STATUS_ERROR_MEMORY_FAULT` в `gemv_i8_w4<4>`. CPU/off работают; `GEMV_W4=0` и `GEMV_SK=0`
   обходят падение. Standalone GEMV shapes проходят, поэтому нужен integration regression, а не
   необоснованное глобальное отключение kernel.
-- [ ] Согласовать с @JustVugg два focused вопроса: non-MTP dev regression/forward-port #2559 на
+- [x] Отправить @JustVugg два focused вопроса: non-MTP dev regression/forward-port #2559 на
   main и device-MTP no-thinking W4/SK fault с сохранённым repro. Не создавать параллельную
-  реализацию уже влитой функциональности. Сообщения пока не отправлены.
-- [ ] Узкий тест B: 2048 × 300, NR=4, split-K on/off в отдельных процессах, CPU reference;
-  подтвердить dispatch, добавить NR=1 контроль. Затем full-model HIP prompt regression.
-  Спецификация и границы доказательств — в `MTP-HIP.md`.
+  реализацию уже влитой функциональности. Открыты [#2757](https://github.com/JustVugg/colibri/issues/2757)
+  и [#2758](https://github.com/JustVugg/colibri/issues/2758); ожидается ответ.
+- [x] Узкий тест B: CPU reference, split-K on/off в отдельных процессах, S4 и четыре S1.
+  2048 × 300 подтвердился как fallback; 2048 × 1100 и 10240 × 300 реально проверили W4.
+  Всё проходит; на 10240 × 300 split-off понижает sr до 1. Root cause не найден.
+- [ ] Full-model HIP prompt regression: новые direct Docker off/full запуски не достигли API
+  readiness в лимите; chat requests не отправлены. Старые fault/controls сохранены отдельно.
+  Локальные материалы A/B и sanitised evidence — в `docs/issues/`; issues опубликованы выше.
+  Дальнейший tracing отложен до maintainer guidance; детали — в `MTP-HIP.md`.
 - [ ] A вести отдельно: interleaved main/dev при одинаковых state и lookup off, затем bisect/profile.
 - [ ] После ответа maintainer'а: минимальный patch поверх выбранного base, real-HIP integration
   test для двух prompt variants и W4/SK path, затем повторные decode/prefill/full-agent A/B.
