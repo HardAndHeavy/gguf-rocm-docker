@@ -195,7 +195,11 @@ Standalone `test_gemv_rows_cuda` прошёл на HIP (`data/colibri-gemv-rows-
 
 Статус проверен 11 ноября: опубликованы [A — #2757](https://github.com/JustVugg/colibri/issues/2757)
 и [B — #2758](https://github.com/JustVugg/colibri/issues/2758), оба открыты.
-Локальные drafts сохранены как история подготовки; ожидается ответ maintainer'а.
+Локальные drafts сохранены как история подготовки. Ответ по B получен; поздний
+[allocator follow-up](issues/issue-B-allocator-followup.md) завершил два fresh-snapshot
+full-model процесса (automatic / forced three drafts) без fault, readiness 203/244 s.
+Исторический FAIL не воспроизведён; сериализация и persistent scratch не выполнялись.
+Ранние startup-limited attempts ниже остаются отдельными inconclusive результатами.
 
 - **A:** исходные JSON/CSV перепроверены: 45,4526 → 37,2574 tok/s (−18,0302%).
   Это исторические thinking-enabled серии (`request={}`), не текущий no-thinking default.

@@ -156,8 +156,10 @@ make bench-strata BENCH_ARGS='--case short --case decode --case prefill --runs 3
 
 Узкий CPU-reference тест выполнен: **2048 × 300 идёт в fallback**, поэтому дополнительно
 проверены реальные W4 shapes **2048 × 1100 и 10240 × 300**, split-K on/off, S4 и четыре S1.
-Оба процесса прошли; root cause не найден. Новая full-model проверка ограничена startup timeout,
-без отправленных chat requests. Дальнейший tracing отложен до ответа maintainer'а.
+Оба процесса прошли; root cause не найден. После ответа maintainer выполнены два свежих
+full-model процесса (automatic и forced three drafts): short/decode завершились без fault.
+Это не fix: исходный FAIL не воспроизведён, сравнение allocator пока не выполнялось.
+Подробности: [B follow-up](docs/issues/issue-B-allocator-followup.md).
 Issues опубликованы: [A — #2757](https://github.com/JustVugg/colibri/issues/2757),
 [B — #2758](https://github.com/JustVugg/colibri/issues/2758); оба открыты на 11 ноября 2026.
 Локальные материалы: [A](docs/issues/colibri-A-non-mtp-regression.md),

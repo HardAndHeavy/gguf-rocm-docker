@@ -8,7 +8,9 @@
 
 - [Issue A — non-MTP decode observation](colibri-A-non-mtp-regression.md): исторические данные, −18,03%; это не установленная причина.
 - [Ответ на рекомендацию maintainer по A](issue-A-pool-followup-ready-to-post.md): новые восемь процессов **ABBA / BCCB** на pinned dev, подготовленный английский комментарий (не отправлен). GPU pool-read обычно ~40–41 tok/s, но один процесс 33,80; стабильное восстановление 45,45 не показано. Порог 90% не дал изменения при нулевых promotions. Скрипт: `scripts/run-colibri-pool-ab.py`.
-- [Issue B — device-MTP HIP fault](colibri-B-hip-device-mtp-fault.md): исторический fault и обходы, новый standalone PASS, незавершённая новая integration-проверка.
+- [Issue B — device-MTP HIP fault](colibri-B-hip-device-mtp-fault.md): исторический fault и обходы, standalone PASS; прежние startup-limited attempts сохранены отдельно.
+- [B — ответ maintainer и allocator follow-up](issue-B-allocator-followup.md): два свежих full-model процесса (automatic / forced three drafts) завершили short+decode без fault. Исходный FAIL не воспроизведён; сериализация и замена scratch не выполнялись.
+- [Отправленный ответ по B](issue-B-followup-ready-to-post.md): английский follow-up с двумя завершёнными запусками и вопросом о targeted capture; **пользователь отправил 11 ноября, ожидаем ответа**.
 - [`evidence/`](evidence/): компактные отобранные JSON и standalone logs без `.env`, API keys/auth headers, usernames и абсолютных host paths. `SHA256.json` фиксирует байты приложений; это **не** hashes весов модели. Публиковать выборочно после личного просмотра.
 
 В A намеренно сохранены подробности confounders; при необходимости первый раздел Summary можно использовать как короткое вступление, остальное — как техническое приложение. A и B не объединять в утверждение об общей причине или одном fix.
@@ -19,7 +21,7 @@
 - B: точные request bodies, отобранные исторические responses/errors и оба новых standalone run logs. Sanitised fault excerpt включён в текст issue.
 - Полные локальные build/startup/runtime logs, metadata snapshots и исходные benchmark JSON остаются в gitignored `data/`; **ссылки на них не являются публичными attachments**.
 - Для follow-up A: `evidence/A-pool-ab-measurements.json` и `evidence/A-pool-ab-log-excerpts.txt` — все восемь процессов, measured/warmup metrics, manifest общего metadata/history snapshot и выбранные counters. Полные исходники: gitignored `data/colibri-investigation/pool-ab/20261111-162844/`.
-- Нет content hashes GGUF, завершённого нового fresh-snapshot integration B matrix или доказанного root-cause patch. Новый interleaved A benchmark выполнен, но число независимых повторов мало и между процессами есть вариабельность.
+- Нет content hashes GGUF, полной fresh-snapshot integration B matrix или доказанного root-cause patch. Два full-device B процесса уже завершились без fault; это не passing off/CPU/SK0/W40 matrix. Новый interleaved A benchmark выполнен, но число независимых повторов мало и между процессами есть вариабельность.
 
 ## Повторение локально
 
@@ -29,14 +31,14 @@ bash scripts/check-colibri-gemv-hip.sh
 
 # Отдельная потенциально падающая integration-проверка; только local host API.
 # Требуются pinned image, models и data/colibri-mtp-dev-control.
-# Default общий лимит 540 s может закончиться до всех пяти профилей.
+# Default общий лимит 540 s может закончиться до всех профилей; лучше по одному процессу.
 python3 scripts/check-colibri-mtp-direct.py --cases full --seconds 540
 ```
 
 Не использовать для этого старый compose runner при активном VPN. Direct runner не запускает
 OpenWebUI, не создаёт bridge/compose network, не останавливает чужие контейнеры; API bind —
-только `127.0.0.1:18080`. Возможен HIP fault. Новые direct off/full attempts в этой сессии
-не вышли из startup; не считать команды выше уже успешным новым repro.
+только `127.0.0.1:18080`. Возможен HIP fault. Ранние direct off/full attempts не вышли из startup. Позднее два full-device запуска
+достигли readiness за 203/244 s и завершили запросы без fault; см. follow-up B выше.
 
 По ответу maintainer в A выполнен ограниченный pool-path/promotion follow-up; дальше — обсуждение
 результатов, не автоматический длительный tracing/bisect. B этим прогоном не исследуется.

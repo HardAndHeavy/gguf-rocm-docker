@@ -2,6 +2,8 @@
 
 **Not submitted.** Pinned-revision investigation, not a claim about current upstream. Historical full-model observations are from 2026-11-09; standalone follow-up and bounded startup attempts are from 2026-11-11. Separate from non-MTP throughput observation A.
 
+> Статус после публикации: получен ответ maintainer и выполнены два свежих full-model запуска без fault. См. [allocator follow-up](issue-B-allocator-followup.md). Текст ниже — исторический draft, не текущий статус.
+
 ## Summary / question
 
 On Radeon AI PRO R9700 (`gfx1201`), Qwen3.8 Flash-Next device MTP with `chat_template_kwargs.enable_thinking=false` failed with `HSA_STATUS_ERROR_MEMORY_FAULT`, reported in `gemv_i8_w4<4>`. Both full and conservative device placement failed. MTP off and CPU-head controls completed the short/decode request pair; disabling W4 **or** split-K also allowed that pair to complete. These are diagnostic workarounds, **not fixes** or evidence that the kernel itself is the root cause. GPU faults can be reported asynchronously after an earlier bad access.

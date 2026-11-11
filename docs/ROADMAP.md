@@ -65,14 +65,15 @@
 - [x] Отправить @JustVugg два focused вопроса: non-MTP dev regression/forward-port #2559 на
   main и device-MTP no-thinking W4/SK fault с сохранённым repro. Не создавать параллельную
   реализацию уже влитой функциональности. Открыты [#2757](https://github.com/JustVugg/colibri/issues/2757)
-  и [#2758](https://github.com/JustVugg/colibri/issues/2758); ожидается ответ.
+  и [#2758](https://github.com/JustVugg/colibri/issues/2758); ответы получены, follow-up в `docs/issues/`.
 - [x] Узкий тест B: CPU reference, split-K on/off в отдельных процессах, S4 и четыре S1.
   2048 × 300 подтвердился как fallback; 2048 × 1100 и 10240 × 300 реально проверили W4.
   Всё проходит; на 10240 × 300 split-off понижает sr до 1. Root cause не найден.
-- [ ] Full-model HIP prompt regression: новые direct Docker off/full запуски не достигли API
-  readiness в лимите; chat requests не отправлены. Старые fault/controls сохранены отдельно.
-  Локальные материалы A/B и sanitised evidence — в `docs/issues/`; issues опубликованы выше.
-  Дальнейший tracing отложен до maintainer guidance; детали — в `MTP-HIP.md`.
+- [ ] Full-model HIP prompt regression: ранние direct Docker attempts ограничились startup.
+  После ответа maintainer два свежих full-device процесса (automatic / forced three drafts)
+  достигли API readiness за 203/244 s и завершили short/decode без fault. Это не fix и не
+  полная regression matrix: baseline FAIL не воспроизведён, serializer/scratch A/B не начат.
+  Детали: `docs/issues/issue-B-allocator-followup.md`; исторические fault/controls отдельно.
 - [ ] A вести отдельно: interleaved main/dev при одинаковых state и lookup off, затем bisect/profile.
 - [ ] После ответа maintainer'а: минимальный patch поверх выбранного base, real-HIP integration
   test для двух prompt variants и W4/SK path, затем повторные decode/prefill/full-agent A/B.

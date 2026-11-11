@@ -1,0 +1,237 @@
+{
+  "note": "Two completed fresh-snapshot integration runs; not a reproduced fault, allocator diagnosis, sanitizer check or exhaustive correctness proof. No model-content hashes. Full local logs remain gitignored. No serializer or allocator replacement was run.",
+  "runs": [
+    {
+      "local_run_id": "20261111-172527",
+      "forced_verify": false,
+      "results": [
+        {
+          "case": "full",
+          "status": "completed",
+          "readiness_seconds": 203.41062794900063,
+          "engine_fault_detected": false,
+          "elapsed_seconds": 213.207418623002
+        }
+      ],
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "1",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1"
+      },
+      "snapshot_unchanged": true,
+      "requests": {
+        "short": {
+          "payload": {
+            "model": "qwen3.8-flash-next-colibri",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ответь одним словом: какой элемент обозначается символом Fe?"
+              }
+            ],
+            "temperature": 0,
+            "max_tokens": 192,
+            "presence_penalty": 0,
+            "frequency_penalty": 0,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "stream": true,
+            "stream_options": {
+              "include_usage": true
+            }
+          },
+          "http_status": 200,
+          "done": true,
+          "content_prefix": "Железо",
+          "content_sha256": "ea48f2faea6ca4eb17eea9656315e0b7ac8e9cdba395f2c544a9d81588edb91c",
+          "usage": [
+            {
+              "prompt_tokens": 27,
+              "completion_tokens": 3,
+              "total_tokens": 30
+            }
+          ],
+          "finish_reasons": [
+            "stop"
+          ]
+        },
+        "decode": {
+          "payload": {
+            "model": "qwen3.8-flash-next-colibri",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Напиши подробный технический дневник тестирования большой языковой модели на AMD GPU: последовательно опиши подготовку, холодный запуск, prefill, decode, контроль памяти, повторяемость и типичные ошибки. Пиши развёрнуто, не менее 1200 слов, без сокращения ответа."
+              }
+            ],
+            "temperature": 0,
+            "max_tokens": 192,
+            "presence_penalty": 0,
+            "frequency_penalty": 0,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "stream": true,
+            "stream_options": {
+              "include_usage": true
+            }
+          },
+          "http_status": 200,
+          "done": true,
+          "content_prefix": "# Технический дневник тестирования большой языковой модели на AMD GPU\n\n## Введение и контекст\n\nДанный дневник фиксирует процесс систематического тестирования большой языковой модел",
+          "content_sha256": "a5cc730af3112f28b71e07dd6e673fbb0104cccbacaf38d947675de6068b6129",
+          "usage": [
+            {
+              "prompt_tokens": 79,
+              "completion_tokens": 192,
+              "total_tokens": 271
+            }
+          ],
+          "finish_reasons": [
+            "length"
+          ]
+        }
+      },
+      "log_excerpts": [
+        "2026-11-11T14:25:47.917463705Z [qwen38] MTP drafts per verify 0, the verify's depth by their probabilities 1 (the head on the card; Q38_MTP_DRAFTS, Q38_MTP_PSTEP set them)",
+        "2026-11-11T14:26:49.144890986Z [qtier] qwen38: warm start, 18552 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 61.2 s",
+        "2026-11-11T14:28:51.166026040Z [chain] qwen38: host pool, every expert (the 6024 the card leaves and its own 18552) in 33.02 GiB of page-locked RAM the device reads over the bus (26.6 s to allocate, 95.4 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-11T14:28:51.866498672Z [qwen38 MTP] turn 1: 1.50 tokens/forward (2 forwards per 3 tokens) | acceptance 50.0% (1/2 drafts) | wiring b | depth by the gate, by position: 1 50.0% (1/2) 2 0.0% (0/0) 3 0.0% (0/0) | ended mid-verify",
+        "2026-11-11T14:28:51.866523338Z [qwen38 spec gate] turn 1: T(1) 0.0 ms, rows 2:1.50, rho 0.50, acceptance by position 0.87 0.60 0.50 0.50 0.50",
+        "2026-11-11T14:28:51.866526043Z [qwen38 MTP] turn 1: draft list 64000 tokens on average, 100.0% of picks inside, 0 ids appended, 0 rebuilds",
+        "2026-11-11T14:29:00.889957688Z [qwen38 MTP] turn 2: 1.84 tokens/forward (104 forwards per 191 tokens) | acceptance 47.5% (87/183 drafts) | wiring b | depth by the gate, by position: 1 66.3% (65/98) 2 37.0% (17/46) 3 12.8% (5/39)",
+        "2026-11-11T14:29:00.889980711Z [qwen38 spec gate] turn 2: T(1) 35.0 ms, rows 2:7.88 3:1.81 4:1.47, rho 0.13, 1.1 ms per extra draft, acceptance by position 0.73 0.52 0.37 0.50 0.50",
+        "2026-11-11T14:29:00.889983136Z [qwen38 MTP] turn 2: draft list 64000 tokens on average, 100.0% of picks inside, 0 ids appended, 0 rebuilds"
+      ]
+    },
+    {
+      "local_run_id": "20261111-173018",
+      "forced_verify": true,
+      "results": [
+        {
+          "case": "full",
+          "status": "completed",
+          "readiness_seconds": 244.03925856600108,
+          "engine_fault_detected": false,
+          "elapsed_seconds": 254.97044505099984
+        }
+      ],
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "1",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "3",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "Q38_MTP_PSTEP": "0",
+        "COLI_SPEC_GATE": "0"
+      },
+      "snapshot_unchanged": true,
+      "requests": {
+        "short": {
+          "payload": {
+            "model": "qwen3.8-flash-next-colibri",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Ответь одним словом: какой элемент обозначается символом Fe?"
+              }
+            ],
+            "temperature": 0,
+            "max_tokens": 192,
+            "presence_penalty": 0,
+            "frequency_penalty": 0,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "stream": true,
+            "stream_options": {
+              "include_usage": true
+            }
+          },
+          "http_status": 200,
+          "done": true,
+          "content_prefix": "Железо",
+          "content_sha256": "ea48f2faea6ca4eb17eea9656315e0b7ac8e9cdba395f2c544a9d81588edb91c",
+          "usage": [
+            {
+              "prompt_tokens": 27,
+              "completion_tokens": 3,
+              "total_tokens": 30
+            }
+          ],
+          "finish_reasons": [
+            "stop"
+          ]
+        },
+        "decode": {
+          "payload": {
+            "model": "qwen3.8-flash-next-colibri",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Напиши подробный технический дневник тестирования большой языковой модели на AMD GPU: последовательно опиши подготовку, холодный запуск, prefill, decode, контроль памяти, повторяемость и типичные ошибки. Пиши развёрнуто, не менее 1200 слов, без сокращения ответа."
+              }
+            ],
+            "temperature": 0,
+            "max_tokens": 192,
+            "presence_penalty": 0,
+            "frequency_penalty": 0,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "stream": true,
+            "stream_options": {
+              "include_usage": true
+            }
+          },
+          "http_status": 200,
+          "done": true,
+          "content_prefix": "# Технический дневник тестирования большой языковой модели на AMD GPU\n\n## Введение и контекст\n\nДанный дневник фиксирует процесс комплексного тестирования большой языковой модели (L",
+          "content_sha256": "6a352cb440ba2332070fe58994cee2ef01f1586dbd5e54a22a5062c40012c0fd",
+          "usage": [
+            {
+              "prompt_tokens": 79,
+              "completion_tokens": 192,
+              "total_tokens": 271
+            }
+          ],
+          "finish_reasons": [
+            "length"
+          ]
+        }
+      },
+      "log_excerpts": [
+        "2026-11-11T14:30:39.240035397Z [qwen38] MTP drafts per verify 3, the verify's depth by their probabilities 0 (the head on the card; Q38_MTP_DRAFTS, Q38_MTP_PSTEP set them)",
+        "2026-11-11T14:31:44.022005568Z [qtier] qwen38: warm start, 18552 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 64.8 s",
+        "2026-11-11T14:34:22.125029619Z [chain] qwen38: host pool, every expert (the 6024 the card leaves and its own 18552) in 33.02 GiB of page-locked RAM the device reads over the bus (60.8 s to allocate, 97.3 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-11T14:34:23.062515540Z [qwen38 MTP] turn 1: 1.50 tokens/forward (2 forwards per 3 tokens) | acceptance 16.7% (1/6 drafts) | wiring b | fixed depth, by position: 1 50.0% (1/2) 2 0.0% (0/2) 3 0.0% (0/2) | ended mid-verify",
+        "2026-11-11T14:34:23.062543944Z [qwen38 MTP] turn 1: draft list 64000 tokens on average, 100.0% of picks inside, 0 ids appended, 0 rebuilds",
+        "2026-11-11T14:34:32.337406206Z [qwen38 MTP] turn 2: 1.74 tokens/forward (110 forwards per 191 tokens) | acceptance 24.7% (81/328 drafts) | wiring b | fixed depth, by position: 1 51.8% (57/110) 2 18.3% (20/109) 3 3.7% (4/109)",
+        "2026-11-11T14:34:32.337434389Z [qwen38 MTP] turn 2: draft list 64007 tokens on average, 84.8% of picks inside, 29 ids appended, 0 rebuilds"
+      ]
+    }
+  ]
+}

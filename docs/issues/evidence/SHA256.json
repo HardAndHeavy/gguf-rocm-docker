@@ -5,5 +5,6 @@
   "B-standalone-sk0.log": "72aa70e47c602179c11194b6033f48332caa2dd7f50d653a2648723441fd469c",
   "B-standalone-sk1.log": "919635083a00293aa02ad8360b34a894a2aba8e3995f476cd8a415a13bf7ad25",
   "A-pool-ab-measurements.json": "b3640c263c1a345032cb05580bd052b15e9f1805c2d3e42fb6f418f08e50a7d7",
-  "A-pool-ab-log-excerpts.txt": "cee732ecc1cbc9f07ab7b9209358ad6d407edfd97040f538607ad38c5b5588ad"
+  "A-pool-ab-log-excerpts.txt": "cee732ecc1cbc9f07ab7b9209358ad6d407edfd97040f538607ad38c5b5588ad",
+  "B-allocator-followup.json": "a21c194fff0dfaee9d05ac8233b7042505f653e51750188d5cbbdbbd8fba4d18"
 }
