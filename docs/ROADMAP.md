@@ -1,5 +1,19 @@
 # Стратегия экспериментов на Radeon AI PRO R9700
 
+> **13 ноября, Colibri:** [PR #2775 проверен](issues/PR2775-VALIDATION.md), ответы
+> отправлены пользователем. Следующий [forced-bus old/new ABBA](issues/A-FORCED-BUS-REVISIONS.md)
+> выполнен: new ~27 против old ~40 tok/s (−31–34%). Clocks/power/CPU записаны,
+> причина не локализована. [Matched rebuild / allocator-only](issues/A-REBUILD-ALLOCATOR.md)
+> уже выполнены: binaries воспроизводимы, gap сохраняется; async rollback не возвращает ~40.
+> После CUDA/HIP ответа maintainer [план](issues/A-NEXT-STEPS-AFTER-MAINTAINER.md):
+> SK=0 на обеих штатных images в ABBA, затем focused S1 timings/trace, если gap остаётся.
+> [Проверки выполнены](issues/A-SK0-ABBA.md): gap34.4–34.6% сохраняется.
+> [Trace](issues/A-SK0-TRACE.md): `cc_dnrec_k<128>` ~4.2×, scratch1092→2600;
+> сильное profiler perturbation, root cause не доказан. Следующий narrow codegen discriminator
+> согласовать с автором; не начинать broad bisect. Рабочий pin не обновлён.
+> Rebuild и [SK0/trace follow-up](issues/issue-A-sk0-ready-to-post.md) отправлены пользователем.
+> **Пауза до ответа maintainer**: новых GPU-прогонов/patches/bisect пока не планируем.
+
 Дата: 11 ноября 2026. Рабочий выбор — **Qwen3.6 + Strata batch MTP**; для сложных задач —
 **Flash-Next + Strata** (отдельная оценка качества ещё нужна). llama.cpp и Colibri сохраняются
 как варианты запуска и контроль. Остальные модели/Vulkan — второй план до обновлений.

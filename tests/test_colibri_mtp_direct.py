@@ -3,6 +3,8 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import json
 
 SPEC = importlib.util.spec_from_file_location(
     'mtp_direct', Path(__file__).resolve().parents[1] / 'scripts/check-colibri-mtp-direct.py')
@@ -11,6 +13,21 @@ SPEC.loader.exec_module(runner)
 
 
 class DirectRunnerTests(unittest.TestCase):
+    def test_resolve_image_records_revision_and_pins_id(self):
+        image_id = 'sha256:' + 'a' * 64
+        info = [{'Id': image_id, 'Config': {'Labels': {'ru.hardandheavy.colibri.revision': 'test'}}, 'RepoDigests': []}]
+        with patch.object(runner, 'cmd', return_value={'returncode': 0, 'stdout': json.dumps(info)}) as command:
+            resolved, details = runner.resolve_image('test:tag')
+        command.assert_called_once_with(['docker', 'image', 'inspect', 'test:tag'])
+        self.assertEqual(resolved, image_id)
+        self.assertEqual(details['labels']['ru.hardandheavy.colibri.revision'], 'test')
+        self.assertEqual(details['requested_reference'], 'test:tag')
+
+    def test_resolve_image_missing_fails_without_pull(self):
+        with patch.object(runner, 'cmd', return_value={'returncode': 1}):
+            with self.assertRaises(RuntimeError):
+                runner.resolve_image('missing')
+
     def test_serialization_only_changes_two_environment_entries(self):
         for forced in (False, True):
             base = runner.case_environment('full', forced)

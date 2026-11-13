@@ -51,6 +51,20 @@ def cmd(args, timeout=15, **kwargs):
     return {'returncode': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr}
 
 
+def resolve_image(reference):
+    """Resolve a local reference once; launch only its immutable ID, never pull."""
+    inspected = cmd(['docker', 'image', 'inspect', reference])
+    if inspected['returncode']:
+        raise RuntimeError('Local image missing: ' + reference)
+    info = json.loads(inspected['stdout'])[0]
+    image_id = info['Id']
+    if not re.fullmatch(r'sha256:[0-9a-f]{64}', image_id):
+        raise RuntimeError('Invalid immutable image ID')
+    return image_id, {'requested_reference': reference, 'id': image_id,
+                      'labels': info.get('Config', {}).get('Labels', {}),
+                      'repo_digests': info.get('RepoDigests', [])}
+
+
 def manifest(path):
     return [{'path': str(p.relative_to(path)), 'bytes': p.stat().st_size,
              'sha256': hashlib.sha256(p.read_bytes()).hexdigest()}
@@ -59,12 +73,14 @@ def manifest(path):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--image', default=IMAGE, help='Local reference resolved to immutable ID; never pulled')
     ap.add_argument('--seconds', type=int, default=540)
     ap.add_argument('--ready-seconds', type=int, default=360)
     ap.add_argument('--force-verify', action='store_true',
                     help='Separate maintainer scenario: DRAFTS=3 PSTEP=0 SPEC_GATE=0, not historical baseline')
     ap.add_argument('--cases', nargs='+', choices=CASES, default=list(CASES))
     a = ap.parse_args()
+    image_id, image_details = resolve_image(a.image)
     if not 1 <= a.ready_seconds <= 480:
         ap.error('--ready-seconds must be 1..480')
     if not 1 <= a.seconds <= 570:
@@ -86,14 +102,11 @@ def main():
         {'name': p.name, 'bytes': p.stat().st_size, 'mtime_ns': p.stat().st_mtime_ns}
         for p in sorted((ROOT / 'data/models').glob('*.gguf'))
         if p.name in (MODEL, MODEL.replace('00001', '00002'), HEAD)])
-    image = cmd(['docker', 'image', 'inspect', IMAGE, '--format', '{{.Id}}'])
-    save(out / 'image-id.json', image)
-    if image['stdout'].strip() != IMAGE:
-        raise RuntimeError('Pinned local image missing')
+    save(out / 'image-id.json', image_details)
     save(out / 'prompts.json', {k: bench.PROMPTS[k] for k in ('short', 'decode')})
     save(out / 'provenance.json', {'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
          'benchmark_sha256': hashlib.sha256((ROOT/'scripts/benchmark.py').read_bytes()).hexdigest(),
-         'image': IMAGE, 'seconds': a.seconds, 'ready_seconds': a.ready_seconds, 'force_verify': a.force_verify, 'cases': a.cases,
+         'image': image_id, 'seconds': a.seconds, 'ready_seconds': a.ready_seconds, 'force_verify': a.force_verify, 'cases': a.cases,
          'core_policy': 'Docker ulimit core=0:0; HSA_COREDUMP not set (not documented in installed runtime).',
          'note': 'No dotenv; API secret exists only in client/process environment. Model files not hashed.'})
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
@@ -132,7 +145,7 @@ def main():
         try:
             r = cmd(['docker', 'run', '--name', active, '--pull', 'never', '--network', 'none',
                      '--device', '/dev/kfd', '--device', '/dev/dri', '--ulimit', 'core=0:0',
-                     '--entrypoint', '/opt/rocm/bin/rocminfo', IMAGE], timeout=12)
+                     '--entrypoint', '/opt/rocm/bin/rocminfo', image_id], timeout=12)
             save(d / 'gpu-probe.json', r)
             return r['returncode'] == 0 and 'gfx1201' in r['stdout']
         except subprocess.TimeoutExpired:
@@ -165,7 +178,7 @@ def main():
                 run += ['-e', k + '=' + v]
             import_head = '--no-mtp' if name == 'off' else '--mtp /models/' + HEAD
             run += ['-e', 'COLI_API_KEY', '-v', str(ROOT/'data/models')+':/models:ro',
-                '-v', str(d/'state')+':/state', '--entrypoint', 'bash', IMAGE, '-lc',
+                '-v', str(d/'state')+':/state', '--entrypoint', 'bash', image_id, '-lc',
                 'ulimit -c 0; python3 ./coli import /models/'+MODEL+' --out /state/'+MODEL[:-5]+'.colibri --mode link '+import_head+
                 ' && exec python3 ./coli serve --model /state/'+MODEL[:-5]+'.colibri --ctx 8192 --ram 48 --host 127.0.0.1 --port 18080']
             save(d / 'command.json', run)
@@ -237,6 +250,10 @@ def main():
                         future.result()
                         if not record.get('done'):
                             raise RuntimeError('stream ended without DONE')
+                        if record.get('http_status') != 200 or not any(isinstance(e.get('usage'), dict) for e in record['events']):
+                            raise RuntimeError('stream missing HTTP 200 or usage')
+                        if any('error' in e for e in record['events']):
+                            raise RuntimeError('error event in stream')
                     except Exception as exc:
                         record['error'] = str(exc)
                         save(d/(prompt_name+'-result.json'), record)

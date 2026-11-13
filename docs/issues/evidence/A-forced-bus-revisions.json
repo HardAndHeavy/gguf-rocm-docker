@@ -1,0 +1,2485 @@
+{
+  "comparison": "old/new/new/old, forced bus throughout",
+  "image_old": {
+    "requested_reference": "gguf-rocm-colibri:mtp-dev-0a6f235b",
+    "id": "sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc",
+    "labels": {
+      "com.amd.rocm.gpu-coverage": "multi-arch",
+      "com.amd.rocm.install-method": "packages",
+      "com.amd.rocm.release-type": "stable",
+      "com.docker.compose.project": "gguf-rocm",
+      "com.docker.compose.service": "colibri",
+      "com.docker.compose.version": "5.7.0",
+      "org.opencontainers.image.base.digest": "sha256:a46fe7a3efd7c7f87a20d63f58bed76c499604d959597584ffb117c2b336c74c",
+      "org.opencontainers.image.base.name": "hardandheavy/transformers-rocm:3.0.1",
+      "org.opencontainers.image.created": "2026-11-08T07:26:32Z",
+      "org.opencontainers.image.description": "llama.cpp with ROCm support for AMD Radeon GPUs",
+      "org.opencontainers.image.documentation": "https://github.com/HardAndHeavy/llama-rocm-docker#readme",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "68e30f4f8403bc2353403246cc0685e414548574",
+      "org.opencontainers.image.source": "https://github.com/JustVugg/colibri",
+      "org.opencontainers.image.title": "gguf-rocm-colibri",
+      "org.opencontainers.image.url": "https://hub.docker.com/r/hardandheavy/llama-rocm",
+      "org.opencontainers.image.version": "3.0.2",
+      "ru.hardandheavy.amdgpu-targets": "gfx1030;gfx1100;gfx1101;gfx1200;gfx1201",
+      "ru.hardandheavy.colibri.revision": "0a6f235b0c7a20726e28e6e0229ef1201de74638",
+      "ru.hardandheavy.llama-cpp-python.revision": "1652066e0af45f2313b339670ef9555e8a54e545",
+      "ru.hardandheavy.llama-cpp-python.version": "0.3.36",
+      "ru.hardandheavy.llama-cpp.revision": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+      "ru.hardandheavy.llama-cpp.version": "v0.9.0"
+    },
+    "repo_digests": [
+      "gguf-rocm-colibri@sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc"
+    ]
+  },
+  "image_new": {
+    "requested_reference": "gguf-rocm-colibri:pr2775-b92eccd7",
+    "id": "sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141",
+    "labels": {
+      "com.amd.rocm.gpu-coverage": "multi-arch",
+      "com.amd.rocm.install-method": "packages",
+      "com.amd.rocm.release-type": "stable",
+      "org.opencontainers.image.base.digest": "sha256:a46fe7a3efd7c7f87a20d63f58bed76c499604d959597584ffb117c2b336c74c",
+      "org.opencontainers.image.base.name": "hardandheavy/transformers-rocm:3.0.1",
+      "org.opencontainers.image.created": "2026-11-08T07:26:32Z",
+      "org.opencontainers.image.description": "llama.cpp with ROCm support for AMD Radeon GPUs",
+      "org.opencontainers.image.documentation": "https://github.com/HardAndHeavy/llama-rocm-docker#readme",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "68e30f4f8403bc2353403246cc0685e414548574",
+      "org.opencontainers.image.source": "https://github.com/JustVugg/colibri",
+      "org.opencontainers.image.title": "gguf-rocm-colibri",
+      "org.opencontainers.image.url": "https://hub.docker.com/r/hardandheavy/llama-rocm",
+      "org.opencontainers.image.version": "3.0.2",
+      "ru.hardandheavy.amdgpu-targets": "gfx1030;gfx1100;gfx1101;gfx1200;gfx1201",
+      "ru.hardandheavy.colibri.revision": "b92eccd79ac60f196146f784c241ea076adda6f6",
+      "ru.hardandheavy.llama-cpp-python.revision": "1652066e0af45f2313b339670ef9555e8a54e545",
+      "ru.hardandheavy.llama-cpp-python.version": "0.3.36",
+      "ru.hardandheavy.llama-cpp.revision": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+      "ru.hardandheavy.llama-cpp.version": "v0.9.0"
+    },
+    "repo_digests": [
+      "gguf-rocm-colibri@sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141"
+    ]
+  },
+  "provenance": {
+    "sequence": [
+      "B",
+      "B",
+      "B",
+      "B"
+    ],
+    "process_plan": [
+      {
+        "build": "old",
+        "image": "sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc",
+        "profile": "B"
+      },
+      {
+        "build": "new",
+        "image": "sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141",
+        "profile": "B"
+      },
+      {
+        "build": "new",
+        "image": "sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141",
+        "profile": "B"
+      },
+      {
+        "build": "old",
+        "image": "sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc",
+        "profile": "B"
+      }
+    ],
+    "telemetry": true,
+    "telemetry_sha256": "fdddf33842865ad92e2371ac90208a0a36e05768bda4f0b604e24c4479cee70b",
+    "script_sha256": "8dadcea811b49cddc129f49f68fbf1b0b90b3d78dcb0c6e693caca6131c2d202",
+    "benchmark_sha256": "2f560566346ca289fdbcc8d9cdd82a9f8c3bf686378d74727b63f62281773416",
+    "image": "sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc",
+    "note": "Same snapshot restored to same path before every process. No page-cache flush, affinity, clock or power changes. Correctness short/decode, short warmup+3, decode warmup+3; no prefill. Thinking override absent. UUID corpus replayed across processes, fresh within each process."
+  },
+  "source_integrity": {
+    "unchanged": true
+  },
+  "new_vs_old_pair_percent": [
+    -30.679098844301343,
+    -33.86961657668041
+  ],
+  "toolchain_old_then_new": "HIP version: 7.16.26385-0000000\nAMD clang version 24.0.0git (https://github.com/ROCm/llvm-project.git d6f6cb691863e9258034ab48c1dfce21689d5606)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/venv/lib/python3.14/site-packages/_rocm_sdk_core/lib/llvm/bin\nConfiguration file: /opt/venv/lib/python3.14/site-packages/_rocm_sdk_core/lib/llvm/bin/clang++.cfg\n33f6b28e5a1c687860cd21702622a83db1aa83f3f0d6462dfe1e14ce09c95668  /app/c/qwen38\nafce42feec72ca6e63b292a4079471dbd2fadd0494af53996a55e82aa89a8507  /app/c/backend_cuda.cu\n33f02bfd53ca274e2d502fb4b31abff009ae24d94542b558b4e8b8f1d160c80e  /app/c/qwen38_cuda_chain.h\nHIP version: 7.16.26385-0000000\nAMD clang version 24.0.0git (https://github.com/ROCm/llvm-project.git d6f6cb691863e9258034ab48c1dfce21689d5606)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/venv/lib/python3.14/site-packages/_rocm_sdk_core/lib/llvm/bin\nConfiguration file: /opt/venv/lib/python3.14/site-packages/_rocm_sdk_core/lib/llvm/bin/clang++.cfg\n281f028f27bd0b91f7ada8fd89fcafee5f3d9472d8a3eaf5a7bd79987fefc83c  /app/c/qwen38\n723742ec5069d7a3d968073e365f25fe77104348934ee9871cb3b54236457bae  /app/c/backend_cuda.cu\nf229f22cbb8062112857736bffd0fa2ad89580af6893c47330b0e7f7b3d6bbed  /app/c/qwen38_cuda_chain.h\n",
+  "snapshot_manifest": [
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/.coli_analysis.json",
+      "bytes": 129567,
+      "sha256": "c93b22b1544aa4e751b5aa9db330dd314684016e1a6dea8227b780e3c9df540b"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/.coli_usage",
+      "bytes": 275342,
+      "sha256": "4b6822c8c43d50001b3e683d272fb91d066cb0ba42362f901de5e7e8ab601b37"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/.coli_vocab",
+      "bytes": 21762,
+      "sha256": "d985a4cb6facc45876192614beacc34093dce34cfd9eb3c033fde24c200c4a3f"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/config.json",
+      "bytes": 2443,
+      "sha256": "e2eff5d297c398e3fc3f10783ce0d53ebe3ad881ff8a667cd3f8034155f12919"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/generation_config.json",
+      "bytes": 94,
+      "sha256": "1cc61e37e3a5e79a4204b3556152fb08d97a952c807488f8c0d563fb1b648782"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/gguf.json",
+      "bytes": 179,
+      "sha256": "10e98b55db690f5c97ee425c71cedb125b97e48a9953c3d54494b70b82524409"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/tokenizer.json",
+      "bytes": 9839484,
+      "sha256": "aef33b834eb88f4b341793dea22e04777dad152cc02a144ffb238d15e4d14e10"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/tokenizer_config.json",
+      "bytes": 10416,
+      "sha256": "19f2cb457f4a10b3dcd27ce75a8cc8efc5c7bb219f1efba95f9cd230c3b8c6a2"
+    }
+  ],
+  "results": [
+    {
+      "index": 1,
+      "profile": "B",
+      "build": "old",
+      "image": "sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc",
+      "status": "completed",
+      "startup_s": 201.99043925299884,
+      "telemetry_error": null,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            39.68832064418546,
+            40.1545080926658,
+            40.28900477263271
+          ],
+          "median_decode_tps": 40.1545080926658,
+          "ttft_s": [
+            1.3425841859989305,
+            1.3240259979993425,
+            1.2805376970009092
+          ],
+          "completion_tokens": [
+            57,
+            55,
+            57
+          ],
+          "finish_reason": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            39.8871025175879,
+            39.68608806339987,
+            39.90445501258661
+          ],
+          "median_decode_tps": 39.8871025175879,
+          "ttft_s": [
+            1.8624754570009827,
+            1.8369880370009923,
+            1.902065008000136
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reason": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "telemetry_request_windows": {
+        "all_measured_decode": {
+          "cpu_busy_pct": {
+            "n": 20,
+            "min": 9.296482412060302,
+            "median": 27.80298524034992,
+            "max": 33.881163084702905,
+            "mean": 25.12368752781006
+          },
+          "gpu_busy_pct": {
+            "n": 20,
+            "min": 63,
+            "median": 99.0,
+            "max": 100,
+            "mean": 95.9
+          },
+          "mem_busy_pct": {
+            "n": 20,
+            "min": 3,
+            "median": 25.5,
+            "max": 27,
+            "mean": 19.1
+          },
+          "mem_available_GiB": {
+            "n": 20,
+            "min": 12.598384857177734,
+            "median": 12.694477081298828,
+            "max": 12.71316909790039,
+            "mean": 12.681783485412598
+          },
+          "freq1_input_MHz": {
+            "n": 20,
+            "min": 2281.0,
+            "median": 3251.0,
+            "max": 3271.0,
+            "mean": 3150.15
+          },
+          "freq2_input_MHz": {
+            "n": 20,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1244.6
+          },
+          "power1_average_W": {
+            "n": 20,
+            "min": 161.0,
+            "median": 263.0,
+            "max": 304.0,
+            "mean": 257.7
+          },
+          "power1_cap_W": {
+            "n": 20,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 20,
+            "min": 53.0,
+            "median": 58.5,
+            "max": 61.0,
+            "mean": 57.95
+          },
+          "temp2_input_C": {
+            "n": 20,
+            "min": 69.0,
+            "median": 76.0,
+            "max": 86.0,
+            "mean": 76.5
+          },
+          "temp3_input_C": {
+            "n": 20,
+            "min": 56.0,
+            "median": 63.0,
+            "max": 66.0,
+            "mean": 62.15
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 320,
+            "min": 1760.0,
+            "median": 3962.123,
+            "max": 4366.923,
+            "mean": 3675.606178125
+          }
+        },
+        "decode-run-1": {
+          "cpu_busy_pct": {
+            "n": 7,
+            "min": 15.040906230333544,
+            "median": 26.780088216761186,
+            "max": 32.55520504731861,
+            "mean": 24.887428127214626
+          },
+          "gpu_busy_pct": {
+            "n": 7,
+            "min": 97,
+            "median": 99,
+            "max": 100,
+            "mean": 99.14285714285714
+          },
+          "mem_busy_pct": {
+            "n": 7,
+            "min": 3,
+            "median": 27,
+            "max": 27,
+            "mean": 20.142857142857142
+          },
+          "mem_available_GiB": {
+            "n": 7,
+            "min": 12.598384857177734,
+            "median": 12.6429443359375,
+            "max": 12.684223175048828,
+            "mean": 12.649916512625557
+          },
+          "freq1_input_MHz": {
+            "n": 7,
+            "min": 3103.0,
+            "median": 3247.0,
+            "max": 3271.0,
+            "mean": 3225.1428571428573
+          },
+          "freq2_input_MHz": {
+            "n": 7,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1238.857142857143
+          },
+          "power1_average_W": {
+            "n": 7,
+            "min": 245.0,
+            "median": 256.0,
+            "max": 267.0,
+            "mean": 256.14285714285717
+          },
+          "power1_cap_W": {
+            "n": 7,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 7,
+            "min": 53.0,
+            "median": 55.0,
+            "max": 57.0,
+            "mean": 55.285714285714285
+          },
+          "temp2_input_C": {
+            "n": 7,
+            "min": 71.0,
+            "median": 72.0,
+            "max": 80.0,
+            "mean": 73.71428571428571
+          },
+          "temp3_input_C": {
+            "n": 7,
+            "min": 56.0,
+            "median": 60.0,
+            "max": 62.0,
+            "mean": 59.142857142857146
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 112,
+            "min": 1760.0,
+            "median": 3966.382,
+            "max": 4341.9,
+            "mean": 3698.677392857143
+          }
+        },
+        "decode-run-2": {
+          "cpu_busy_pct": {
+            "n": 7,
+            "min": 9.296482412060302,
+            "median": 28.481411468178955,
+            "max": 33.881163084702905,
+            "mean": 24.724574061577627
+          },
+          "gpu_busy_pct": {
+            "n": 7,
+            "min": 63,
+            "median": 99,
+            "max": 100,
+            "mean": 94
+          },
+          "mem_busy_pct": {
+            "n": 7,
+            "min": 5,
+            "median": 25,
+            "max": 27,
+            "mean": 18.571428571428573
+          },
+          "mem_available_GiB": {
+            "n": 7,
+            "min": 12.681903839111328,
+            "median": 12.697559356689453,
+            "max": 12.71316909790039,
+            "mean": 12.698598044259208
+          },
+          "freq1_input_MHz": {
+            "n": 7,
+            "min": 2356.0,
+            "median": 3261.0,
+            "max": 3262.0,
+            "mean": 3125.0
+          },
+          "freq2_input_MHz": {
+            "n": 7,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1238.857142857143
+          },
+          "power1_average_W": {
+            "n": 7,
+            "min": 164.0,
+            "median": 265.0,
+            "max": 303.0,
+            "mean": 259.2857142857143
+          },
+          "power1_cap_W": {
+            "n": 7,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 7,
+            "min": 57.0,
+            "median": 59.0,
+            "max": 59.0,
+            "mean": 58.42857142857143
+          },
+          "temp2_input_C": {
+            "n": 7,
+            "min": 71.0,
+            "median": 76.0,
+            "max": 84.0,
+            "mean": 77.14285714285714
+          },
+          "temp3_input_C": {
+            "n": 7,
+            "min": 60.0,
+            "median": 64.0,
+            "max": 64.0,
+            "mean": 62.714285714285715
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 112,
+            "min": 1760.0,
+            "median": 3947.842,
+            "max": 4366.365,
+            "mean": 3671.629705357143
+          }
+        },
+        "decode-run-3": {
+          "cpu_busy_pct": {
+            "n": 6,
+            "min": 17.054751415984896,
+            "median": 29.908302807332596,
+            "max": 30.580075662042876,
+            "mean": 25.86495587244257
+          },
+          "gpu_busy_pct": {
+            "n": 6,
+            "min": 71,
+            "median": 99.0,
+            "max": 100,
+            "mean": 94.33333333333333
+          },
+          "mem_busy_pct": {
+            "n": 6,
+            "min": 5,
+            "median": 22.0,
+            "max": 26,
+            "mean": 18.5
+          },
+          "mem_available_GiB": {
+            "n": 6,
+            "min": 12.69424057006836,
+            "median": 12.698278427124023,
+            "max": 12.706001281738281,
+            "mean": 12.699344635009766
+          },
+          "freq1_input_MHz": {
+            "n": 6,
+            "min": 2281.0,
+            "median": 3255.5,
+            "max": 3258.0,
+            "mean": 3092.0
+          },
+          "freq2_input_MHz": {
+            "n": 6,
+            "min": 1258.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1258.0
+          },
+          "power1_average_W": {
+            "n": 6,
+            "min": 161.0,
+            "median": 265.5,
+            "max": 304.0,
+            "mean": 257.6666666666667
+          },
+          "power1_cap_W": {
+            "n": 6,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 6,
+            "min": 60.0,
+            "median": 60.5,
+            "max": 61.0,
+            "mean": 60.5
+          },
+          "temp2_input_C": {
+            "n": 6,
+            "min": 69.0,
+            "median": 78.0,
+            "max": 86.0,
+            "mean": 79.0
+          },
+          "temp3_input_C": {
+            "n": 6,
+            "min": 63.0,
+            "median": 65.5,
+            "max": 66.0,
+            "mean": 65.0
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 96,
+            "min": 1760.0,
+            "median": 3952.907,
+            "max": 4366.923,
+            "mean": 3653.3289791666666
+          }
+        }
+      },
+      "telemetry_samples": 260,
+      "telemetry_errors": [],
+      "gpu_performance_levels": [
+        "auto"
+      ],
+      "cpu_governors": [
+        "powersave"
+      ],
+      "selected_log_lines": [
+        "2026-11-13T09:32:47.355332422Z [qtier] qwen38: warm start, 19186 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 60.8 s",
+        "2026-11-13T09:34:53.566765576Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (28.2 s to allocate, 98.0 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T09:35:42.387196656Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1279 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T09:35:42.387185625Z [chain] qwen38: 61392 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 17085 slots from the host pool"
+      ],
+      "snapshot_matches": true,
+      "environment_public": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "COLI_CUDA_CHAIN_POOL_READ": "1"
+      },
+      "container_observation": "Only current test container and the pre-existing controller appeared in sampled docker ps; not a host-workload exclusion.",
+      "requests": [
+        {
+          "case": "short",
+          "prompt_sha256": "44e7e091188ab66adc53cd46ea40f9a8eabfe18b338edc29e0d0e119daabbfaf",
+          "http_status": 200,
+          "total_s": 2.701250231000813,
+          "ttft_s": 1.280898254000931,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 106,
+            "completion_tokens": 55,
+            "total_tokens": 161
+          },
+          "content_chars": 8,
+          "reasoning_chars": 195,
+          "decode_tps": 38.733949611597325,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "cddbc747b30a15ece55a83c7a74ff47e1f3756112f29fb1f0924fe7f828b1087",
+          "http_status": 200,
+          "total_s": 2.779706884999541,
+          "ttft_s": 1.3425841859989305,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 57,
+            "total_tokens": 164
+          },
+          "content_chars": 8,
+          "reasoning_chars": 205,
+          "decode_tps": 39.68832064418546,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "b87cd9835dc620baa387e3f72f8698a702d39ef967763f73c0408aa4856e2d05",
+          "http_status": 200,
+          "total_s": 2.6948220300000685,
+          "ttft_s": 1.3240259979993425,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 113,
+            "completion_tokens": 55,
+            "total_tokens": 168
+          },
+          "content_chars": 8,
+          "reasoning_chars": 195,
+          "decode_tps": 40.1545080926658,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "a407dcd1af8dde29186f718ead2b971a96a82fba99d2ec57ab4794c51f68479e",
+          "http_status": 200,
+          "total_s": 2.6965934460004064,
+          "ttft_s": 1.2805376970009092,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 57,
+            "total_tokens": 164
+          },
+          "content_chars": 8,
+          "reasoning_chars": 205,
+          "decode_tps": 40.28900477263271,
+          "phase": "run",
+          "run": 3
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "4e82351513a508780c5b3e02c55db7c6b0492b9349613f4932521cfe9ec9508b",
+          "http_status": 200,
+          "total_s": 6.730772250999507,
+          "ttft_s": 1.8463100619992474,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 161,
+            "completion_tokens": 192,
+            "total_tokens": 353
+          },
+          "content_chars": 0,
+          "reasoning_chars": 738,
+          "decode_tps": 39.11828946021894,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "9e670d9b4ae1943a4f67e17cb8457a873ccd9a66cbb9d63882048a5ef6748da4",
+          "http_status": 200,
+          "total_s": 6.652585163999902,
+          "ttft_s": 1.8624754570009827,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 703,
+          "decode_tps": 39.8871025175879,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "c4fc958c5a110dc28c93e2e8a6d57cbe7bdc063d0e6cd9cfb1ddf4d30d4bd94f",
+          "http_status": 200,
+          "total_s": 6.651589233000777,
+          "ttft_s": 1.8369880370009923,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 159,
+            "completion_tokens": 192,
+            "total_tokens": 351
+          },
+          "content_chars": 0,
+          "reasoning_chars": 738,
+          "decode_tps": 39.68608806339987,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "a6c0717062b0a47844efa13084fb5d58e665f8bf2994dc8c99511b9b162a5610",
+          "http_status": 200,
+          "total_s": 6.6902844149990415,
+          "ttft_s": 1.902065008000136,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 714,
+          "decode_tps": 39.90445501258661,
+          "phase": "run",
+          "run": 3
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "profile": "B",
+      "build": "new",
+      "image": "sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141",
+      "status": "completed",
+      "startup_s": 214.52375677300006,
+      "telemetry_error": null,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            27.277375924881923,
+            27.404606961065237,
+            27.31111658956047
+          ],
+          "median_decode_tps": 27.31111658956047,
+          "ttft_s": [
+            1.2563104629989539,
+            1.314981674999217,
+            1.2597535980003158
+          ],
+          "completion_tokens": [
+            58,
+            55,
+            57
+          ],
+          "finish_reason": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            27.5912550272385,
+            27.650098910089298,
+            27.651354225940093
+          ],
+          "median_decode_tps": 27.650098910089298,
+          "ttft_s": [
+            1.8977377820010588,
+            1.8671786089998932,
+            1.9018048090001685
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reason": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "telemetry_request_windows": {
+        "all_measured_decode": {
+          "cpu_busy_pct": {
+            "n": 27,
+            "min": 9.905956112852664,
+            "median": 24.87405541561713,
+            "max": 31.38364779874214,
+            "mean": 23.242824310379934
+          },
+          "gpu_busy_pct": {
+            "n": 27,
+            "min": 93,
+            "median": 100,
+            "max": 100,
+            "mean": 98.88888888888889
+          },
+          "mem_busy_pct": {
+            "n": 27,
+            "min": 4,
+            "median": 19,
+            "max": 19,
+            "mean": 15.555555555555555
+          },
+          "mem_available_GiB": {
+            "n": 27,
+            "min": 12.748950958251953,
+            "median": 12.777076721191406,
+            "max": 12.841255187988281,
+            "mean": 12.77860556708442
+          },
+          "freq1_input_MHz": {
+            "n": 27,
+            "min": 3163.0,
+            "median": 3281.0,
+            "max": 3289.0,
+            "mean": 3263.296296296296
+          },
+          "freq2_input_MHz": {
+            "n": 27,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1248.0740740740741
+          },
+          "power1_average_W": {
+            "n": 27,
+            "min": 193.0,
+            "median": 221.0,
+            "max": 308.0,
+            "mean": 236.59259259259258
+          },
+          "power1_cap_W": {
+            "n": 27,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 27,
+            "min": 60.0,
+            "median": 63.0,
+            "max": 65.0,
+            "mean": 63.18518518518518
+          },
+          "temp2_input_C": {
+            "n": 27,
+            "min": 73.0,
+            "median": 76.0,
+            "max": 90.0,
+            "mean": 78.18518518518519
+          },
+          "temp3_input_C": {
+            "n": 27,
+            "min": 64.0,
+            "median": 68.0,
+            "max": 70.0,
+            "mean": 67.85185185185185
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 432,
+            "min": 1760.0,
+            "median": 3966.38,
+            "max": 4391.9,
+            "mean": 3650.6079907407407
+          }
+        },
+        "decode-run-1": {
+          "cpu_busy_pct": {
+            "n": 9,
+            "min": 16.760828625235405,
+            "median": 26.557583385777217,
+            "max": 31.38364779874214,
+            "mean": 25.167777758191274
+          },
+          "gpu_busy_pct": {
+            "n": 9,
+            "min": 95,
+            "median": 100,
+            "max": 100,
+            "mean": 99
+          },
+          "mem_busy_pct": {
+            "n": 9,
+            "min": 5,
+            "median": 19,
+            "max": 19,
+            "mean": 15.666666666666666
+          },
+          "mem_available_GiB": {
+            "n": 9,
+            "min": 12.763118743896484,
+            "median": 12.785457611083984,
+            "max": 12.803058624267578,
+            "mean": 12.786666022406685
+          },
+          "freq1_input_MHz": {
+            "n": 9,
+            "min": 3163.0,
+            "median": 3286.0,
+            "max": 3289.0,
+            "mean": 3258.777777777778
+          },
+          "freq2_input_MHz": {
+            "n": 9,
+            "min": 1258.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1258.0
+          },
+          "power1_average_W": {
+            "n": 9,
+            "min": 193.0,
+            "median": 219.0,
+            "max": 301.0,
+            "mean": 231.88888888888889
+          },
+          "power1_cap_W": {
+            "n": 9,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 9,
+            "min": 60.0,
+            "median": 61.0,
+            "max": 62.0,
+            "mean": 61.333333333333336
+          },
+          "temp2_input_C": {
+            "n": 9,
+            "min": 73.0,
+            "median": 74.0,
+            "max": 87.0,
+            "mean": 76.11111111111111
+          },
+          "temp3_input_C": {
+            "n": 9,
+            "min": 64.0,
+            "median": 66.0,
+            "max": 68.0,
+            "mean": 66.0
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 144,
+            "min": 1760.0,
+            "median": 3967.0065,
+            "max": 4391.9,
+            "mean": 3713.432840277778
+          }
+        },
+        "decode-run-2": {
+          "cpu_busy_pct": {
+            "n": 9,
+            "min": 9.905956112852664,
+            "median": 20.50473186119874,
+            "max": 28.58040201005025,
+            "mean": 20.65115529320676
+          },
+          "gpu_busy_pct": {
+            "n": 9,
+            "min": 93,
+            "median": 100,
+            "max": 100,
+            "mean": 98.55555555555556
+          },
+          "mem_busy_pct": {
+            "n": 9,
+            "min": 4,
+            "median": 19,
+            "max": 19,
+            "mean": 15.333333333333334
+          },
+          "mem_available_GiB": {
+            "n": 9,
+            "min": 12.748950958251953,
+            "median": 12.755836486816406,
+            "max": 12.766956329345703,
+            "mean": 12.755982716878256
+          },
+          "freq1_input_MHz": {
+            "n": 9,
+            "min": 3208.0,
+            "median": 3283.0,
+            "max": 3288.0,
+            "mean": 3269.3333333333335
+          },
+          "freq2_input_MHz": {
+            "n": 9,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1243.111111111111
+          },
+          "power1_average_W": {
+            "n": 9,
+            "min": 209.0,
+            "median": 221.0,
+            "max": 308.0,
+            "mean": 237.0
+          },
+          "power1_cap_W": {
+            "n": 9,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 9,
+            "min": 63.0,
+            "median": 63.0,
+            "max": 64.0,
+            "mean": 63.333333333333336
+          },
+          "temp2_input_C": {
+            "n": 9,
+            "min": 75.0,
+            "median": 76.0,
+            "max": 89.0,
+            "mean": 78.66666666666667
+          },
+          "temp3_input_C": {
+            "n": 9,
+            "min": 66.0,
+            "median": 68.0,
+            "max": 70.0,
+            "mean": 68.0
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 144,
+            "min": 1760.0,
+            "median": 3966.878,
+            "max": 3981.598,
+            "mean": 3738.9575416666667
+          }
+        },
+        "decode-run-3": {
+          "cpu_busy_pct": {
+            "n": 9,
+            "min": 14.276729559748428,
+            "median": 25.91194968553459,
+            "max": 27.42749054224464,
+            "mean": 23.90953987974177
+          },
+          "gpu_busy_pct": {
+            "n": 9,
+            "min": 98,
+            "median": 99,
+            "max": 100,
+            "mean": 99.11111111111111
+          },
+          "mem_busy_pct": {
+            "n": 9,
+            "min": 4,
+            "median": 19,
+            "max": 19,
+            "mean": 15.666666666666666
+          },
+          "mem_available_GiB": {
+            "n": 9,
+            "min": 12.772972106933594,
+            "median": 12.783496856689453,
+            "max": 12.841255187988281,
+            "mean": 12.793167961968315
+          },
+          "freq1_input_MHz": {
+            "n": 9,
+            "min": 3199.0,
+            "median": 3280.0,
+            "max": 3283.0,
+            "mean": 3261.777777777778
+          },
+          "freq2_input_MHz": {
+            "n": 9,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1243.111111111111
+          },
+          "power1_average_W": {
+            "n": 9,
+            "min": 218.0,
+            "median": 226.0,
+            "max": 300.0,
+            "mean": 240.88888888888889
+          },
+          "power1_cap_W": {
+            "n": 9,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 9,
+            "min": 64.0,
+            "median": 65.0,
+            "max": 65.0,
+            "mean": 64.88888888888889
+          },
+          "temp2_input_C": {
+            "n": 9,
+            "min": 77.0,
+            "median": 77.0,
+            "max": 90.0,
+            "mean": 79.77777777777777
+          },
+          "temp3_input_C": {
+            "n": 9,
+            "min": 68.0,
+            "median": 70.0,
+            "max": 70.0,
+            "mean": 69.55555555555556
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 144,
+            "min": 1760.0,
+            "median": 3947.8415,
+            "max": 4341.956,
+            "mean": 3499.433590277778
+          }
+        }
+      },
+      "telemetry_samples": 286,
+      "telemetry_errors": [],
+      "gpu_performance_levels": [
+        "auto"
+      ],
+      "cpu_governors": [
+        "powersave"
+      ],
+      "selected_log_lines": [
+        "2026-11-13T09:37:18.100119754Z [qtier] qwen38: warm start, 19186 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 71.2 s",
+        "2026-11-13T09:39:25.765376087Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (32.2 s to allocate, 95.4 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T09:40:28.347202664Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1288 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T09:40:28.347191914Z [chain] qwen38: 61824 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 17341 slots from the host pool"
+      ],
+      "snapshot_matches": true,
+      "environment_public": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "COLI_CUDA_CHAIN_POOL_READ": "1"
+      },
+      "container_observation": "Only current test container and the pre-existing controller appeared in sampled docker ps; not a host-workload exclusion.",
+      "requests": [
+        {
+          "case": "short",
+          "prompt_sha256": "44e7e091188ab66adc53cd46ea40f9a8eabfe18b338edc29e0d0e119daabbfaf",
+          "http_status": 200,
+          "total_s": 3.6063732519996847,
+          "ttft_s": 1.2938313899994682,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 106,
+            "completion_tokens": 63,
+            "total_tokens": 169
+          },
+          "content_chars": 8,
+          "reasoning_chars": 234,
+          "decode_tps": 27.261406434072885,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "cddbc747b30a15ece55a83c7a74ff47e1f3756112f29fb1f0924fe7f828b1087",
+          "http_status": 200,
+          "total_s": 3.3838377079991915,
+          "ttft_s": 1.2563104629989539,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 58,
+            "total_tokens": 165
+          },
+          "content_chars": 8,
+          "reasoning_chars": 215,
+          "decode_tps": 27.277375924881923,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "b87cd9835dc620baa387e3f72f8698a702d39ef967763f73c0408aa4856e2d05",
+          "http_status": 200,
+          "total_s": 3.32257873799972,
+          "ttft_s": 1.314981674999217,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 113,
+            "completion_tokens": 55,
+            "total_tokens": 168
+          },
+          "content_chars": 8,
+          "reasoning_chars": 195,
+          "decode_tps": 27.404606961065237,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "a407dcd1af8dde29186f718ead2b971a96a82fba99d2ec57ab4794c51f68479e",
+          "http_status": 200,
+          "total_s": 3.3478235219990893,
+          "ttft_s": 1.2597535980003158,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 57,
+            "total_tokens": 164
+          },
+          "content_chars": 8,
+          "reasoning_chars": 205,
+          "decode_tps": 27.31111658956047,
+          "phase": "run",
+          "run": 3
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "4e82351513a508780c5b3e02c55db7c6b0492b9349613f4932521cfe9ec9508b",
+          "http_status": 200,
+          "total_s": 8.807940573999076,
+          "ttft_s": 1.851588413999707,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 161,
+            "completion_tokens": 192,
+            "total_tokens": 353
+          },
+          "content_chars": 0,
+          "reasoning_chars": 720,
+          "decode_tps": 27.46365425594026,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "9e670d9b4ae1943a4f67e17cb8457a873ccd9a66cbb9d63882048a5ef6748da4",
+          "http_status": 200,
+          "total_s": 8.82171774500057,
+          "ttft_s": 1.8977377820010588,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 703,
+          "decode_tps": 27.5912550272385,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "c4fc958c5a110dc28c93e2e8a6d57cbe7bdc063d0e6cd9cfb1ddf4d30d4bd94f",
+          "http_status": 200,
+          "total_s": 8.776573172999633,
+          "ttft_s": 1.8671786089998932,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 159,
+            "completion_tokens": 192,
+            "total_tokens": 351
+          },
+          "content_chars": 0,
+          "reasoning_chars": 738,
+          "decode_tps": 27.650098910089298,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "a6c0717062b0a47844efa13084fb5d58e665f8bf2994dc8c99511b9b162a5610",
+          "http_status": 200,
+          "total_s": 8.81079055599912,
+          "ttft_s": 1.9018048090001685,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 728,
+          "decode_tps": 27.651354225940093,
+          "phase": "run",
+          "run": 3
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "profile": "B",
+      "build": "new",
+      "image": "sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141",
+      "status": "completed",
+      "startup_s": 205.34263051900052,
+      "telemetry_error": null,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            26.25661760391839,
+            27.317010851399484,
+            24.168547187517966
+          ],
+          "median_decode_tps": 26.25661760391839,
+          "ttft_s": [
+            1.4319619180023437,
+            1.496928040000057,
+            1.4311377699996228
+          ],
+          "completion_tokens": [
+            58,
+            55,
+            57
+          ],
+          "finish_reason": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            27.024533301605423,
+            26.691435461673933,
+            26.917323158787926
+          ],
+          "median_decode_tps": 26.917323158787926,
+          "ttft_s": [
+            1.9175706429996353,
+            2.275013141999807,
+            1.9488460819993634
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reason": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "telemetry_request_windows": {
+        "all_measured_decode": {
+          "cpu_busy_pct": {
+            "n": 27,
+            "min": 9.817495280050347,
+            "median": 25.650793650793652,
+            "max": 36.35782747603834,
+            "mean": 25.803185008132104
+          },
+          "gpu_busy_pct": {
+            "n": 27,
+            "min": 36,
+            "median": 100,
+            "max": 100,
+            "mean": 96.37037037037037
+          },
+          "mem_busy_pct": {
+            "n": 27,
+            "min": 0,
+            "median": 18,
+            "max": 19,
+            "mean": 15.444444444444445
+          },
+          "mem_available_GiB": {
+            "n": 27,
+            "min": 12.530769348144531,
+            "median": 12.581794738769531,
+            "max": 12.937232971191406,
+            "mean": 12.675257506193939
+          },
+          "freq1_input_MHz": {
+            "n": 27,
+            "min": 1771.0,
+            "median": 3280.0,
+            "max": 3290.0,
+            "mean": 3172.925925925926
+          },
+          "freq2_input_MHz": {
+            "n": 27,
+            "min": 875.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1228.9259259259259
+          },
+          "power1_average_W": {
+            "n": 27,
+            "min": 51.0,
+            "median": 218.0,
+            "max": 310.0,
+            "mean": 220.37037037037038
+          },
+          "power1_cap_W": {
+            "n": 27,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 27,
+            "min": 61.0,
+            "median": 64.0,
+            "max": 65.0,
+            "mean": 63.74074074074074
+          },
+          "temp2_input_C": {
+            "n": 27,
+            "min": 66.0,
+            "median": 76.0,
+            "max": 91.0,
+            "mean": 77.07407407407408
+          },
+          "temp3_input_C": {
+            "n": 27,
+            "min": 64.0,
+            "median": 68.0,
+            "max": 71.0,
+            "mean": 68.33333333333333
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 432,
+            "min": 1760.0,
+            "median": 3967.2155000000002,
+            "max": 4366.928,
+            "mean": 3846.6537824074076
+          }
+        },
+        "decode-run-1": {
+          "cpu_busy_pct": {
+            "n": 9,
+            "min": 21.206349206349206,
+            "median": 27.74968394437421,
+            "max": 34.037108125399875,
+            "mean": 27.219658998683954
+          },
+          "gpu_busy_pct": {
+            "n": 9,
+            "min": 95,
+            "median": 99,
+            "max": 100,
+            "mean": 98.66666666666667
+          },
+          "mem_busy_pct": {
+            "n": 9,
+            "min": 4,
+            "median": 18,
+            "max": 19,
+            "mean": 15.444444444444445
+          },
+          "mem_available_GiB": {
+            "n": 9,
+            "min": 12.671428680419922,
+            "median": 12.895587921142578,
+            "max": 12.937232971191406,
+            "mean": 12.875032212999132
+          },
+          "freq1_input_MHz": {
+            "n": 9,
+            "min": 3220.0,
+            "median": 3283.0,
+            "max": 3290.0,
+            "mean": 3271.6666666666665
+          },
+          "freq2_input_MHz": {
+            "n": 9,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1228.2222222222222
+          },
+          "power1_average_W": {
+            "n": 9,
+            "min": 210.0,
+            "median": 218.0,
+            "max": 305.0,
+            "mean": 234.55555555555554
+          },
+          "power1_cap_W": {
+            "n": 9,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 9,
+            "min": 61.0,
+            "median": 62.0,
+            "max": 63.0,
+            "mean": 62.333333333333336
+          },
+          "temp2_input_C": {
+            "n": 9,
+            "min": 74.0,
+            "median": 74.0,
+            "max": 87.0,
+            "mean": 77.0
+          },
+          "temp3_input_C": {
+            "n": 9,
+            "min": 64.0,
+            "median": 67.0,
+            "max": 68.0,
+            "mean": 66.55555555555556
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 144,
+            "min": 1760.0,
+            "median": 3967.0465000000004,
+            "max": 4326.666,
+            "mean": 3894.9673055555554
+          }
+        },
+        "decode-run-2": {
+          "cpu_busy_pct": {
+            "n": 9,
+            "min": 20.599489795918366,
+            "median": 27.982233502538072,
+            "max": 36.35782747603834,
+            "mean": 27.657790561949547
+          },
+          "gpu_busy_pct": {
+            "n": 9,
+            "min": 36,
+            "median": 100,
+            "max": 100,
+            "mean": 92.22222222222223
+          },
+          "mem_busy_pct": {
+            "n": 9,
+            "min": 0,
+            "median": 19,
+            "max": 19,
+            "mean": 15
+          },
+          "mem_available_GiB": {
+            "n": 9,
+            "min": 12.543514251708984,
+            "median": 12.561744689941406,
+            "max": 12.61199951171875,
+            "mean": 12.567598130967882
+          },
+          "freq1_input_MHz": {
+            "n": 9,
+            "min": 1771.0,
+            "median": 3273.0,
+            "max": 3287.0,
+            "mean": 3095.0
+          },
+          "freq2_input_MHz": {
+            "n": 9,
+            "min": 875.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1215.4444444444443
+          },
+          "power1_average_W": {
+            "n": 9,
+            "min": 51.0,
+            "median": 214.0,
+            "max": 301.0,
+            "mean": 206.11111111111111
+          },
+          "power1_cap_W": {
+            "n": 9,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 9,
+            "min": 64.0,
+            "median": 64.0,
+            "max": 64.0,
+            "mean": 64.0
+          },
+          "temp2_input_C": {
+            "n": 9,
+            "min": 66.0,
+            "median": 76.0,
+            "max": 89.0,
+            "mean": 76.22222222222223
+          },
+          "temp3_input_C": {
+            "n": 9,
+            "min": 66.0,
+            "median": 70.0,
+            "max": 70.0,
+            "mean": 68.66666666666667
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 144,
+            "min": 1760.0,
+            "median": 3967.306,
+            "max": 4366.928,
+            "mean": 3838.5915416666667
+          }
+        },
+        "decode-run-3": {
+          "cpu_busy_pct": {
+            "n": 9,
+            "min": 9.817495280050347,
+            "median": 23.96694214876033,
+            "max": 30.42091836734694,
+            "mean": 22.53210546376281
+          },
+          "gpu_busy_pct": {
+            "n": 9,
+            "min": 87,
+            "median": 100,
+            "max": 100,
+            "mean": 98.22222222222223
+          },
+          "mem_busy_pct": {
+            "n": 9,
+            "min": 5,
+            "median": 18,
+            "max": 19,
+            "mean": 15.88888888888889
+          },
+          "mem_available_GiB": {
+            "n": 9,
+            "min": 12.530769348144531,
+            "median": 12.580955505371094,
+            "max": 12.7320556640625,
+            "mean": 12.5831421746148
+          },
+          "freq1_input_MHz": {
+            "n": 9,
+            "min": 2192.0,
+            "median": 3280.0,
+            "max": 3289.0,
+            "mean": 3152.1111111111113
+          },
+          "freq2_input_MHz": {
+            "n": 9,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1243.111111111111
+          },
+          "power1_average_W": {
+            "n": 9,
+            "min": 142.0,
+            "median": 220.0,
+            "max": 310.0,
+            "mean": 220.44444444444446
+          },
+          "power1_cap_W": {
+            "n": 9,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 9,
+            "min": 64.0,
+            "median": 65.0,
+            "max": 65.0,
+            "mean": 64.88888888888889
+          },
+          "temp2_input_C": {
+            "n": 9,
+            "min": 70.0,
+            "median": 77.0,
+            "max": 91.0,
+            "mean": 78.0
+          },
+          "temp3_input_C": {
+            "n": 9,
+            "min": 68.0,
+            "median": 70.0,
+            "max": 71.0,
+            "mean": 69.77777777777777
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 144,
+            "min": 1760.0,
+            "median": 3967.173,
+            "max": 4294.078,
+            "mean": 3806.4025
+          }
+        }
+      },
+      "telemetry_samples": 281,
+      "telemetry_errors": [],
+      "gpu_performance_levels": [
+        "auto"
+      ],
+      "cpu_governors": [
+        "powersave"
+      ],
+      "selected_log_lines": [
+        "2026-11-13T09:42:01.144379816Z [qtier] qwen38: warm start, 19186 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 70.1 s",
+        "2026-11-13T09:44:01.069751136Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (22.4 s to allocate, 97.6 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T09:45:07.057139045Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1288 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T09:45:07.057126411Z [chain] qwen38: 61824 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 17341 slots from the host pool"
+      ],
+      "snapshot_matches": true,
+      "environment_public": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "COLI_CUDA_CHAIN_POOL_READ": "1"
+      },
+      "container_observation": "Only current test container and the pre-existing controller appeared in sampled docker ps; not a host-workload exclusion.",
+      "requests": [
+        {
+          "case": "short",
+          "prompt_sha256": "44e7e091188ab66adc53cd46ea40f9a8eabfe18b338edc29e0d0e119daabbfaf",
+          "http_status": 200,
+          "total_s": 3.945326490000298,
+          "ttft_s": 1.617277869998361,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 106,
+            "completion_tokens": 63,
+            "total_tokens": 169
+          },
+          "content_chars": 8,
+          "reasoning_chars": 234,
+          "decode_tps": 27.084550823000722,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "cddbc747b30a15ece55a83c7a74ff47e1f3756112f29fb1f0924fe7f828b1087",
+          "http_status": 200,
+          "total_s": 3.637036831001751,
+          "ttft_s": 1.4319619180023437,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 58,
+            "total_tokens": 165
+          },
+          "content_chars": 8,
+          "reasoning_chars": 215,
+          "decode_tps": 26.25661760391839,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "b87cd9835dc620baa387e3f72f8698a702d39ef967763f73c0408aa4856e2d05",
+          "http_status": 200,
+          "total_s": 3.5118503580015386,
+          "ttft_s": 1.496928040000057,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 113,
+            "completion_tokens": 55,
+            "total_tokens": 168
+          },
+          "content_chars": 8,
+          "reasoning_chars": 195,
+          "decode_tps": 27.317010851399484,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "a407dcd1af8dde29186f718ead2b971a96a82fba99d2ec57ab4794c51f68479e",
+          "http_status": 200,
+          "total_s": 3.7889845650024654,
+          "ttft_s": 1.4311377699996228,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 57,
+            "total_tokens": 164
+          },
+          "content_chars": 8,
+          "reasoning_chars": 205,
+          "decode_tps": 24.168547187517966,
+          "phase": "run",
+          "run": 3
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "4e82351513a508780c5b3e02c55db7c6b0492b9349613f4932521cfe9ec9508b",
+          "http_status": 200,
+          "total_s": 8.896325059999072,
+          "ttft_s": 1.8883791379994364,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 161,
+            "completion_tokens": 192,
+            "total_tokens": 353
+          },
+          "content_chars": 0,
+          "reasoning_chars": 720,
+          "decode_tps": 27.26060602915448,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "9e670d9b4ae1943a4f67e17cb8457a873ccd9a66cbb9d63882048a5ef6748da4",
+          "http_status": 200,
+          "total_s": 8.986707608997676,
+          "ttft_s": 1.9175706429996353,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 703,
+          "decode_tps": 27.024533301605423,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "c4fc958c5a110dc28c93e2e8a6d57cbe7bdc063d0e6cd9cfb1ddf4d30d4bd94f",
+          "http_status": 200,
+          "total_s": 9.432475853998767,
+          "ttft_s": 2.275013141999807,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 159,
+            "completion_tokens": 192,
+            "total_tokens": 351
+          },
+          "content_chars": 0,
+          "reasoning_chars": 738,
+          "decode_tps": 26.691435461673933,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "a6c0717062b0a47844efa13084fb5d58e665f8bf2994dc8c99511b9b162a5610",
+          "http_status": 200,
+          "total_s": 9.046260146002169,
+          "ttft_s": 1.9488460819993634,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 728,
+          "decode_tps": 26.917323158787926,
+          "phase": "run",
+          "run": 3
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "profile": "B",
+      "build": "old",
+      "image": "sha256:e888c06f9db6a2d55997c43f2b0bd45c0face5d3ff428eba2b8a19dc65a299cc",
+      "status": "completed",
+      "startup_s": 215.33241211899804,
+      "telemetry_error": null,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            40.607987693753294,
+            40.68396100209528,
+            40.718748383185705
+          ],
+          "median_decode_tps": 40.68396100209528,
+          "ttft_s": [
+            1.272273567999946,
+            1.3118429809983354,
+            1.2727173430030234
+          ],
+          "completion_tokens": [
+            57,
+            55,
+            57
+          ],
+          "finish_reason": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            40.70798630716608,
+            40.70341311418445,
+            40.146047714767256
+          ],
+          "median_decode_tps": 40.70341311418445,
+          "ttft_s": [
+            1.9007994160019734,
+            1.8656102599998121,
+            1.900589521999791
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reason": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "telemetry_request_windows": {
+        "all_measured_decode": {
+          "cpu_busy_pct": {
+            "n": 20,
+            "min": 10.529634300126103,
+            "median": 29.124401181746492,
+            "max": 34.58001226241569,
+            "mean": 26.193759765808473
+          },
+          "gpu_busy_pct": {
+            "n": 20,
+            "min": 83,
+            "median": 99.0,
+            "max": 100,
+            "mean": 97.55
+          },
+          "mem_busy_pct": {
+            "n": 20,
+            "min": 5,
+            "median": 25.5,
+            "max": 27,
+            "mean": 20.45
+          },
+          "mem_available_GiB": {
+            "n": 20,
+            "min": 11.957420349121094,
+            "median": 12.029947280883789,
+            "max": 12.041496276855469,
+            "mean": 12.026644897460937
+          },
+          "freq1_input_MHz": {
+            "n": 20,
+            "min": 3096.0,
+            "median": 3243.5,
+            "max": 3259.0,
+            "mean": 3221.05
+          },
+          "freq2_input_MHz": {
+            "n": 20,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1251.3
+          },
+          "power1_average_W": {
+            "n": 20,
+            "min": 226.0,
+            "median": 269.0,
+            "max": 309.0,
+            "mean": 271.35
+          },
+          "power1_cap_W": {
+            "n": 20,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 20,
+            "min": 60.0,
+            "median": 63.0,
+            "max": 65.0,
+            "mean": 63.1
+          },
+          "temp2_input_C": {
+            "n": 20,
+            "min": 75.0,
+            "median": 80.5,
+            "max": 90.0,
+            "mean": 81.75
+          },
+          "temp3_input_C": {
+            "n": 20,
+            "min": 64.0,
+            "median": 68.0,
+            "max": 72.0,
+            "mean": 68.4
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 320,
+            "min": 1760.0,
+            "median": 3966.761,
+            "max": 4367.81,
+            "mean": 3818.3995375
+          }
+        },
+        "decode-run-1": {
+          "cpu_busy_pct": {
+            "n": 7,
+            "min": 12.0125786163522,
+            "median": 28.67924528301887,
+            "max": 34.38485804416404,
+            "mean": 25.40008851154255
+          },
+          "gpu_busy_pct": {
+            "n": 7,
+            "min": 83,
+            "median": 99,
+            "max": 100,
+            "mean": 96.57142857142857
+          },
+          "mem_busy_pct": {
+            "n": 7,
+            "min": 5,
+            "median": 26,
+            "max": 27,
+            "mean": 22.571428571428573
+          },
+          "mem_available_GiB": {
+            "n": 7,
+            "min": 12.020248413085938,
+            "median": 12.036941528320312,
+            "max": 12.041496276855469,
+            "mean": 12.033981323242188
+          },
+          "freq1_input_MHz": {
+            "n": 7,
+            "min": 3096.0,
+            "median": 3249.0,
+            "max": 3259.0,
+            "mean": 3218.285714285714
+          },
+          "freq2_input_MHz": {
+            "n": 7,
+            "min": 1258.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1258.0
+          },
+          "power1_average_W": {
+            "n": 7,
+            "min": 226.0,
+            "median": 267.0,
+            "max": 299.0,
+            "mean": 262.2857142857143
+          },
+          "power1_cap_W": {
+            "n": 7,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 7,
+            "min": 60.0,
+            "median": 62.0,
+            "max": 62.0,
+            "mean": 61.42857142857143
+          },
+          "temp2_input_C": {
+            "n": 7,
+            "min": 75.0,
+            "median": 78.0,
+            "max": 86.0,
+            "mean": 79.14285714285714
+          },
+          "temp3_input_C": {
+            "n": 7,
+            "min": 64.0,
+            "median": 67.0,
+            "max": 68.0,
+            "mean": 66.57142857142857
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 112,
+            "min": 1760.0,
+            "median": 3967.228,
+            "max": 4317.067,
+            "mean": 3837.046714285714
+          }
+        },
+        "decode-run-2": {
+          "cpu_busy_pct": {
+            "n": 7,
+            "min": 17.621145374449338,
+            "median": 32.199117832388154,
+            "max": 32.8508495909377,
+            "mean": 28.96644325421515
+          },
+          "gpu_busy_pct": {
+            "n": 7,
+            "min": 94,
+            "median": 99,
+            "max": 100,
+            "mean": 98.42857142857143
+          },
+          "mem_busy_pct": {
+            "n": 7,
+            "min": 5,
+            "median": 26,
+            "max": 27,
+            "mean": 20.142857142857142
+          },
+          "mem_available_GiB": {
+            "n": 7,
+            "min": 12.019447326660156,
+            "median": 12.026206970214844,
+            "max": 12.030315399169922,
+            "mean": 12.025909423828125
+          },
+          "freq1_input_MHz": {
+            "n": 7,
+            "min": 3192.0,
+            "median": 3246.0,
+            "max": 3251.0,
+            "mean": 3235.285714285714
+          },
+          "freq2_input_MHz": {
+            "n": 7,
+            "min": 1258.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1258.0
+          },
+          "power1_average_W": {
+            "n": 7,
+            "min": 260.0,
+            "median": 272.0,
+            "max": 309.0,
+            "mean": 278.0
+          },
+          "power1_cap_W": {
+            "n": 7,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 7,
+            "min": 63.0,
+            "median": 63.0,
+            "max": 64.0,
+            "mean": 63.42857142857143
+          },
+          "temp2_input_C": {
+            "n": 7,
+            "min": 79.0,
+            "median": 81.0,
+            "max": 89.0,
+            "mean": 82.57142857142857
+          },
+          "temp3_input_C": {
+            "n": 7,
+            "min": 66.0,
+            "median": 70.0,
+            "max": 70.0,
+            "mean": 68.57142857142857
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 112,
+            "min": 1760.0,
+            "median": 3947.8535,
+            "max": 4367.81,
+            "mean": 3711.896973214286
+          }
+        },
+        "decode-run-3": {
+          "cpu_busy_pct": {
+            "n": 6,
+            "min": 10.529634300126103,
+            "median": 27.289299747792192,
+            "max": 34.58001226241569,
+            "mean": 23.88491215931093
+          },
+          "gpu_busy_pct": {
+            "n": 6,
+            "min": 89,
+            "median": 99.0,
+            "max": 100,
+            "mean": 97.66666666666667
+          },
+          "mem_busy_pct": {
+            "n": 6,
+            "min": 5,
+            "median": 23.5,
+            "max": 27,
+            "mean": 18.333333333333332
+          },
+          "mem_available_GiB": {
+            "n": 6,
+            "min": 11.957420349121094,
+            "median": 12.030174255371094,
+            "max": 12.040611267089844,
+            "mean": 12.018943786621094
+          },
+          "freq1_input_MHz": {
+            "n": 6,
+            "min": 3129.0,
+            "median": 3221.5,
+            "max": 3246.0,
+            "mean": 3207.6666666666665
+          },
+          "freq2_input_MHz": {
+            "n": 6,
+            "min": 1124.0,
+            "median": 1258.0,
+            "max": 1258.0,
+            "mean": 1235.6666666666667
+          },
+          "power1_average_W": {
+            "n": 6,
+            "min": 240.0,
+            "median": 270.0,
+            "max": 300.0,
+            "mean": 274.1666666666667
+          },
+          "power1_cap_W": {
+            "n": 6,
+            "min": 300.0,
+            "median": 300.0,
+            "max": 300.0,
+            "mean": 300.0
+          },
+          "temp1_input_C": {
+            "n": 6,
+            "min": 64.0,
+            "median": 65.0,
+            "max": 65.0,
+            "mean": 64.66666666666667
+          },
+          "temp2_input_C": {
+            "n": 6,
+            "min": 79.0,
+            "median": 81.5,
+            "max": 90.0,
+            "mean": 83.83333333333333
+          },
+          "temp3_input_C": {
+            "n": 6,
+            "min": 68.0,
+            "median": 71.0,
+            "max": 72.0,
+            "mean": 70.33333333333333
+          },
+          "cpu_scaling_cur_MHz": {
+            "n": 96,
+            "min": 1760.0,
+            "median": 3967.2889999999998,
+            "max": 3972.051,
+            "mean": 3920.8974895833335
+          }
+        }
+      },
+      "telemetry_samples": 273,
+      "telemetry_errors": [],
+      "gpu_performance_levels": [
+        "auto"
+      ],
+      "cpu_governors": [
+        "powersave"
+      ],
+      "selected_log_lines": [
+        "2026-11-13T09:46:45.351501415Z [qtier] qwen38: warm start, 19186 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 72.0 s",
+        "2026-11-13T09:48:51.658291498Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (31.4 s to allocate, 94.9 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T09:49:41.740327081Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1279 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T09:49:41.740312874Z [chain] qwen38: 61392 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 17085 slots from the host pool"
+      ],
+      "snapshot_matches": true,
+      "environment_public": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "COLI_CUDA_CHAIN_POOL_READ": "1"
+      },
+      "container_observation": "Only current test container and the pre-existing controller appeared in sampled docker ps; not a host-workload exclusion.",
+      "requests": [
+        {
+          "case": "short",
+          "prompt_sha256": "44e7e091188ab66adc53cd46ea40f9a8eabfe18b338edc29e0d0e119daabbfaf",
+          "http_status": 200,
+          "total_s": 2.6870581510011107,
+          "ttft_s": 1.2840427580013056,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 106,
+            "completion_tokens": 55,
+            "total_tokens": 161
+          },
+          "content_chars": 8,
+          "reasoning_chars": 195,
+          "decode_tps": 39.218764278257716,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "cddbc747b30a15ece55a83c7a74ff47e1f3756112f29fb1f0924fe7f828b1087",
+          "http_status": 200,
+          "total_s": 2.6770745610010636,
+          "ttft_s": 1.272273567999946,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 57,
+            "total_tokens": 164
+          },
+          "content_chars": 8,
+          "reasoning_chars": 205,
+          "decode_tps": 40.607987693753294,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "b87cd9835dc620baa387e3f72f8698a702d39ef967763f73c0408aa4856e2d05",
+          "http_status": 200,
+          "total_s": 2.6648673829986365,
+          "ttft_s": 1.3118429809983354,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 113,
+            "completion_tokens": 55,
+            "total_tokens": 168
+          },
+          "content_chars": 8,
+          "reasoning_chars": 195,
+          "decode_tps": 40.68396100209528,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "short",
+          "prompt_sha256": "a407dcd1af8dde29186f718ead2b971a96a82fba99d2ec57ab4794c51f68479e",
+          "http_status": 200,
+          "total_s": 2.673586888002319,
+          "ttft_s": 1.2727173430030234,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 107,
+            "completion_tokens": 57,
+            "total_tokens": 164
+          },
+          "content_chars": 8,
+          "reasoning_chars": 205,
+          "decode_tps": 40.718748383185705,
+          "phase": "run",
+          "run": 3
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "4e82351513a508780c5b3e02c55db7c6b0492b9349613f4932521cfe9ec9508b",
+          "http_status": 200,
+          "total_s": 7.1373689159991045,
+          "ttft_s": 1.8758526649980922,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 161,
+            "completion_tokens": 192,
+            "total_tokens": 353
+          },
+          "content_chars": 0,
+          "reasoning_chars": 738,
+          "decode_tps": 36.311464121110944,
+          "phase": "warmup",
+          "run": 0
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "9e670d9b4ae1943a4f67e17cb8457a873ccd9a66cbb9d63882048a5ef6748da4",
+          "http_status": 200,
+          "total_s": 6.594522678999056,
+          "ttft_s": 1.9007994160019734,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 703,
+          "decode_tps": 40.70798630716608,
+          "phase": "run",
+          "run": 1
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "c4fc958c5a110dc28c93e2e8a6d57cbe7bdc063d0e6cd9cfb1ddf4d30d4bd94f",
+          "http_status": 200,
+          "total_s": 6.559577961998002,
+          "ttft_s": 1.8656102599998121,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 159,
+            "completion_tokens": 192,
+            "total_tokens": 351
+          },
+          "content_chars": 0,
+          "reasoning_chars": 738,
+          "decode_tps": 40.70341311418445,
+          "phase": "run",
+          "run": 2
+        },
+        {
+          "case": "decode",
+          "prompt_sha256": "a6c0717062b0a47844efa13084fb5d58e665f8bf2994dc8c99511b9b162a5610",
+          "http_status": 200,
+          "total_s": 6.6598216719976335,
+          "ttft_s": 1.900589521999791,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 192,
+            "total_tokens": 354
+          },
+          "content_chars": 0,
+          "reasoning_chars": 714,
+          "decode_tps": 40.146047714767256,
+          "phase": "run",
+          "run": 3
+        }
+      ]
+    }
+  ],
+  "telemetry_caveat": "Approximately 1Hz; measured decode request windows include TTFT/prefill. Observed clocks, not fixed. Host-wide CPU, not per-process. Container sampling cannot exclude host workloads."
+}

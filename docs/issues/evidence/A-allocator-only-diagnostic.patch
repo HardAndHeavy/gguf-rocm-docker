@@ -1,0 +1,11 @@
+--- a/backend_cuda.cu
++++ b/backend_cuda.cu
+@@ -5120,7 +5120,7 @@
+             void *part = NULL; int own = 0;   /* own: the stream's buffer (HIP, gemv_sk_part), kept */
+             const size_t pb = (size_t)kz * S * t->O * sizeof(float);
+ #if defined(__HIP__) || defined(__HIP_PLATFORM_AMD__)
+-            if (sr * xrow <= 48 * 1024 && kz > 1) own = (part = gemv_sk_part(ctx, st, pb)) != NULL;
++            /* Allocator-only diagnostic: leave own=0; use existing async allocation/free fallback. */
+ #endif
+             if (sr * xrow <= 48 * 1024 && (kz == 1 || own || cudaMallocAsync(&part, pb, st) == cudaSuccess)) {
+                 dim3 g(bw, (unsigned)kz, (unsigned)((S + sr - 1) / sr));

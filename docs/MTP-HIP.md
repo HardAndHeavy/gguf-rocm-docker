@@ -1,5 +1,13 @@
 # Qwen3.8 MTP на ROCm/HIP: исследование перед вкладом
 
+> **13 ноября:** выполнена отдельная [проверка PR #2775](issues/PR2775-VALIDATION.md)
+> на merge `b92eccd7`: B off/full/forced проходят, A auto выбирает bus, но
+> ответы A/B отправлены пользователем. Последующее [forced-bus сравнение](issues/A-FORCED-BUS-REVISIONS.md)
+> дало old ~40 против new ~27 tok/s; follow-up отправлен.
+> [Matched rebuild / allocator-only](issues/A-REBUILD-ALLOCATOR.md) подтвердили gap,
+> async rollback не вернул скорость. [SK0 и trace](issues/A-SK0-TRACE.md) выполнены,
+> follow-up отправлен пользователем; ждём maintainer. Root cause не установлен. Рабочий pin не менялся. Остальной текст — история исследования с указанными датами.
+
 Снимок исследования: 9 ноября 2026. GPU — Radeon AI PRO R9700, `gfx1201`, 32 GiB.
 Рабочий репозиторий закрепляет Colibri `main` на
 [`0a5504a1`](https://github.com/JustVugg/colibri/commit/0a5504a1dc64f86fcd0fe7db298b0448c730e7e6).
@@ -297,3 +305,16 @@ COLIBRI_STATE_DIR=./data/colibri-mtp-repro \
 Полезный PR — минимальный доказанный root-cause fix и regression test, без глобального
 отключения быстрого пути и без деградации обычного режима. Отрицательный результат теста
 тоже сохраняется; отсутствие падения не равно доказанной корректности.
+
+
+### 13 ноября: SK0/PROMOTE0 и warmed-engine trace
+
+[ABBA](issues/A-SK0-ABBA.md) на двух штатных rebuilt images: old40.12/40.03,
+new26.34/26.20 tok/s, gap34.4–34.6% сохраняется. PROMOTE0 меняет pool33.02→7.30GiB
+на обеих ревизиях; это не чистая SK-only ablation относительно прошлой серии.
+[Bounded trace](issues/A-SK0-TRACE.md) дал повторяемую зацепку `cc_dnrec_k<128>`:
+~4.2× median duration при matched count/geometry, Scratch_Size1092→2600.
+Сильный несимметричный profiler overhead, поэтому traced wall-time не benchmark.
+Root cause не доказан, sums/snapshot patches не применены. Предыдущий rebuild reply отправлен;
+[SK0/trace follow-up](issues/issue-A-sk0-ready-to-post.md) отправлен пользователем 13 ноября; ждём ответа.
+Production pin/`.env`/исходный state не менялись; к MTP fault B этот результат не относится.

@@ -149,6 +149,24 @@ make bench-strata BENCH_ARGS='--case short --case decode --case prefill --runs 3
 
 ## Open source: две отдельные проблемы Colibri
 
+**Обновление 13 ноября:** [PR #2775 проверен на R9700](docs/issues/PR2775-VALIDATION.md).
+Три B integration-процесса проходят без fault; оба auto-процесса A выбирают bus,
+но первый auto медленнее и восстановления исторической скорости не доказано.
+[Новые ответы A](docs/issues/issue-A-pr2775-ready-to-post.md) и
+[B](docs/issues/issue-B-pr2775-ready-to-post.md) **отправлены пользователем**.
+Следующий [forced-bus old/new ABBA](docs/issues/A-FORCED-BUS-REVISIONS.md)
+показал old ~40 против new ~27 tok/s (−31–34%), с записью clocks/power/CPU.
+Этот [follow-up](docs/issues/issue-A-forced-bus-revisions-ready-to-post.md) отправлен пользователем.
+Затем [matched rebuild и allocator-only контроль](docs/issues/A-REBUILD-ALLOCATOR.md)
+подтвердили разрыв и не показали восстановления скорости при возврате async allocation.
+[Follow-up о rebuild](docs/issues/issue-A-rebuild-allocator-ready-to-post.md) отправлен пользователем.
+[SK0/PROMOTE0 ABBA](docs/issues/A-SK0-ABBA.md) сохранил gap34.4–34.6%;
+[bounded trace](docs/issues/A-SK0-TRACE.md) дал зацепку `cc_dnrec_k<128>` (~4.2× duration,
+scratch1092→2600), не доказанный root cause. Profiler wall-time сильно возмущён.
+[SK0/trace follow-up](docs/issues/issue-A-sk0-ready-to-post.md) **отправлен пользователем 13 ноября**.
+Исследование на паузе до ответа maintainer; следующий узкий patch ещё не согласован.
+Рабочий pin и `.env` не менялись. Ниже — исторические наблюдения 9–11 ноября.
+
 - **A — non-MTP regression:** main 45,45 → dev 37,26 tok/s (−18,0%) при сопоставимом
   state и lookup off. Причина не доказана; не приписываем её PR #2559 без bisect/profile.
 - **B — HIP memory fault:** device MTP + `enable_thinking=false` падает в

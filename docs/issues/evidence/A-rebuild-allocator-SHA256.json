@@ -1,0 +1,4 @@
+{
+  "A-rebuild-allocator.json": "fe64cfd07a0951d07ecc19203e2f3f1c8c072e6d4a9cc324932e629c4d3fef26",
+  "A-allocator-only-diagnostic.patch": "1825c671e4cdfeafa60c183474d3ee0bce5048a737b09bfc83e7c7c9d71be8f4"
+}

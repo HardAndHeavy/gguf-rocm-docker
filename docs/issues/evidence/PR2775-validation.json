@@ -1,0 +1,1215 @@
+{
+  "revision": "b92eccd79ac60f196146f784c241ea076adda6f6",
+  "image": {
+    "requested_reference": "gguf-rocm-colibri:pr2775-b92eccd7",
+    "id": "sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141",
+    "labels": {
+      "com.amd.rocm.gpu-coverage": "multi-arch",
+      "com.amd.rocm.install-method": "packages",
+      "com.amd.rocm.release-type": "stable",
+      "org.opencontainers.image.base.digest": "sha256:a46fe7a3efd7c7f87a20d63f58bed76c499604d959597584ffb117c2b336c74c",
+      "org.opencontainers.image.base.name": "hardandheavy/transformers-rocm:3.0.1",
+      "org.opencontainers.image.created": "2026-11-08T07:26:32Z",
+      "org.opencontainers.image.description": "llama.cpp with ROCm support for AMD Radeon GPUs",
+      "org.opencontainers.image.documentation": "https://github.com/HardAndHeavy/llama-rocm-docker#readme",
+      "org.opencontainers.image.licenses": "Apache-2.0",
+      "org.opencontainers.image.revision": "68e30f4f8403bc2353403246cc0685e414548574",
+      "org.opencontainers.image.source": "https://github.com/JustVugg/colibri",
+      "org.opencontainers.image.title": "gguf-rocm-colibri",
+      "org.opencontainers.image.url": "https://hub.docker.com/r/hardandheavy/llama-rocm",
+      "org.opencontainers.image.version": "3.0.2",
+      "ru.hardandheavy.amdgpu-targets": "gfx1030;gfx1100;gfx1101;gfx1200;gfx1201",
+      "ru.hardandheavy.colibri.revision": "b92eccd79ac60f196146f784c241ea076adda6f6",
+      "ru.hardandheavy.llama-cpp-python.revision": "1652066e0af45f2313b339670ef9555e8a54e545",
+      "ru.hardandheavy.llama-cpp-python.version": "0.3.36",
+      "ru.hardandheavy.llama-cpp.revision": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+      "ru.hardandheavy.llama-cpp.version": "v0.9.0"
+    },
+    "repo_digests": [
+      "gguf-rocm-colibri@sha256:0e99d6b9f4148b30ba4aeeedf66cdeab26807a3c26489a03c426ab2d82dbf141"
+    ]
+  },
+  "toolchain": "HIP version: 7.16.26385-0000000\nAMD clang version 24.0.0git (https://github.com/ROCm/llvm-project.git d6f6cb691863e9258034ab48c1dfce21689d5606)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/venv/lib/python3.14/site-packages/_rocm_sdk_core/lib/llvm/bin\nConfiguration file: /opt/venv/lib/python3.14/site-packages/_rocm_sdk_core/lib/llvm/bin/clang++.cfg\n723742ec5069d7a3d968073e365f25fe77104348934ee9871cb3b54236457bae  /app/c/backend_cuda.cu\nf229f22cbb8062112857736bffd0fa2ad89580af6893c47330b0e7f7b3d6bbed  /app/c/qwen38_cuda_chain.h\n281f028f27bd0b91f7ada8fd89fcafee5f3d9472d8a3eaf5a7bd79987fefc83c  /app/c/qwen38\n",
+  "model_sha256": "92cee27ae5bbadcd732416a0f7a7f0acc092399dbbe8f5a5efa707c2ec0a49d7  Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf\n316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113  Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf\nda56287342376566ea31c2688069ea07519739027d8cb3362df65c33d45a927b  mtp-Qwen3.8-Flash-Next-Q2_0.gguf\n",
+  "B": [
+    {
+      "scenario": "off",
+      "results": [
+        {
+          "case": "off",
+          "status": "completed",
+          "readiness_seconds": 211.70326845599993,
+          "engine_fault_detected": false,
+          "elapsed_seconds": 222.41661617299997
+        }
+      ],
+      "snapshot_integrity": {
+        "unchanged": true
+      },
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1"
+      },
+      "pre_run_matches_common_snapshot": true,
+      "requests": [
+        {
+          "case": "short",
+          "http_status": 200,
+          "done": true,
+          "error": null,
+          "usage": [
+            {
+              "prompt_tokens": 27,
+              "completion_tokens": 3,
+              "total_tokens": 30
+            }
+          ],
+          "finish_reasons": [
+            "stop"
+          ],
+          "short_answer": "Железо"
+        },
+        {
+          "case": "decode",
+          "http_status": 200,
+          "done": true,
+          "error": null,
+          "usage": [
+            {
+              "prompt_tokens": 79,
+              "completion_tokens": 192,
+              "total_tokens": 271
+            }
+          ],
+          "finish_reasons": [
+            "length"
+          ]
+        }
+      ],
+      "selected_log_lines": []
+    },
+    {
+      "scenario": "full",
+      "results": [
+        {
+          "case": "full",
+          "status": "completed",
+          "readiness_seconds": 209.41397552699982,
+          "engine_fault_detected": false,
+          "elapsed_seconds": 227.68004726599975
+        }
+      ],
+      "snapshot_integrity": {
+        "unchanged": true
+      },
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "1",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1"
+      },
+      "pre_run_matches_common_snapshot": true,
+      "requests": [
+        {
+          "case": "short",
+          "http_status": 200,
+          "done": true,
+          "error": null,
+          "usage": [
+            {
+              "prompt_tokens": 27,
+              "completion_tokens": 3,
+              "total_tokens": 30
+            }
+          ],
+          "finish_reasons": [
+            "stop"
+          ],
+          "short_answer": "Железо"
+        },
+        {
+          "case": "decode",
+          "http_status": 200,
+          "done": true,
+          "error": null,
+          "usage": [
+            {
+              "prompt_tokens": 79,
+              "completion_tokens": 192,
+              "total_tokens": 271
+            }
+          ],
+          "finish_reasons": [
+            "length"
+          ]
+        }
+      ],
+      "selected_log_lines": [
+        "2026-11-13T06:00:57.584406145Z [qwen38 MTP] turn 2: 1.77 tokens/forward (108 forwards per 191 tokens) | acceptance 42.6% (83/195 drafts) | wiring b | depth by the gate, by position: 1 63.6% (68/107) 2 24.1% (13/54) 3 5.9% (2/34)",
+        "2026-11-13T06:00:57.584431733Z [qwen38 spec gate] turn 2: T(1) 84.3 ms, rows 2:1.45 3:3.46 4:1.60, rho 0.23, 1.6 ms per extra draft, acceptance by position 0.69 0.30 0.33 0.50 0.50",
+        "2026-11-13T06:00:57.584434238Z [qwen38 MTP] turn 2: draft list 64000 tokens on average, 97.4% of picks inside, 5 ids appended, 0 rebuilds"
+      ]
+    },
+    {
+      "scenario": "forced",
+      "results": [
+        {
+          "case": "full",
+          "status": "completed",
+          "readiness_seconds": 204.98697446100005,
+          "engine_fault_detected": false,
+          "elapsed_seconds": 216.87866801099972
+        }
+      ],
+      "snapshot_integrity": {
+        "unchanged": true
+      },
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "1",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "3",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "Q38_MTP_PSTEP": "0",
+        "COLI_SPEC_GATE": "0"
+      },
+      "pre_run_matches_common_snapshot": true,
+      "requests": [
+        {
+          "case": "short",
+          "http_status": 200,
+          "done": true,
+          "error": null,
+          "usage": [
+            {
+              "prompt_tokens": 27,
+              "completion_tokens": 3,
+              "total_tokens": 30
+            }
+          ],
+          "finish_reasons": [
+            "stop"
+          ],
+          "short_answer": "Железо"
+        },
+        {
+          "case": "decode",
+          "http_status": 200,
+          "done": true,
+          "error": null,
+          "usage": [
+            {
+              "prompt_tokens": 79,
+              "completion_tokens": 192,
+              "total_tokens": 271
+            }
+          ],
+          "finish_reasons": [
+            "length"
+          ]
+        }
+      ],
+      "selected_log_lines": [
+        "2026-11-13T06:04:42.881550686Z [qwen38 MTP] turn 2: 1.95 tokens/forward (98 forwards per 191 tokens) | acceptance 32.2% (93/289 drafts) | wiring b | fixed depth, by position: 1 64.9% (63/97) 2 25.0% (24/96) 3 6.2% (6/96)",
+        "2026-11-13T06:04:42.881573649Z [qwen38 MTP] turn 2: draft list 64001 tokens on average, 94.8% of picks inside, 10 ids appended, 0 rebuilds"
+      ]
+    }
+  ],
+  "A": [
+    {
+      "index": 1,
+      "profile": "A",
+      "status": "completed",
+      "startup_s": 199.85220705300026,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            27.27096061031312,
+            26.245164396927237,
+            27.309828138234263
+          ],
+          "median_decode_tps": 27.27096061031312,
+          "ttft_s": [
+            2.674245788999997,
+            1.3112927249999302,
+            1.2560687979998875
+          ],
+          "completion_tokens": [
+            62,
+            70,
+            62
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            24.895573561546616,
+            28.01582176548527,
+            23.99844501635708
+          ],
+          "median_decode_tps": 24.895573561546616,
+          "ttft_s": [
+            1.9191602910000256,
+            1.9091736939999464,
+            1.8626861480001935
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reasons": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "pre_run_matches_common_snapshot": true,
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1"
+      },
+      "selected_log_lines": [
+        "2026-11-13T06:08:16.654668654Z [chain] qwen38: a decode step's pooled experts read by the device over the bus: 54.34 ms a step of 1 with the CPU's, 41.22 over the bus",
+        "2026-11-13T06:09:24.766196051Z [chain] qwen38: 1003 hybrid layer steps without a slot of the host's: the device went on without its word (COLI_CUDA_CHAIN_HOST_SKIP=0: it waits)",
+        "2026-11-13T06:09:24.766230556Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1310 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T06:06:09.990061707Z [qtier] qwen38: warm start, 19186 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 62.4 s",
+        "2026-11-13T06:08:12.253749167Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (21.7 s to allocate, 100.6 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T06:09:24.766191392Z [chain] qwen38: 62880 layer steps with the routed experts in the frame, 581 of them hybrid (3028 slots on the host in 4848.9 ms, 3765.1 ms waiting for the device's routes), 17607 slots from the host pool"
+      ],
+      "measured_and_warmup_metrics": [
+        {
+          "name": "short",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 4.816166307000003,
+              "ttft_s": 2.459727801999634,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 110,
+                "completion_tokens": 61,
+                "total_tokens": 171
+              },
+              "content_chars": 8,
+              "reasoning_chars": 226,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 25.87722690810591,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 4.949495200000001,
+              "ttft_s": 2.674245788999997,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 109,
+                "completion_tokens": 62,
+                "total_tokens": 171
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.27096061031312,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.978037114000017,
+              "ttft_s": 1.3112927249999302,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 111,
+                "completion_tokens": 70,
+                "total_tokens": 181
+              },
+              "content_chars": 8,
+              "reasoning_chars": 272,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 26.245164396927237,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.527928836999763,
+              "ttft_s": 1.2560687979998875,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 106,
+                "completion_tokens": 62,
+                "total_tokens": 168
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.309828138234263,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        },
+        {
+          "name": "decode",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 8.847011432999807,
+              "ttft_s": 1.8840200919999006,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 165,
+                "completion_tokens": 192,
+                "total_tokens": 357
+              },
+              "content_chars": 0,
+              "reasoning_chars": 711,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.437314782494486,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 9.592699068000002,
+              "ttft_s": 1.9191602910000256,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 164,
+                "completion_tokens": 192,
+                "total_tokens": 356
+              },
+              "content_chars": 0,
+              "reasoning_chars": 692,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 24.895573561546616,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.728214119000313,
+              "ttft_s": 1.9091736939999464,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 162,
+                "completion_tokens": 192,
+                "total_tokens": 354
+              },
+              "content_chars": 0,
+              "reasoning_chars": 701,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.01582176548527,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 9.823098133000258,
+              "ttft_s": 1.8626861480001935,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 161,
+                "completion_tokens": 192,
+                "total_tokens": 353
+              },
+              "content_chars": 0,
+              "reasoning_chars": 738,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 23.99844501635708,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "profile": "B",
+      "status": "completed",
+      "startup_s": 200.3021012070003,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            27.81626393495206,
+            27.77042886593338,
+            28.019302931399704
+          ],
+          "median_decode_tps": 27.81626393495206,
+          "ttft_s": [
+            1.4156974709999304,
+            1.433002702000067,
+            1.3924058779998632
+          ],
+          "completion_tokens": [
+            62,
+            70,
+            62
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            28.024657928707878,
+            27.73247815005004,
+            27.78198303101194
+          ],
+          "median_decode_tps": 27.78198303101194,
+          "ttft_s": [
+            2.0857074089999514,
+            2.093292869999914,
+            2.089701469999909
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reasons": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "pre_run_matches_common_snapshot": true,
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "COLI_CUDA_CHAIN_POOL_READ": "1"
+      },
+      "selected_log_lines": [
+        "2026-11-13T06:13:56.259726268Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1306 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T06:10:50.988064599Z [qtier] qwen38: warm start, 19186 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 62.7 s",
+        "2026-11-13T06:12:50.582790176Z [chain] qwen38: host pool, every expert (the 5390 the card leaves and its own 19186) in 33.02 GiB of page-locked RAM the device reads over the bus (21.9 s to allocate, 97.7 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T06:13:56.259709827Z [chain] qwen38: 62688 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 17661 slots from the host pool"
+      ],
+      "measured_and_warmup_metrics": [
+        {
+          "name": "short",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 3.5037550269998974,
+              "ttft_s": 1.4372684360000676,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 110,
+                "completion_tokens": 57,
+                "total_tokens": 167
+              },
+              "content_chars": 8,
+              "reasoning_chars": 205,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.58113847513919,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.6462481950002257,
+              "ttft_s": 1.4156974709999304,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 109,
+                "completion_tokens": 62,
+                "total_tokens": 171
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.81626393495206,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.9540687919998163,
+              "ttft_s": 1.433002702000067,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 111,
+                "completion_tokens": 70,
+                "total_tokens": 181
+              },
+              "content_chars": 8,
+              "reasoning_chars": 272,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.77042886593338,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.6074762959997315,
+              "ttft_s": 1.3924058779998632,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 106,
+                "completion_tokens": 62,
+                "total_tokens": 168
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.019302931399704,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        },
+        {
+          "name": "decode",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 8.941853056000127,
+              "ttft_s": 2.069539745000384,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 165,
+                "completion_tokens": 192,
+                "total_tokens": 357
+              },
+              "content_chars": 0,
+              "reasoning_chars": 711,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.79905417767375,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.902709064000192,
+              "ttft_s": 2.0857074089999514,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 164,
+                "completion_tokens": 192,
+                "total_tokens": 356
+              },
+              "content_chars": 0,
+              "reasoning_chars": 692,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.024657928707878,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.982252677999895,
+              "ttft_s": 2.093292869999914,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 162,
+                "completion_tokens": 192,
+                "total_tokens": 354
+              },
+              "content_chars": 0,
+              "reasoning_chars": 701,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.73247815005004,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.966094964000149,
+              "ttft_s": 2.089701469999909,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 161,
+                "completion_tokens": 192,
+                "total_tokens": 353
+              },
+              "content_chars": 0,
+              "reasoning_chars": 738,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.78198303101194,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "profile": "B",
+      "status": "completed",
+      "startup_s": 198.67131176600014,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            28.12444856773642,
+            28.11538561918564,
+            28.521358291634794
+          ],
+          "median_decode_tps": 28.12444856773642,
+          "ttft_s": [
+            1.420071784999891,
+            1.4406735899992782,
+            1.3884592970007361
+          ],
+          "completion_tokens": [
+            62,
+            70,
+            62
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            28.105678107800813,
+            28.59810630955229,
+            28.027973860207144
+          ],
+          "median_decode_tps": 28.105678107800813,
+          "ttft_s": [
+            2.0820514019997063,
+            2.069422737000423,
+            2.067386092999186
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reasons": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "pre_run_matches_common_snapshot": true,
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1",
+        "COLI_CUDA_CHAIN_POOL_READ": "1"
+      },
+      "selected_log_lines": [
+        "2026-11-13T06:18:26.041376455Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1306 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T06:15:22.492607766Z [qtier] qwen38: warm start, 19198 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 62.2 s",
+        "2026-11-13T06:17:23.527330067Z [chain] qwen38: host pool, every expert (the 5378 the card leaves and its own 19198) in 33.02 GiB of page-locked RAM the device reads over the bus (23.3 s to allocate, 97.7 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T06:18:26.041362459Z [chain] qwen38: 62688 layer steps with the routed experts in the frame, 0 of them hybrid (0 slots on the host in 0.0 ms, 0.0 ms waiting for the device's routes), 17554 slots from the host pool"
+      ],
+      "measured_and_warmup_metrics": [
+        {
+          "name": "short",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 3.471252127000298,
+              "ttft_s": 1.4372037640005146,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 110,
+                "completion_tokens": 57,
+                "total_tokens": 167
+              },
+              "content_chars": 8,
+              "reasoning_chars": 205,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.02628259940522,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.6262079469997843,
+              "ttft_s": 1.420071784999891,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 109,
+                "completion_tokens": 62,
+                "total_tokens": 171
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.12444856773642,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.931120051000107,
+              "ttft_s": 1.4406735899992782,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 111,
+                "completion_tokens": 70,
+                "total_tokens": 181
+              },
+              "content_chars": 8,
+              "reasoning_chars": 272,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.11538561918564,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.5644453980003163,
+              "ttft_s": 1.3884592970007361,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 106,
+                "completion_tokens": 62,
+                "total_tokens": 168
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.521358291634794,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        },
+        {
+          "name": "decode",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 9.010441798000102,
+              "ttft_s": 2.165226955000435,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 165,
+                "completion_tokens": 192,
+                "total_tokens": 357
+              },
+              "content_chars": 0,
+              "reasoning_chars": 711,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.909091180160747,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.879415131999849,
+              "ttft_s": 2.0820514019997063,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 164,
+                "completion_tokens": 192,
+                "total_tokens": 356
+              },
+              "content_chars": 0,
+              "reasoning_chars": 692,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.105678107800813,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.749714133999987,
+              "ttft_s": 2.069422737000423,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 162,
+                "completion_tokens": 192,
+                "total_tokens": 354
+              },
+              "content_chars": 0,
+              "reasoning_chars": 701,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.59810630955229,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.88367183199989,
+              "ttft_s": 2.067386092999186,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 161,
+                "completion_tokens": 192,
+                "total_tokens": 353
+              },
+              "content_chars": 0,
+              "reasoning_chars": 738,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 28.027973860207144,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "profile": "A",
+      "status": "completed",
+      "startup_s": 194.47970543500014,
+      "cases": {
+        "short": {
+          "decode_tps": [
+            27.478656529830488,
+            27.32119929821876,
+            27.284281682143654
+          ],
+          "median_decode_tps": 27.32119929821876,
+          "ttft_s": [
+            1.254812215000129,
+            1.2637390500003676,
+            1.2094988769995325
+          ],
+          "completion_tokens": [
+            55,
+            57,
+            62
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop"
+          ]
+        },
+        "decode": {
+          "decode_tps": [
+            27.843846463311237,
+            27.621865047767013,
+            27.771319475848294
+          ],
+          "median_decode_tps": 27.771319475848294,
+          "ttft_s": [
+            1.8743077850003829,
+            1.8680621780004003,
+            1.8666288739996162
+          ],
+          "completion_tokens": [
+            192,
+            192,
+            192
+          ],
+          "finish_reasons": [
+            "length",
+            "length",
+            "length"
+          ]
+        }
+      },
+      "pre_run_matches_common_snapshot": true,
+      "environment": {
+        "COLI_CUDA": "1",
+        "COLI_VULKAN": "0",
+        "COLI_CUDA_HOST_POOL": "0",
+        "COLI_CUDA_CHAIN_POOL": "1",
+        "COLI_CUDA_CHAIN_LAYERWISE": "1",
+        "COLI_CUDA_CHAIN_ROWS": "64",
+        "COLI_LOOKUP": "0",
+        "Q38_MTP": "0",
+        "Q38_MTP_CHAIN": "1",
+        "Q38_MTP_DRAFTS": "0",
+        "COLI_CUDA_CHAIN_MTP_CARD": "1",
+        "COLI_CUDA_CHAIN_MTP_POOL": "1",
+        "COLI_NO_OMP_TUNE": "1",
+        "OMP_NUM_THREADS": "8",
+        "COLI_ALLOWED_HOSTS": "localhost,127.0.0.1"
+      },
+      "selected_log_lines": [
+        "2026-11-13T06:21:52.189676379Z [chain] qwen38: a decode step's pooled experts read by the device over the bus: 44.88 ms a step of 1 with the CPU's, 36.66 over the bus",
+        "2026-11-13T06:22:50.193402644Z [chain] qwen38: 1003 hybrid layer steps without a slot of the host's: the device went on without its word (COLI_CUDA_CHAIN_HOST_SKIP=0: it waits)",
+        "2026-11-13T06:22:50.193414586Z [chain] qwen38: 0 experts promoted to the card (0 residents back to the pool), 0 on their way; 1290 frames braked, 98.6 % of the routes on the card",
+        "2026-11-13T06:19:50.994603461Z [qtier] qwen38: warm start, 19198 of the GGUF's experts in VRAM, the history's most used first (.coli_usage) -- 62.1 s",
+        "2026-11-13T06:21:49.068791481Z [chain] qwen38: host pool, every expert (the 5378 the card leaves and its own 19198) in 33.02 GiB of page-locked RAM the device reads over the bus (22.9 s to allocate, 95.2 s to read; COLI_CUDA_CHAIN_POOL=0 off)",
+        "2026-11-13T06:22:50.193399999Z [chain] qwen38: 61920 layer steps with the routed experts in the frame, 1349 of them hybrid (7950 slots on the host in 904.6 ms, 12674.6 ms waiting for the device's routes), 17247 slots from the host pool"
+      ],
+      "measured_and_warmup_metrics": [
+        {
+          "name": "short",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 3.5507905479998954,
+              "ttft_s": 1.2826047449998441,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 110,
+                "completion_tokens": 61,
+                "total_tokens": 171
+              },
+              "content_chars": 8,
+              "reasoning_chars": 226,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 26.90213911753995,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.257107979000466,
+              "ttft_s": 1.254812215000129,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 109,
+                "completion_tokens": 55,
+                "total_tokens": 164
+              },
+              "content_chars": 8,
+              "reasoning_chars": 195,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.478656529830488,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.3507214259998364,
+              "ttft_s": 1.2637390500003676,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 111,
+                "completion_tokens": 57,
+                "total_tokens": 168
+              },
+              "content_chars": 8,
+              "reasoning_chars": 205,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.32119929821876,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 3.4822975679999217,
+              "ttft_s": 1.2094988769995325,
+              "finish_reason": "stop",
+              "usage": {
+                "prompt_tokens": 106,
+                "completion_tokens": 62,
+                "total_tokens": 168
+              },
+              "content_chars": 8,
+              "reasoning_chars": 224,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.284281682143654,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        },
+        {
+          "name": "decode",
+          "runs": [
+            {
+              "http_status": 200,
+              "total_s": 8.758616639999673,
+              "ttft_s": 1.8568560989997422,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 165,
+                "completion_tokens": 192,
+                "total_tokens": 357
+              },
+              "content_chars": 0,
+              "reasoning_chars": 711,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.679769117638404,
+              "phase": "warmup",
+              "run": 0
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.735648986000342,
+              "ttft_s": 1.8743077850003829,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 164,
+                "completion_tokens": 192,
+                "total_tokens": 356
+              },
+              "content_chars": 0,
+              "reasoning_chars": 690,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.843846463311237,
+              "phase": "run",
+              "run": 1
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.784403972000291,
+              "ttft_s": 1.8680621780004003,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 162,
+                "completion_tokens": 192,
+                "total_tokens": 354
+              },
+              "content_chars": 0,
+              "reasoning_chars": 695,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.621865047767013,
+              "phase": "run",
+              "run": 2
+            },
+            {
+              "http_status": 200,
+              "total_s": 8.745757362999939,
+              "ttft_s": 1.8666288739996162,
+              "finish_reason": "length",
+              "usage": {
+                "prompt_tokens": 161,
+                "completion_tokens": 192,
+                "total_tokens": 353
+              },
+              "content_chars": 0,
+              "reasoning_chars": 731,
+              "completion_tokens_source": "stream_usage",
+              "decode_tps": 27.771319475848294,
+              "phase": "run",
+              "run": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "No contemporaneous old-build performance control.",
+    "Old unchanged device-MTP baseline already passed fresh-snapshot tests.",
+    "No sanitizer, failing-address capture, clock control, or long endurance test.",
+    "Unrelated CPU work observed during process 2; not evidence of causation."
+  ],
+  "A_source_integrity": {
+    "unchanged": true
+  },
+  "metadata_snapshot_manifest": [
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/.coli_analysis.json",
+      "bytes": 129567,
+      "sha256": "c93b22b1544aa4e751b5aa9db330dd314684016e1a6dea8227b780e3c9df540b"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/.coli_usage",
+      "bytes": 275342,
+      "sha256": "4b6822c8c43d50001b3e683d272fb91d066cb0ba42362f901de5e7e8ab601b37"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/.coli_vocab",
+      "bytes": 21762,
+      "sha256": "d985a4cb6facc45876192614beacc34093dce34cfd9eb3c033fde24c200c4a3f"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/config.json",
+      "bytes": 2443,
+      "sha256": "e2eff5d297c398e3fc3f10783ce0d53ebe3ad881ff8a667cd3f8034155f12919"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/generation_config.json",
+      "bytes": 94,
+      "sha256": "1cc61e37e3a5e79a4204b3556152fb08d97a952c807488f8c0d563fb1b648782"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/gguf.json",
+      "bytes": 179,
+      "sha256": "10e98b55db690f5c97ee425c71cedb125b97e48a9953c3d54494b70b82524409"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/tokenizer.json",
+      "bytes": 9839484,
+      "sha256": "aef33b834eb88f4b341793dea22e04777dad152cc02a144ffb238d15e4d14e10"
+    },
+    {
+      "path": "Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.colibri/tokenizer_config.json",
+      "bytes": 10416,
+      "sha256": "19f2cb457f4a10b3dcd27ce75a8cc8efc5c7bb219f1efba95f9cd230c3b8c6a2"
+    }
+  ]
+}
