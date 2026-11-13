@@ -44,3 +44,19 @@ class ComparisonPlanTests(unittest.TestCase):
         for previous in ({}, {'experiment_settings': runner.experiment_settings('1','0')}):
             with self.assertRaisesRegex(RuntimeError, 'settings mismatch'):
                 runner.check_resume_settings(previous, settings)
+
+    def test_scratch_comparison_same_image_and_only_limit_differs(self):
+        plan = runner.scratch_comparison_plan('immutable')
+        self.assertEqual([p['image'] for p in plan], ['immutable']*4)
+        self.assertEqual([p['profile'] for p in plan], ['B']*4)
+        self.assertEqual([p['scratch_limit'] for p in plan], [None, '1073741824', '1073741824', None])
+        baseline = runner.process_environment('B', '0', '0')
+        self.assertNotIn('HSA_SCRATCH_SINGLE_LIMIT', baseline)
+        changed = runner.process_environment('B', '0', '0', plan[1]['scratch_limit'])
+        docker_args = runner.environment_arguments(changed)
+        index = docker_args.index('HSA_SCRATCH_SINGLE_LIMIT=1073741824')
+        self.assertEqual(docker_args[index-1], '-e')
+        self.assertEqual(changed.pop('HSA_SCRATCH_SINGLE_LIMIT'), '1073741824')
+        self.assertEqual(changed, baseline)
+        plan[1]['scratch_limit'] = 'changed'
+        self.assertEqual(plan[2]['scratch_limit'], '1073741824')

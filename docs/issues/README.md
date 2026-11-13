@@ -1,6 +1,6 @@
 # Colibri A/B: черновики для upstream
 
-**[Checkpoint 13 ноября](COLIBRI-CHECKPOINT-2026-11-13.md): все результаты сохранены, SK0/trace follow-up отправлен пользователем; пауза до ответа maintainer.**
+**[Checkpoint 13 ноября](COLIBRI-CHECKPOINT-2026-11-13.md): новый ответ maintainer проверен — [ROCr scratch и PR #2809](A-SCRATCH-LIMIT.md). Scratch override: 26.52 → 38.00/37.04 → 26.66 tok/s; old/fix/fix/old без override: 40.27/40.34/40.68/40.31. [Новый follow-up](issue-A-scratch-ready-to-post.md) **отправлен пользователем 13 ноября; ждём ответа maintainer**. Автоматической отправки не было. Production не менялся.**
 
 Актуализация **13 ноября 2026**. Issues [A — #2757](https://github.com/JustVugg/colibri/issues/2757) и [B — #2758](https://github.com/JustVugg/colibri/issues/2758) остаются открытыми по проверке 13 ноября. Ответы maintainer привели к влитому [PR #2775](https://github.com/JustVugg/colibri/pull/2775).
 
@@ -11,7 +11,7 @@
 - **Forced-bus follow-up отправлен пользователем:** [английский ответ](issue-A-forced-bus-revisions-ready-to-post.md), [sanitised evidence](evidence/A-forced-bus-revisions.json).
 - **Следующий контроль выполнен:** [matched rebuild / allocator-only](A-REBUILD-ALLOCATOR.md). Rebuilt old/new ~40/~27; соответствующие binaries побайтно совпали с прежними, packages совпали. Async-only diagnostic на new не вернул скорость (~25–26).
 - **Matched-rebuild follow-up отправлен пользователем:** [английский ответ](issue-A-rebuild-allocator-ready-to-post.md) обновлён с учётом нового CUDA/HIP ответа maintainer; [evidence](evidence/A-rebuild-allocator.json).
-- **SK0 и bounded trace выполнены:** [ABBA](A-SK0-ABBA.md) old40.12/40.03, new26.34/26.20, gap34.4–34.6%; [trace](A-SK0-TRACE.md) указывает на `cc_dnrec_k<128>` (~4.2×, scratch1092→2600), но wall-time сильно возмущён. [SK0/trace follow-up](issue-A-sk0-ready-to-post.md) **отправлен пользователем 13 ноября; ждём ответа**, [evidence](evidence/A-sk0-trace.json). Root cause не доказан, новых patches/bisect нет.
+- **SK0 и bounded trace выполнены:** [ABBA](A-SK0-ABBA.md) old40.12/40.03, new26.34/26.20, gap34.4–34.6%; [trace](A-SK0-TRACE.md) указывает на `cc_dnrec_k<128>` (~4.2×, scratch1092→2600), но wall-time сильно возмущён. [SK0/trace follow-up](issue-A-sk0-ready-to-post.md) **отправлен пользователем 13 ноября**, [evidence](evidence/A-sk0-trace.json). Полученный ответ привёл к [scratch-limit / PR #2809 validation](A-SCRATCH-LIMIT.md): use-once churn исчезает с override, fix branch без override возвращает ~40 tok/s. Новый follow-up отправлен пользователем 13 ноября; исследование на паузе до ответа maintainer.
 - **Новая sanitised выжимка:** [PR2775-validation.json](evidence/PR2775-validation.json), включая полные hashes GGUF; [её SHA-256](evidence/PR2775-SHA256.json).
 - Ниже — исторические материалы 9–11 ноября, не синхронизированные копии GitHub. Старые ограничения и формулировки «ожидаем ответа» относятся к датам тех запусков.
 

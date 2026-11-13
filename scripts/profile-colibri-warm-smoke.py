@@ -22,6 +22,8 @@ def main():
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--tokens', type=int, choices=[16,64], default=16)
     ap.add_argument('--expanded', action='store_true')
+    ap.add_argument('--scratch-trace', action='store_true', help='Add ROCr scratch allocation/free events')
+    ap.add_argument('--scratch-limit', choices=['1073741824'], help='Explicit HSA_SCRATCH_SINGLE_LIMIT before engine startup; default unset')
     args=ap.parse_args()
     h=load('direct', 'check-colibri-mtp-direct.py'); b=load('bench', 'benchmark.py')
     image, details=h.resolve_image(args.image)
@@ -39,8 +41,12 @@ def main():
         if v.endswith(':/state'): cmd[i]=str(state)+':/state'
     cmd[cmd.index('--entrypoint')+2]=image
     cmd[2:2]=['--cap-add=SYS_PTRACE','-e','ROCP_TOOL_ATTACH=1','-v',str(trace)+':/trace']
+    public_env={**json.loads((template/'environment-public.json').read_text()),'ROCP_TOOL_ATTACH':'1'}
+    if args.scratch_limit:
+        cmd[2:2]=['-e', 'HSA_SCRATCH_SINGLE_LIMIT='+args.scratch_limit]
+        public_env['HSA_SCRATCH_SINGLE_LIMIT']=args.scratch_limit
     h.save(out/'command.json',cmd)
-    h.save(out/'environment-public.json',{**json.loads((template/'environment-public.json').read_text()),'ROCP_TOOL_ATTACH':'1'})
+    h.save(out/'environment-public.json',public_env)
     key=secrets.token_urlsafe(32)
     urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler({})))
     client=b.OpenAIClient('http://127.0.0.1:18080/v1',key,90)
@@ -75,6 +81,8 @@ def main():
         prof=['docker','exec',name,'/opt/rocm/bin/rocprofv3','--pid',pid,'--attach-children=false','--attach-duration-msec','15000','--attach-sync-output=true','--kernel-trace','--stats','--output-config','--output-format','csv','json','--output-directory','/trace','--output-file','smoke']
         if args.expanded:
             prof += ['--hip-runtime-trace','--memory-copy-trace','--memory-allocation-trace']
+        if args.scratch_trace:
+            prof += ['--scratch-memory-trace']
         h.save(out/'profiler-command.json',prof)
         with (out/'profiler.log').open('w') as f:
             profiler=subprocess.Popen(prof,stdout=f,stderr=subprocess.STDOUT)

@@ -34,6 +34,13 @@ def bus_comparison_plan(old_image, new_image):
             [('old', old_image), ('new', new_image), ('new', new_image), ('old', old_image)]]
 
 
+def scratch_comparison_plan(image):
+    """Same unmodified image, default/1GiB/1GiB/default; forced bus."""
+    return [dict(build=label, image=image, profile='B', scratch_limit=value)
+            for label, value in [('scratch-default', None), ('scratch-1GiB', '1073741824'),
+                                 ('scratch-1GiB', '1073741824'), ('scratch-default', None)]]
+
+
 def experiment_settings(gemv_sk=None, promote=None):
     return dict(COLI_CUDA_GEMV_SK=gemv_sk, COLI_CUDA_CHAIN_PROMOTE=promote)
 
@@ -47,7 +54,7 @@ def environment_arguments(env):
     return [arg for key, value in env.items() for arg in ('-e', key+'='+value)]
 
 
-def process_environment(profile, gemv_sk=None, promote=None):
+def process_environment(profile, gemv_sk=None, promote=None, scratch_limit=None):
     env = dict(COLI_CUDA='1', COLI_VULKAN='0',COLI_CUDA_HOST_POOL='0',COLI_CUDA_CHAIN_POOL='1',COLI_CUDA_CHAIN_LAYERWISE='1',COLI_CUDA_CHAIN_ROWS='64',COLI_LOOKUP='0',Q38_MTP='0',Q38_MTP_CHAIN='1',Q38_MTP_DRAFTS='0',COLI_CUDA_CHAIN_MTP_CARD='1',COLI_CUDA_CHAIN_MTP_POOL='1',COLI_NO_OMP_TUNE='1',OMP_NUM_THREADS='8',COLI_ALLOWED_HOSTS='localhost,127.0.0.1')
     if profile in ('B','C'):
         env['COLI_CUDA_CHAIN_POOL_READ']='1'
@@ -56,6 +63,8 @@ def process_environment(profile, gemv_sk=None, promote=None):
     for key, value in experiment_settings(gemv_sk, promote).items():
         if value is not None:
             env[key] = value
+    if scratch_limit is not None:
+        env['HSA_SCRATCH_SINGLE_LIMIT'] = scratch_limit
     return env
 
 def main():
@@ -65,6 +74,7 @@ def main():
     ap.add_argument('--resume', type=Path, help='Resume this runner\'s interrupted series; retain original corpus/snapshot')
     ap.add_argument('--sequence', nargs='+', choices=['A','B','C'], default=list('ABBABCCB'))
     ap.add_argument('--compare-bus-image', help='Compare --image (old) with this new image as old/new/new/old, all forced bus; no resume')
+    ap.add_argument('--compare-scratch-limit', action='store_true', help='Same-image forced-bus default/1GiB/1GiB/default; no resume')
     ap.add_argument('--telemetry', action='store_true', help='Read-only 1 Hz sysfs/proc telemetry annotated by request phase')
     ap.add_argument('--image', default=helper.IMAGE, help='Image reference resolved to an immutable ID before launch')
     ap.add_argument('--require-auto-decision', action='store_true', help='Require profile A to log its measured automatic pool choice before timing')
@@ -74,7 +84,12 @@ def main():
     settings = experiment_settings(args.gemv_sk, args.promote)
     image_id, image_details = helper.resolve_image(args.image)
     comparison_details = None
-    if args.compare_bus_image:
+    if args.compare_scratch_limit:
+        if args.resume or args.require_auto_decision or args.compare_bus_image:
+            ap.error('scratch comparison cannot resume, compare images or require auto decision')
+        plan = scratch_comparison_plan(image_id)
+        args.sequence = ['B'] * 4
+    elif args.compare_bus_image:
         if args.resume or args.require_auto_decision:
             ap.error('bus comparison cannot resume or require auto decision')
         comparison_id, comparison_details = helper.resolve_image(args.compare_bus_image)
@@ -161,7 +176,7 @@ def main():
             save(d/'pre-run-manifest.json',before)
             if before != original:
                 raise RuntimeError('snapshot mismatch')
-            env = process_environment(profile, args.gemv_sk, args.promote)
+            env = process_environment(profile, args.gemv_sk, args.promote, process.get('scratch_limit'))
             save(d/'environment-public.json',env)
             active = f'colibri-pool-ab-{stamp}-{i}'
             run = ['docker','run','-d','--name',active,'--pull','never','--network','host','--init','--device','/dev/kfd','--device','/dev/dri','--ulimit','memlock=-1:-1','--ulimit','core=0:0','--shm-size','2g','--no-healthcheck']
