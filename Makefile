@@ -30,6 +30,13 @@ run-strata-api: prepare-strata
 run-colibri-api: prepare-colibri
 	$(COMPOSE) -f compose.colibri.yaml up -d colibri
 
+run-qwen36:
+	STRATA_FAMILY=qwen36 STRATA_MODEL=ud-q4_k_xl \
+		STRATA_MODEL_PATH=/models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf \
+		STRATA_CONTEXT=32k STRATA_VISION=off STRATA_PARALLEL=2 \
+		STRATA_MTP=on STRATA_DRAFTING=mtp STRATA_BATCH_MTP=1 \
+		PRESET=qwen36-work make run-strata-api
+
 run-strata: prepare-strata
 run-colibri: prepare-colibri
 run-llama: prepare-llama
